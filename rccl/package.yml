@@ -1,0 +1,48 @@
+name       : rccl
+version    : 5.2.3
+release    : 1
+source     :
+    - https://github.com/ROCmSoftwarePlatform/rccl/archive/refs/tags/rocm-5.2.3.tar.gz : ecba09f4c95b4b2dae81b88231a972ac956d29909b5e712e21cf2a74bd251ff4
+license    : MIT
+component  : programming.library
+summary    : ROCm Communication Collectives Library (RCCL) 
+description: |
+    RCCL (pronounced "Rickle") is a stand-alone library of standard collective communication routines for GPUs, implementing all-reduce, all-gather, reduce, broadcast, reduce-scatter, gather, scatter, and all-to-all. There is also initial support for direct GPU-to-GPU send and receive operations. It has been optimized to achieve high bandwidth on platforms using PCIe, xGMI as well as networking using InfiniBand Verbs or TCP/IP sockets. RCCL supports an arbitrary number of GPUs installed in a single node or multiple nodes, and can be used in either single- or multi-process (e.g., MPI) applications.
+clang      : yes
+builddeps  :
+    - rocminfo
+    - rocm-cmake
+    - rocm-compilersupport-devel
+    - rocm-device-libs-devel
+    - rocm-hip-devel
+    - rocm-opencl-devel
+    - rocm-runtime-devel
+    - rocm-smi-devel
+    - git
+environment: |
+    export CCACHE_MAXSIZE=100G
+
+    export ROCM_PATH=%PREFIX%
+    export ROCM_DIR=%PREFIX%
+
+    export HIP_PLATFORM=amd
+    export HIP_RUNTIME=rocclr
+    export HIP_COMPILER=clang
+    export HIP_CLANG_PATH=/usr/bin
+    export DEVICE_LIB_PATH=/usr/lib64/amdgcn/bitcode
+    export HSA_PATH=/usr/hsa
+    export LLVM_PATH=/usr
+
+    # CXXFLAGS="${CXXFLAGS/-fstack-protector-strong/} -fcf-protection=none"
+    # unset LDFLAGS FFLAGS FCFLAGS 
+    export CXXFLAGS="${CXXFLAGS/-fstack-protector-strong/} -fcf-protection=none -mllvm -amdgpu-opt-vgpr-liverange=false -w"
+    # export LDFLAGS="-mllvm -amdgpu-opt-vgpr-liverange=false"
+    # export CXXFLAGS="${CXXFLAGS/-fstack-protector-strong/} -fcf-protection=none"
+setup      : |
+    %cmake_ninja -DCMAKE_CXX_COMPILER=/usr/bin/hipcc -DBUILD_TESTS=OFF \
+                 -DHIP_COMPILER=clang \
+                 -DAMDGPU_TARGETS="gfx1030" \
+build      : |
+    %ninja_build
+install    : |
+    %ninja_install

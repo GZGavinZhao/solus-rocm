@@ -1,0 +1,83 @@
+<PISI>
+    <Source>
+        <Name>rocm-opencl</Name>
+        <Packager>
+            <Name>Gavin Zhao</Name>
+            <Email>me@gzgz.dev</Email>
+        </Packager>
+        <License>MIT</License>
+        <PartOf>programming.devel</PartOf>
+        <Summary xml:lang="en">OpenCL 2.2 compatible language runtime for AMD Radeon GPUs</Summary>
+        <Description xml:lang="en">OpenCL 2.2 compatible language runtime for AMD Radeon GPUs
+</Description>
+        <Archive type="binary" sha1sum="79eb0752a961b8e0d15c77d298c97498fbc89c5a">https://getsol.us/sources/README.Solus</Archive>
+    </Source>
+    <Package>
+        <Name>rocm-opencl</Name>
+        <Summary xml:lang="en">OpenCL 2.2 compatible language runtime for AMD Radeon GPUs</Summary>
+        <Description xml:lang="en">OpenCL 2.2 compatible language runtime for AMD Radeon GPUs
+</Description>
+        <PartOf>programming.devel</PartOf>
+        <Files>
+            <Path fileType="executable">/usr/bin/clinfo</Path>
+            <Path fileType="library">/usr/lib/libamdocl64.so.5</Path>
+            <Path fileType="library">/usr/lib/libamdocl64.so.5.2.3</Path>
+            <Path fileType="library">/usr/lib/libcltrace.so.5</Path>
+            <Path fileType="library">/usr/lib/libcltrace.so.5.2.3</Path>
+            <Path fileType="data">/usr/opencl/bin/clinfo</Path>
+            <Path fileType="data">/usr/opencl/include/CL/cl.h</Path>
+            <Path fileType="data">/usr/opencl/include/CL/cl.hpp</Path>
+            <Path fileType="data">/usr/opencl/include/CL/cl2.hpp</Path>
+            <Path fileType="data">/usr/opencl/include/CL/cl_dx9_media_sharing_intel.h</Path>
+            <Path fileType="data">/usr/opencl/include/CL/cl_ext.h</Path>
+            <Path fileType="data">/usr/opencl/include/CL/cl_ext_intel.h</Path>
+            <Path fileType="data">/usr/opencl/include/CL/cl_gl.h</Path>
+            <Path fileType="data">/usr/opencl/include/CL/cl_gl_ext.h</Path>
+            <Path fileType="data">/usr/opencl/include/CL/cl_icd.h</Path>
+            <Path fileType="data">/usr/opencl/include/CL/cl_platform.h</Path>
+            <Path fileType="data">/usr/opencl/include/CL/cl_va_api_media_sharing_intel.h</Path>
+            <Path fileType="data">/usr/opencl/include/CL/cl_version.h</Path>
+            <Path fileType="data">/usr/opencl/include/CL/opencl.h</Path>
+            <Path fileType="data">/usr/opencl/lib/libamdocl64.so</Path>
+            <Path fileType="data">/usr/share/OpenCL/vendors/amdocl64.icd</Path>
+            <Path fileType="doc">/usr/share/doc/opencl/LICENSE.txt</Path>
+        </Files>
+    </Package>
+    <Package>
+        <Name>rocm-opencl-devel</Name>
+        <Summary xml:lang="en">Development files for rocm-opencl</Summary>
+        <Description xml:lang="en">OpenCL 2.2 compatible language runtime for AMD Radeon GPUs
+</Description>
+        <PartOf>programming.devel</PartOf>
+        <RuntimeDependencies>
+            <Dependency release="2">rocm-opencl</Dependency>
+        </RuntimeDependencies>
+        <Files>
+            <Path fileType="header">/usr/include/rocm-opencl/CL/cl.h</Path>
+            <Path fileType="header">/usr/include/rocm-opencl/CL/cl.hpp</Path>
+            <Path fileType="header">/usr/include/rocm-opencl/CL/cl2.hpp</Path>
+            <Path fileType="header">/usr/include/rocm-opencl/CL/cl_dx9_media_sharing_intel.h</Path>
+            <Path fileType="header">/usr/include/rocm-opencl/CL/cl_egl.h</Path>
+            <Path fileType="header">/usr/include/rocm-opencl/CL/cl_ext.h</Path>
+            <Path fileType="header">/usr/include/rocm-opencl/CL/cl_ext_intel.h</Path>
+            <Path fileType="header">/usr/include/rocm-opencl/CL/cl_gl.h</Path>
+            <Path fileType="header">/usr/include/rocm-opencl/CL/cl_gl_ext.h</Path>
+            <Path fileType="header">/usr/include/rocm-opencl/CL/cl_icd.h</Path>
+            <Path fileType="header">/usr/include/rocm-opencl/CL/cl_platform.h</Path>
+            <Path fileType="header">/usr/include/rocm-opencl/CL/cl_va_api_media_sharing_intel.h</Path>
+            <Path fileType="header">/usr/include/rocm-opencl/CL/cl_version.h</Path>
+            <Path fileType="header">/usr/include/rocm-opencl/CL/opencl.h</Path>
+            <Path fileType="library">/usr/lib/libamdocl64.so</Path>
+            <Path fileType="library">/usr/lib/libcltrace.so</Path>
+        </Files>
+    </Package>
+    <History>
+        <Update release="2">
+            <Date>2022-11-23</Date>
+            <Version>5.2.3</Version>
+            <Comment>Packaging update</Comment>
+            <Name>Gavin Zhao</Name>
+            <Email>me@gzgz.dev</Email>
+        </Update>
+    </History>
+</PISI>

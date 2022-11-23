@@ -1,0 +1,25 @@
+From 489c8b6a4ae180da65630edbfcc92728f665db6c Mon Sep 17 00:00:00 2001
+From: acxz <17132214+acxz@users.noreply.github.com>
+Date: Sun, 24 Jul 2022 16:29:22 -0400
+Subject: [PATCH] update from deprecated HIP to hip call for find_package
+
+---
+ CMakeLists.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index ba531370..235b4d69 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -311,7 +311,7 @@ endif()
+ 
+ if (MAGMA_ENABLE_HIP)
+   set( GPU_TARGET "gfx900" CACHE STRING "HIP architectures to compile for" )
+-  list(APPEND CMAKE_PREFIX_PATH /opt/rocm/hip /opt/rocm)
++  list(APPEND CMAKE_PREFIX_PATH /usr /usr/hip)
+   find_package( HIP )
+   if (HIP_FOUND)
+     message( STATUS "Found HIP ${HIP_VERSION}" )
+-- 
+2.37.2
+

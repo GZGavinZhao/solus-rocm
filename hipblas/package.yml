@@ -1,0 +1,45 @@
+name       : hipblas
+version    : 5.2.3
+release    : 1
+source     :
+    - https://github.com/ROCmSoftwarePlatform/hipBLAS/archive/refs/tags/rocm-5.2.3.tar.gz : 4d66db9b000b6207b5270d90556b724bfdb08ebbfcc675f014287e0be7ee6344
+license    : MIT
+component  : programming.library
+summary    : ROCm BLAS marshalling library 
+description: |
+    hipBLAS is a Basic Linear Algebra Subprograms (BLAS) marshalling library, with multiple supported backends. It sits between the application and a 'worker' BLAS library, marshalling inputs into the backend library and marshalling results back to the application. hipBLAS exports an interface that does not require the client to change, regardless of the chosen backend. Currently, hipBLAS supports rocBLAS and cuBLAS as backends.
+clang      : yes
+builddeps  :
+    - rocminfo
+    - rocm-cmake
+    - rocm-compilersupport-devel
+    - rocm-device-libs-devel
+    - rocm-hip-devel
+    - rocm-opencl-devel
+    - rocm-runtime-devel
+    - rocm-smi-devel
+    - rocblas-devel
+    - rocsolver-devel
+environment: |
+    export CCACHE_MAXSIZE=100G
+
+    export ROCM_PATH=%PREFIX%
+    export ROCM_DIR=%PREFIX%
+
+    export HIP_PLATFORM=amd
+    export HIP_RUNTIME=rocclr
+    export DEVICE_LIB_PATH=/usr/lib64/amdgcn/bitcode
+    export HIP_DEVICE_LIB_PATH=/usr/lib64/amdgcn/bitcode
+    export HSA_PATH=/usr/hsa
+    export LLVM_PATH=/usr
+
+    # https://github.com/ROCm-Developer-Tools/HIP/blob/rocm-5.1.x/docs/markdown/clang_options.md
+    export CXXFLAGS="${CXXFLAGS/-fstack-protector-strong/} -fcf-protection=none"
+setup      : |
+    %cmake_ninja -DBUILD_FILE_REORG_BACKWARD_COMPATIBILITY=ON \
+                 -DCMAKE_CXX_COMPILER=/usr/bin/hipcc \
+                 -DAMDGPU_TARGETS="gfx1030" \
+build      : |
+    %ninja_build
+install    : |
+    %ninja_install

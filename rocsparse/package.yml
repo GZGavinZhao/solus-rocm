@@ -1,0 +1,44 @@
+name       : rocsparse
+version    : 5.2.3
+release    : 1
+source     :
+    - https://github.com/ROCmSoftwarePlatform/rocSPARSE/archive/refs/tags/rocm-5.2.3.tar.gz : 6da3f3303a8ada94c4dbff4b42ee33a2e2883a908ee21c41cb2aa7180382026a
+license    : MIT
+component  : programming.library
+summary    : Next generation SPARSE implementation for ROCm platform 
+description: |
+    rocSPARSE exposes a common interface that provides Basic Linear Algebra Subroutines for sparse computation implemented on top of AMD's Radeon Open eCosystem Platform ROCm runtime and toolchains. rocSPARSE is created using the HIP programming language and optimized for AMD's latest discrete GPUs.
+clang      : yes
+builddeps  :
+    - rocminfo
+    - rocm-cmake
+    - rocm-compilersupport-devel
+    - rocm-device-libs-devel
+    - rocm-hip-devel
+    - rocm-opencl-devel
+    - rocm-runtime-devel
+    - rocm-smi-devel
+    - rocprim-devel
+    - git
+environment: |
+    export ROCM_PATH=%PREFIX%
+    export ROCM_DIR=%PREFIX%
+
+    export HIP_PLATFORM=amd
+    export HIP_RUNTIME=rocclr
+    export HIP_COMPILER=clang
+    export HIP_CLANG_PATH=/usr/bin
+    export DEVICE_LIB_PATH=/usr/lib64/amdgcn/bitcode
+    export HSA_PATH=/usr/hsa
+    export LLVM_PATH=/usr
+
+    unset CFLAGS CXXFLAGS LDFLAGS
+    export CFLAGS="-w"
+    export CXXFLAGS="-w"
+setup      : |
+    %cmake_ninja -DBUILD_CLIENTS_SAMPLES=OFF \
+                 -DAMDGPU_TARGETS="gfx1030"
+build      : |
+    %ninja_build
+install    : |
+    %ninja_install

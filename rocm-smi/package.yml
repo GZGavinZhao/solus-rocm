@@ -1,0 +1,17 @@
+name       : rocm-smi
+version    : 5.2.3
+release    : 2
+source     :
+    - https://github.com/RadeonOpenCompute/rocm_smi_lib/archive/refs/tags/rocm-5.2.3.tar.gz : fcf4f75a8daeca81ecb107989712c5f3776ee11e6eed870cb93efbf66ff1c384
+license    : NCSA
+component  : programming.devel
+summary    : ROCm System Management Interface Library
+description: |
+    ROCm System Management Interface Library
+setup      : |
+    %patch -p1 < $pkgfiles/0001-Add-missing-string-header-for-memcpy.patch
+    %cmake_ninja
+build      : |
+    %ninja_build
+install    : |
+    %ninja_install

@@ -1,0 +1,31 @@
+name       : rocm-device-libs
+version    : 5.2.3
+release    : 2
+source     :
+  # - https://github.com/RadeonOpenCompute/ROCm-Device-Libs/archive/refs/tags/rocm-5.2.3.tar.gz : 16b7fc7db4759bd6fb54852e9855fa16ead76c97871d7e1e9392e846381d611a
+    - git|https://github.com/RadeonOpenCompute/ROCm-Device-Libs.git : rocm-5.2.3
+license    : NCSA
+component  : xorg.driver
+homepage   : https://github.com/RadeonOpenCompute
+summary    : ROCm Device Libraries
+description: |
+    This package contains a set of AMD specific device-side language runtime libraries in the form of bit code. Specifically:
+    - Open Compute library controls
+    - Open Compute Math library
+    - Open Compute Kernel library
+    - OpenCL built-in library
+    - HIP built-in library
+    - Heterogeneous Compute built-in library
+clang      : yes
+builddeps  :
+    - rocm-cmake
+    - rocm-runtime-devel
+setup      : |
+    %patch -p1 < $pkgfiles/0001-Use-FHS-compliant-install.patch
+    %cmake_ninja
+build      : |
+    %ninja_build
+install    : |
+    %ninja_install
+check      : |
+    %ninja_check

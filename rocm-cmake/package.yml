@@ -1,0 +1,17 @@
+name       : rocm-cmake
+version    : 5.2.3
+release    : 2
+source     :
+    - https://github.com/RadeonOpenCompute/rocm-cmake/archive/refs/tags/rocm-5.2.3.tar.gz : c63b707ec07d24fda5a2a6fffeda4df4cc04ceea5df3b8822cbe4e6600e358b4
+license    : MIT
+component  : programming.devel
+homepage   : https://github.com/RadeonOpenCompute
+summary    : ROCm cmake modules
+description: |
+    ROCm cmake modules provides cmake modules for common build tasks needed for the ROCM software stack.
+setup      : |
+    %cmake_ninja
+build      : |
+    %ninja_build
+install    : |
+    %ninja_install

@@ -1,0 +1,40 @@
+name       : rocmlir
+version    : 5.2.3
+release    : 1
+source     :
+    - https://github.com/ROCmSoftwarePlatform/rocMLIR/archive/refs/tags/rocm-5.2.3.tar.gz : 29e1c352d203622fa083432d5d368caccb53ba141119fbb7e8d5247d99854625 
+license    : Apache-2.0
+component  : programming.devel
+summary    : MLIR-based convolution and GEMM kernel generator for ROCm
+description: |
+    rocMLIR is a MLIR-based convolution and GEMM kernel generator targetting AMD hardware. This generator is mainly used from MIOpen and MIGraphX, but it can be used on a standalone basis.
+clang      : yes
+builddeps  :
+    - pkgconfig(zlib)
+    - rocminfo
+    - rocm-cmake
+    - rocm-compilersupport-devel
+    - rocm-device-libs-devel
+    - rocm-hip-devel
+    - rocm-opencl-devel
+    - rocm-runtime-devel
+    - rocm-smi-devel
+# environment: |
+#     # export CFLAGS="$CFLAGS --gcc-toolchain=/usr/lib64/gcc/x86_64-solus-linux/12"
+#     # export CXXFLAGS="$CXXFLAGS --gcc-toolchain=/usr/lib64/gcc/x86_64-solus-linux/12"
+#     # export CXXFLAGS="${CXXFLAGS/-fstack-protector-strong/} -fcf-protection=none"
+setup      : |
+    %cmake_ninja -DBUILD_FAT_LIBROCKCOMPILER=ON \
+                 -DLLVM_BUILD_UTILS:BOOL=OFF \
+                 -DMLIR_INCLUDE_DOCS:BOOL=OFF \
+                 -DMLIR_INCLUDE_TESTS:BOOL=OFF \
+                 -DMLIR_INCLUDE_INTEGRATION_TESTS:BOOL=OFF \
+                 # -DMLIR_BUILD_MLIR_C_DYLIB=ON \
+                 # -DCMAKE_PREFIX_PATH=%{_libdir}/cmake/llvm/ \
+                 # -DLLVM_EXTERNAL_LIT=%{_bindir}/lit \
+                 # -DBUILD_SHARED_LIBS=OFF \
+                 # -DMLIR_INSTALL_AGGREGATE_OBJECTS=OFF \
+build      : |
+    %ninja_build
+install    : |
+    %ninja_install

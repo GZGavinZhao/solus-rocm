@@ -1,0 +1,59 @@
+<PISI>
+    <Source>
+        <Name>rocprofiler</Name>
+        <Packager>
+            <Name>Gavin Zhao</Name>
+            <Email>me@gzgz.dev</Email>
+        </Packager>
+        <License>MIT</License>
+        <PartOf>programming.library</PartOf>
+        <Summary xml:lang="en">ROCm profiler library with perf-counters and derived metrics.</Summary>
+        <Description xml:lang="en">Profiling with metrics and traces based on perfcounters (PMC) and traces (SPM). Implementation is based on AqlProfile HSA extension.
+</Description>
+        <Archive type="binary" sha1sum="79eb0752a961b8e0d15c77d298c97498fbc89c5a">https://getsol.us/sources/README.Solus</Archive>
+    </Source>
+    <Package>
+        <Name>rocprofiler</Name>
+        <Summary xml:lang="en">ROCm profiler library with perf-counters and derived metrics.</Summary>
+        <Description xml:lang="en">Profiling with metrics and traces based on perfcounters (PMC) and traces (SPM). Implementation is based on AqlProfile HSA extension.
+</Description>
+        <PartOf>programming.library</PartOf>
+        <Files>
+            <Path fileType="executable">/usr/bin/rocprof</Path>
+            <Path fileType="header">/usr/include/rocprofiler/activity.h</Path>
+            <Path fileType="header">/usr/include/rocprofiler/rocprofiler.h</Path>
+            <Path fileType="library">/usr/lib/librocprofiler64.so</Path>
+            <Path fileType="library">/usr/lib/librocprofiler64.so.1</Path>
+            <Path fileType="library">/usr/lib/librocprofiler64.so.1.0.0</Path>
+            <Path fileType="library">/usr/lib/rocprofiler/gfx_metrics.xml</Path>
+            <Path fileType="library">/usr/lib/rocprofiler/librocprof-tool.so</Path>
+            <Path fileType="library">/usr/lib/rocprofiler/metrics.xml</Path>
+            <Path fileType="library">/usr/lib/rocprofiler/rocprof-ctrl</Path>
+            <Path fileType="executable">/usr/libexec/rocprofiler/dform.py</Path>
+            <Path fileType="executable">/usr/libexec/rocprofiler/mem_manager.py</Path>
+            <Path fileType="executable">/usr/libexec/rocprofiler/merge_traces.sh</Path>
+            <Path fileType="executable">/usr/libexec/rocprofiler/sqlitedb.py</Path>
+            <Path fileType="executable">/usr/libexec/rocprofiler/tblextr.py</Path>
+            <Path fileType="executable">/usr/libexec/rocprofiler/txt2params.py</Path>
+            <Path fileType="executable">/usr/libexec/rocprofiler/txt2xml.sh</Path>
+            <Path fileType="data">/usr/rocprofiler/bin/rocprof</Path>
+            <Path fileType="data">/usr/rocprofiler/include/activity.h</Path>
+            <Path fileType="data">/usr/rocprofiler/include/rocprofiler.h</Path>
+            <Path fileType="data">/usr/rocprofiler/lib/librocprofiler64.so</Path>
+            <Path fileType="data">/usr/rocprofiler/lib/librocprofiler64.so.1</Path>
+            <Path fileType="data">/usr/rocprofiler/lib/librocprofiler64.so.1.0.0</Path>
+            <Path fileType="data">/usr/rocprofiler/tool/ctrl</Path>
+            <Path fileType="data">/usr/rocprofiler/tool/libtool.so</Path>
+            <Path fileType="doc">/usr/share/doc/rocprofiler-dev/LICENSE</Path>
+        </Files>
+    </Package>
+    <History>
+        <Update release="1">
+            <Date>2022-11-02</Date>
+            <Version>5.2.1</Version>
+            <Comment>Packaging update</Comment>
+            <Name>Gavin Zhao</Name>
+            <Email>me@gzgz.dev</Email>
+        </Update>
+    </History>
+</PISI>

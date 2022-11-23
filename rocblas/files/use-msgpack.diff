@@ -1,0 +1,75 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 9b0b3c61..144eea31 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -4,6 +4,7 @@
+ 
+ cmake_minimum_required( VERSION 3.16.8 )
+ 
++include(GNUInstallDirs)
+ 
+ # This has to be initialized before the project() command appears
+ # Set the default of CMAKE_BUILD_TYPE to be release, unless user specifies with -D.  MSVC_IDE does not use CMAKE_BUILD_TYPE
+@@ -145,21 +146,21 @@ if(NOT SKIP_LIBRARY)
+ 
+     set( Tensile_TEST_LOCAL_PATH "" CACHE PATH "Use local Tensile directory instead of fetching a GitHub branch" )
+ 
+-    include(virtualenv)
+-
+-    if (Tensile_TEST_LOCAL_PATH)
+-      virtualenv_install(${Tensile_TEST_LOCAL_PATH})
+-      message (STATUS "using local Tensile from ${Tensile_TEST_LOCAL_PATH}, copied to ${Tensile_ROOT}")
+-    else()
+-      # Use the virtual-env setup and download package from specified repot:
+-      set( tensile_fork "ROCmSoftwarePlatform" CACHE STRING "Tensile fork to use" )
+-      file (STRINGS "tensile_tag.txt" read_tensile_tag)
+-      set( tensile_tag ${read_tensile_tag} CACHE STRING "Tensile tag to download" )
+-      virtualenv_install("git+https://github.com/${tensile_fork}/Tensile.git@${tensile_tag}")
+-      message (STATUS "using GIT Tensile fork=${tensile_fork} from branch=${tensile_tag}")
+-    endif()
+-    message(STATUS "Adding ${VIRTUALENV_HOME_DIR} to CMAKE_PREFIX_PATH")
+-    list(APPEND CMAKE_PREFIX_PATH ${VIRTUALENV_HOME_DIR})
++	# include(virtualenv)
++
++    # if (Tensile_TEST_LOCAL_PATH)
++    #   virtualenv_install(${Tensile_TEST_LOCAL_PATH})
++    #   message (STATUS "using local Tensile from ${Tensile_TEST_LOCAL_PATH}, copied to ${Tensile_ROOT}")
++    # else()
++    #   # Use the virtual-env setup and download package from specified repot:
++    #   set( tensile_fork "ROCmSoftwarePlatform" CACHE STRING "Tensile fork to use" )
++    #   file (STRINGS "tensile_tag.txt" read_tensile_tag)
++    #   set( tensile_tag ${read_tensile_tag} CACHE STRING "Tensile tag to download" )
++    #   virtualenv_install("git+https://github.com/${tensile_fork}/Tensile.git@${tensile_tag}")
++    #   message (STATUS "using GIT Tensile fork=${tensile_fork} from branch=${tensile_tag}")
++    # endif()
++    # message(STATUS "Adding ${VIRTUALENV_HOME_DIR} to CMAKE_PREFIX_PATH")
++    # list(APPEND CMAKE_PREFIX_PATH ${VIRTUALENV_HOME_DIR})
+     if (TENSILE_VERSION)
+       find_package(Tensile ${TENSILE_VERSION} EXACT REQUIRED HIP LLVM OpenMP PATHS "${INSTALLED_TENSILE_PATH}")
+     else()
+diff --git a/library/src/CMakeLists.txt b/library/src/CMakeLists.txt
+index ff3fd563..a6db5843 100755
+--- a/library/src/CMakeLists.txt
++++ b/library/src/CMakeLists.txt
+@@ -398,9 +398,9 @@ target_include_directories( rocblas
+   PUBLIC  $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/library/include>
+           $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/library/include/internal>
+           $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+-	  $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/include/rocblas/internal>
+-	  $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/include/rocblas>
+-	  $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/include>
++          $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/include/rocblas/internal>
++          $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/include/rocblas>
++          $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/include>
+           $<BUILD_INTERFACE:${Tensile_INC}>
+           $<INSTALL_INTERFACE:include>
+           )
+@@ -563,7 +563,7 @@ if( BUILD_WITH_TENSILE )
+   if (WIN32)
+     set( ROCBLAS_TENSILE_LIBRARY_DIR "\${CPACK_PACKAGING_INSTALL_PREFIX}/bin/rocblas" CACHE PATH "path to tensile library" )
+   else()
+-    set( ROCBLAS_TENSILE_LIBRARY_DIR "\${CPACK_PACKAGING_INSTALL_PREFIX}lib/rocblas" CACHE PATH "path to tensile library" )
++    set( ROCBLAS_TENSILE_LIBRARY_DIR "${CMAKE_INSTALL_LIBDIR}/rocblas" CACHE PATH "path to tensile library" )
+   endif()
+   rocm_install(
+     DIRECTORY ${CMAKE_BINARY_DIR}/Tensile/library

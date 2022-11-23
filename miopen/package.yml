@@ -1,0 +1,61 @@
+name       : miopen
+version    : 2.16.0
+release    : 1
+source     :
+    # - https://github.com/ROCmSoftwarePlatform/MIOpen/archive/refs/tags/2.14.0.tar.gz : 6e9a6f925b976eb21fadb02187b9e8d7eb5475ca595ca29610c337416c1dbb77
+    - https://github.com/ROCmSoftwarePlatform/MIOpen/archive/refs/tags/2.16.0.tar.gz : 47d3d3fc1290c9034c044c03b39b6577b8f3142763ce63d7e92784dc1d4fabf6
+license    : MIT
+component  : programming.library
+summary    : AMD's Machine Intelligence Library 
+description: |
+    MIOpen is AMD's library for high performance machine learning primitives.
+clang      : yes
+builddeps  :
+    - pkgconfig(sqlite3)
+    - bzip2-devel
+    - rocminfo
+    - rocm-cmake
+    - rocm-compilersupport-devel
+    - rocm-device-libs-devel
+    - rocm-hip-devel
+    - rocm-opencl-devel
+    - rocm-runtime-devel
+    - rocm-smi-devel
+      # - rocm-tensile
+    - rocmlir-devel
+    - half-devel
+    - libboost-devel
+    - clang-ocl
+    - rocblas-devel
+environment: |
+    export ROCM_PATH=%PREFIX%
+    export ROCM_DIR=%PREFIX%
+
+    export HIP_PLATFORM=amd
+    export HIP_RUNTIME=rocclr
+    export HIP_CLANG_PATH=/usr/bin
+    export HIP_CLANG_INCLUDE_PATH=/usr/include/hip
+    export HIP_CLANG_ROOT=/usr
+    export DEVICE_LIB_PATH=/usr/lib64/amdgcn/bitcode
+    export HIP_DEVICE_LIB_PATH=/usr/lib64/amdgcn/bitcode
+    export HSA_PATH=/usr/hsa
+    export LLVM_PATH=/usr
+    # https://github.com/ROCm-Developer-Tools/HIP/blob/rocm-5.1.x/docs/markdown/clang_options.md
+    # export CXXFLAGS="${CXXFLAGS/-fstack-protector-strong/} -fcf-protection=none"
+setup      : |
+    sed -i "s|MLIRMIOpen|rocMLIR|" CMakeLists.txt
+
+    %cmake_ninja -DMIOPEN_TEST_ALL=OFF \
+                 -DMIOPEN_USE_COMGR=ON \
+                 -DMIOPEN_BACKEND=HIP \
+                 -DMIOPEN_USE_MIOPENGEMM=OFF \
+                 -DMIOPEN_USE_MLIR=OFF \
+                 -DMIOPEN_USE_MIOPENTENSILE=OFF \
+                 -DBoost_USE_STATIC_LIBS=OFF \
+                 -DCMAKE_CXX_COMPILER=/usr/bin/clang++ \
+                 -DAMD_GPU_TARGETS="gfx900;gfx906;gfx908;gfx90a;Vega20;Vega10;gfx1030;gfx1032" \
+                 # -DAMD_GPU_TARGETS="gfx1030" \
+build      : |
+    %ninja_build
+install    : |
+    %ninja_install

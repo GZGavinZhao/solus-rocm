@@ -1,0 +1,54 @@
+name       : hipsolver
+version    : 5.2.3
+release    : 1
+source     :
+    - https://github.com/ROCmSoftwarePlatform/hipSOLVER/archive/refs/tags/rocm-5.2.3.tar.gz : a57d883fdd09c6c7f9856fcfcabee6fa7ff9beed33d2f1a465bf28d38ea6f364
+license    : MIT
+component  : programming.library
+summary    : ROCm SOLVER marshalling library 
+description: |
+    hipSOLVER is a LAPACK marshalling library, with multiple supported backends. It sits between the application and a 'worker' LAPACK library, marshalling inputs into the backend library and marshalling results back to the application. hipSOLVER exports an interface that does not require the client to change, regardless of the chosen backend. Currently, hipSOLVER supports rocSOLVER and cuSOLVER as backends.
+clang      : yes
+builddeps  :
+    - rocblas-devel
+    - rocminfo
+    - rocm-cmake
+    - rocm-compilersupport-devel
+    - rocm-device-libs-devel
+    - rocm-hip-devel
+    - rocm-opencl-devel
+    - rocm-runtime-devel
+    - rocm-smi-devel
+    - rocsolver-devel
+environment: |
+    export CCACHE_MAXSIZE=100G
+
+    export ROCM_PATH=%PREFIX%
+    export ROCM_DIR=%PREFIX%
+
+    export HIP_PLATFORM=amd
+    export HIP_RUNTIME=rocclr
+    export DEVICE_LIB_PATH=/usr/lib64/amdgcn/bitcode
+    export HIP_DEVICE_LIB_PATH=/usr/lib64/amdgcn/bitcode
+    export HIP_COMPILER=clang
+    export HIP_CLANG_PATH=/usr/bin
+    export HSA_PATH=/usr/hsa
+    export LLVM_PATH=/usr
+
+    # https://github.com/ROCm-Developer-Tools/HIP/blob/rocm-5.1.x/docs/markdown/clang_options.md
+    # export CFLAGS="-fcf-protection=none"
+    # export CXXFLAGS="-fcf-protection=none"
+setup      : |
+    if [[ -d /usr/lib64/ccache/bin ]]; then
+        CMAKE_CCACHE_FLAGS="-DCMAKE_C_COMPILER_LAUNCHER=ccache -DCMAKE_CXX_COMPILER_LAUNCHER=ccache"
+    fi
+
+    %cmake_ninja $CMAKE_CCACHE_FLAGS \
+                 -DCMAKE_C_COMPILER=/usr/bin/clang \
+                 -DCMAKE_CXX_COMPILER=/usr/bin/hipcc \
+                 -DUSE_HIP_CLANG=ON -DHIP_COMPILER=clang \
+                 -DAMDGPU_TARGETS='gfx1030' #limiting compilation to just one GPU speeds up build time massively
+build      : |
+    %ninja_build
+install    : |
+    %ninja_install

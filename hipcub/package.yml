@@ -1,0 +1,43 @@
+name       : hipcub
+version    : 5.2.3
+release    : 1
+source     :
+    - https://github.com/ROCmSoftwarePlatform/hipCUB/archive/refs/tags/rocm-5.2.3.tar.gz : cab929f10c649f8fd76df989a16d0cd9301bc6aaad91cd2f84498c831378d559
+license    : MIT
+component  : programming.library
+summary    : Reusable software components for ROCm developers 
+description: |
+    hipCUB is a thin wrapper library on top of rocPRIM or CUB. It enables developers to port a project using the CUB library to the HIP layer to run on AMD hardware. In the ROCm environment, hipCUB uses the rocPRIM library as the backend. However, on CUDA platforms it uses CUB instead.
+clang      : yes
+builddeps  :
+    - rocprim-devel
+    - rocminfo
+    - rocm-cmake
+    - rocm-compilersupport-devel
+    - rocm-device-libs-devel
+    - rocm-hip-devel
+    - rocm-opencl-devel
+    - rocm-runtime-devel
+    - rocm-smi-devel
+    - git
+environment: |
+    export CCACHE_MAXSIZE=100G
+
+    export ROCM_PATH=%PREFIX%
+    export ROCM_DIR=%PREFIX%
+
+    export HIP_PLATFORM=amd
+    export HIP_RUNTIME=rocclr
+    export DEVICE_LIB_PATH=/usr/lib64/amdgcn/bitcode
+    export HIP_DEVICE_LIB_PATH=/usr/lib64/amdgcn/bitcode
+    export HIP_COMPILER=clang
+    export HIP_CLANG_PATH=/usr/bin
+    export HSA_PATH=/usr/hsa
+    export LLVM_PATH=/usr
+setup      : |
+    %cmake_ninja -DCMAKE_CXX_COMPILER=/usr/bin/hipcc \
+                 -DAMDGPU_TARGETS='gfx1030' #limiting compilation to just one GPU speeds up build time massively
+build      : |
+    %ninja_build
+install    : |
+    %ninja_install

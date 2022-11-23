@@ -1,0 +1,54 @@
+name       : rocfft
+version    : 5.2.3
+release    : 1
+source     :
+    - https://github.com/ROCmSoftwarePlatform/rocFFT/archive/refs/tags/rocm-5.2.3.tar.gz : 0cee37886f01f1afb3ae5dad1164c819573c13c6675bff4eb668de334adbff27
+license    : MIT
+component  : programming.library
+summary    : Next generation FFT implementation for ROCm 
+description: |
+    rocFFT is a software library for computing Fast Fourier Transforms (FFT) written in HIP. It is part of AMD's software ecosystem based on ROCm.
+clang      : yes
+networking : yes # Well they want to build a static sqlite3
+builddeps  :
+    - pkgconfig(python3) # Whhatt?
+    - pkgconfig(sqlite3)
+    - libboost-devel
+    - rocminfo
+    - rocm-cmake
+    - rocm-compilersupport-devel
+    - rocm-device-libs-devel
+    - rocm-hip-devel
+    - rocm-opencl-devel
+    - rocm-runtime-devel
+    - rocm-smi-devel
+environment: |
+    export CCACHE_MAXSIZE=100G
+
+    export ROCM_PATH=%PREFIX%
+    export ROCM_DIR=%PREFIX%
+
+    export HIP_PLATFORM=amd
+    export HIP_RUNTIME=rocclr
+    export DEVICE_LIB_PATH=/usr/lib64/amdgcn/bitcode
+    export HIP_DEVICE_LIB_PATH=/usr/lib64/amdgcn/bitcode
+    export HSA_PATH=/usr/hsa
+    export LLVM_PATH=/usr
+
+    # https://github.com/ROCm-Developer-Tools/HIP/blob/rocm-5.1.x/docs/markdown/clang_options.md
+    # export CFLAGS="${CFLAGS/-fstack-protector-strong/} -fcf-protection=none -mcmodel=medium -fuse-ld=mold"
+    # export CXXFLAGS="${CXXFLAGS/-fstack-protector-strong/} -fcf-protection=none -mcmodel=medium -fuse-ld=mold"
+setup      : |
+    if [[ -d /usr/lib64/ccache/bin ]]; then
+        CMAKE_CCACHE_FLAGS="-DCMAKE_C_COMPILER_LAUNCHER=ccache -DCMAKE_CXX_COMPILER_LAUNCHER=ccache"
+    fi
+
+    %cmake_ninja $CMAKE_CCACHE_FLAGS \
+                 -DCMAKE_C_COMPILER=/usr/bin/clang \
+                 -DCMAKE_CXX_COMPILER=/usr/bin/hipcc \
+                 -DUSE_HIP_CLANG=ON -DHIP_COMPILER=clang \
+                 -DAMDGPU_TARGETS='gfx1030' #limiting compilation to just one GPU speeds up build time massively
+build      : |
+    %ninja_build
+install    : |
+    %ninja_install

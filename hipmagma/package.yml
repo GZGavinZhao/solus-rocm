@@ -1,0 +1,50 @@
+name       : hipmagma
+version    : 2.6.2
+release    : 1
+source     :
+    - http://icl.cs.utk.edu/projectsfiles/magma/downloads/magma-2.6.2.tar.gz : 75b554dab00903e2d10b972c913e50e7f88cbc62f3ae432b5a086c7e4eda0a71
+license    : Custom
+component  : programming.library
+summary    : Matrix Algebra on GPU and Multicore Architectures
+description: |
+    Matrix Algebra on GPU and Multicore Architectures
+clang      : yes
+builddeps  :
+    - pkgconfig(lapack)
+    - pkgconfig(openblas)
+    - rocminfo
+    - rocm-cmake
+    - rocm-compilersupport-devel
+    - rocm-device-libs-devel
+    - rocm-hip-devel
+    - rocm-opencl-devel
+    - rocm-runtime-devel
+    - rocm-smi-devel
+    - hipblas-devel
+    - hipsparse-devel
+environment: |
+    export ROCM_PATH=%PREFIX%
+    export ROCM_DIR=%PREFIX%
+
+    export HIP_PLATFORM=amd
+    export HIP_RUNTIME=rocclr
+    export HIP_COMPILER=clang
+    export HIP_CLANG_PATH=/usr/bin
+    export DEVICE_LIB_PATH=/usr/lib64/amdgcn/bitcode
+    export HSA_PATH=/usr/hsa
+    export LLVM_PATH=/usr
+
+    export CXXFLAGS="${CXXFLAGS/-fstack-protector-strong/} -fcf-protection=none -w"
+    export FCFLAGS+=" -w"
+    export FFLAGS+=" -w"
+setup      : |
+    %cmake_ninja -DBUILD_TESTING=OFF \
+                 -DCMAKE_CXX_COMPILER=/usr/bin/hipcc \
+                 -DMAGMA_ENABLE_CUDA=OFF \
+                 -DMAGMA_ENABLE_HIP=ON \
+                 -DBUILD_SHARED_LIBS=ON \
+                 -DGPU_TARGET="gfx1030" \
+build      : |
+    %ninja_build
+install    : |
+    %ninja_install

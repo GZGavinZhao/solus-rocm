@@ -1,0 +1,23 @@
+name       : rocminfo
+version    : 5.2.3
+release    : 1
+source     :
+    - https://github.com/RadeonOpenCompute/rocminfo/archive/refs/tags/rocm-5.2.3.tar.gz : 38fe8db21077100ee2242bd087371f6b8e0078d3a269e145d3a4ab314d0b8902
+homepage   : https://github.com/RadeonOpenCompute/rocminfo/
+license    : NCSA
+component  : programming.devel
+clang      : yes
+summary    : ROCm Application for Reporting System Info
+description: |
+    ROCm Application for Reporting System Info
+builddeps  :
+    - rocm-cmake
+    - rocm-runtime-devel
+setup      : |
+    %cmake_ninja -DROCM_DIR=%PREFIX% \
+                 -DROCRTST_BLD_TYPE="Release" \
+                 -DROCRTST_BLD_BITS=64
+build      : |
+    %ninja_build
+install    : |
+    %ninja_install

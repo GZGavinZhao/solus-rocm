@@ -1,0 +1,159 @@
+#Cmake macro is called within sourcedir but HIP assumes it's called from build
+%define __cmake_in_source_build 1
+%global upstreamname hipamd
+
+Name:           rocm-hip
+Version:        5.1.3
+Release:        1%{?dist}
+Summary:        ROCm HIP Runtime
+
+Url:            https://github.com/RadeonOpenCompute/hipamd
+License:        MIT
+Source0:        https://github.com/ROCm-Developer-Tools/%{upstreamname}/archive/refs/tags/rocm-%{version}.tar.gz#/%{upstreamname}-%{version}.tar.gz
+Source1:        https://github.com/ROCm-Developer-Tools/HIP/archive/refs/tags/rocm-%{version}.tar.gz#/HIP-%{version}.tar.gz
+
+#Bundled code:
+Source2:        https://github.com/RadeonOpenCompute/ROCm-OpenCL-Runtime/archive/refs/tags/rocm-%{version}.tar.gz#/ROCm-OpenCL-Runtime-%{version}.tar.gz
+Source3:        https://github.com/ROCm-Developer-Tools/ROCclr/archive/refs/tags/rocm-%{version}.tar.gz#/ROCclr-%{version}.tar.gz
+
+#Issue causing debug symbols to not generate:
+#https://github.com/ROCm-Developer-Tools/hipamd/issues/24
+Patch1:         0001-Revert-hip-Fix-and-install-cmake-targets-for-hip-pac.patch
+Patch2:         0002-Revert-hip-Switch-to-component-based-packaging.patch
+
+#To allow unbunbled OCL ICD
+Patch4:         0002-Fix-CL-icd-header-include.patch
+
+# https://github.com/ROCm-Developer-Tools/ROCclr/commit/211c1c4d8c7f6dac48ba6c73256da60955f9dbd1
+Patch100:       0001-SWDEV-323669-Fix-linux-arch-detection.patch
+
+#Fixes ppc64le ROCclr build:
+# https://github.com/ROCm-Developer-Tools/ROCclr/pull/33
+Patch101:       0001-SWDEV-323669-Improve-arch-detection.patch
+
+#Use GNUInstallDirs:
+Patch5:         0001-Use-GNUInstallDirs.patch
+
+BuildRequires:  clang-devel
+BuildRequires:  cmake
+BuildRequires:  git
+BuildRequires:  libffi-devel
+BuildRequires:  libglvnd-devel
+BuildRequires:  llvm-devel
+BuildRequires:  perl
+BuildRequires:  numactl-devel
+BuildRequires:  ocl-icd-devel
+BuildRequires:  rocm-runtime-devel
+BuildRequires:  rocminfo
+BuildRequires:  rocm-comgr-devel
+BuildRequires:  zlib-devel
+
+Requires:       rocm-comgr
+
+#Only the following architectures are supported:
+# The kernel support only exists for x86_64, aarch64, and ppc64le
+# 32bit userspace is excluded based on current Fedora policies
+ExclusiveArch:  x86_64 aarch64 ppc64le
+
+#ROCm-OpenCL is bundled, as well as openCL headers carried over
+Provides:       bundled(opencl-headers) = 2.2
+Provides:       bundled(rocm-opencl) = %{version}
+
+%description
+HIP is a C++ Runtime API and Kernel Language that allows developers to create
+portable applications for AMD and NVIDIA GPUs from single source code.
+
+%package devel
+Summary:        ROCm HIP development package
+Requires:       %{name}%{?_isa} = %{version}-%{release}
+
+%description devel
+The AMD ROCm HIP development package.
+
+%prep
+%autosetup -N -a 1 -b 2 -n %{upstreamname}-rocm-%{version}
+gzip -dc %{SOURCE3} | tar -xof -
+pushd ROCclr-rocm-%{version}
+%autopatch -p1 -m 100
+popd
+%autopatch -p1 -m 0 -M 99
+
+#FIXME: soname is broken when building from tar, upstream is fixing the issue:
+sed -i 's/-${HIP_VERSION_GITHASH}//' CMakeLists.txt
+
+#HIP requires RPATH
+#https://github.com/ROCm-Developer-Tools/hipamd/issues/22
+sed -i "/CMAKE_INSTALL_RPATH/d" CMakeLists.txt
+
+pushd ../ROCm-OpenCL-Runtime-rocm-%{version}
+#Clean up unused bundled code:
+# bundled opencl2.2 headers are needed as ocl doesn't compile against latest:
+ls -d khronos/* | grep -v headers | xargs rm -r
+ls -d khronos/headers/* | grep -v opencl2.2 | xargs rm -r
+# unused opencl 2.2 test code:
+rm -r khronos/headers/opencl2.2/tests/
+popd
+
+%build
+#Set location of clang++ for hipconfig perl script run by cmake:
+export HIP_CLANG_PATH=%{_bindir}
+mkdir build
+cd build
+%cmake -S.. -B. \
+    -DHIP_COMMON_DIR=$(pwd)/../HIP-rocm-%{version} \
+    -DCMAKE_INSTALL_LIBDIR=%{_lib} \
+    -DAMD_OPENCL_PATH=$(pwd)/../../ROCm-OpenCL-Runtime-rocm-%{version} \
+    -DROCCLR_INCLUDE_DIR=../ROCclr-rocm-%{version}/include \
+    -DHIP_COMPILER=clang \
+    -DCMAKE_BUILD_TYPE=RelWithDebInfo
+%cmake_build
+
+%install
+cd build
+%cmake_install
+
+#FIXME: hip installs some cmake modules incorrectly:
+mkdir -p %{buildroot}%{_datadir}/cmake
+mv %{buildroot}%{_prefix}/cmake %{buildroot}%{_datadir}/cmake/Modules
+
+%files
+%doc README.md
+%license LICENSE.txt
+#FIXME: hipInfo shouldn't be hidden, nor in libdir:
+%{_libdir}/.hipInfo
+%{_libdir}/libamdhip64.so.5{,.*}
+%{_libdir}/libhiprtc-builtins.so.5{,.*}
+
+%files devel
+%{_bindir}/*
+#FIXME: hipVersion shouldn't be hidden, nor in bindir:
+%{_bindir}/.hipVersion
+%{_includedir}/hip
+%{_libdir}/libamdhip64.so
+%{_libdir}/libhiprtc-builtins.so
+%{_datadir}/cmake/Modules/FindHIP*
+%{_libdir}/cmake/hip
+%{_libdir}/cmake/hip-lang
+
+%changelog
+* Fri Jun 10 2022 Jeremy Newton <alexjnewt at hotmail dot com> - 5.1.3
+- Update to 5.1.3
+- Bundle rocm-opencl to simplify build for now
+
+* Sat May 07 2022 Jeremy Newton <alexjnewt at hotmail dot com> - 5.1.0-4
+- Fix OCL header include, so opencl can fully unbundle ocl-icd
+- Rework rocclr patches
+- Add patch for gnuinstalldirs
+- Fix cmake module path
+
+* Wed Apr 20 2022 Jeremy Newton <alexjnewt at hotmail dot com> - 5.1.0-3
+- Unbundle ROCm OpenCL and ROCclr
+
+* Tue Apr 05 2022 Jeremy Newton <alexjnewt at hotmail dot com> - 5.1.0-2
+- Enable ppc64le
+
+* Fri Apr 01 2022 Jeremy Newton <alexjnewt at hotmail dot com> - 5.1.0-1
+- Update to 5.1.0
+
+* Sat Mar 12 2022 Jeremy Newton <alexjnewt at hotmail dot com> - 5.0.2-1
+- Initial package

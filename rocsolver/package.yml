@@ -1,0 +1,53 @@
+name       : rocsolver
+version    : 5.2.3
+release    : 1
+source     :
+    - https://github.com/ROCmSoftwarePlatform/rocSOLVER/archive/refs/tags/rocm-5.2.3.tar.gz : b278a1640f31fb1905f18dc5127d57e2b1d36fd2b4f39ae811b5537fa6ce87d4
+license    : MIT
+component  : programming.library
+summary    : Next generation LAPACK implementation for ROCm platform 
+description: |
+    rocSOLVER is a work-in-progress implementation of a subset of LAPACK functionality on the ROCm platform.
+clang      : yes
+cache      : no
+builddeps  :
+    - pkgconfig(fmt)
+    - rocblas-devel
+    - rocminfo
+    - rocm-cmake
+    - rocm-compilersupport-devel
+    - rocm-device-libs-devel
+    - rocm-hip-devel
+    - rocm-opencl-devel
+    - rocm-runtime-devel
+    - rocm-smi-devel
+environment: |
+    export CCACHE_MAXSIZE=100G
+
+    export ROCM_PATH=%PREFIX%
+    export ROCM_DIR=%PREFIX%
+
+    export HIP_PLATFORM=amd
+    export HIP_RUNTIME=rocclr
+    export DEVICE_LIB_PATH=/usr/lib64/amdgcn/bitcode
+    export HIP_DEVICE_LIB_PATH=/usr/lib64/amdgcn/bitcode
+    export HSA_PATH=/usr/hsa
+    export LLVM_PATH=/usr
+
+    # Some flags are causing trouble, I don't know what...
+    # ld.lld: error: relocation R_X86_64_64 cannot be used against local symbol; recompile with -fPIC
+    unset CFLAGS CXXFLAGS LDFLAGS
+    export CFLAGS="-w"
+    export CXXFLAGS="-w"
+    # https://github.com/ROCm-Developer-Tools/HIP/blob/rocm-5.1.x/docs/markdown/clang_options.md
+    # export CFLAGS="${CFLAGS/-fstack-protector-strong/} -fcf-protection=none -mcmodel=medany -fPIC -w"
+    # export CXXFLAGS="${CXXFLAGS/-fstack-protector-strong/} -fcf-protection=none -mcmodel=medany -fPIC -w"
+    # export LDFLAGS="${LDFLAGS} -mcmodel=medany -fPIC -w"
+setup      : |
+    %cmake_ninja -DBUILD_FILE_REORG_BACKWARD_COMPATIBILITY=ON \
+                 -DROCSOLVER_EMBED_FMT=ON \
+                 -DAMDGPU_TARGETS='gfx1030' #limiting compilation to just one GPU speeds up build time massively
+build      : |
+    %ninja_build -j6
+install    : |
+    %ninja_install

@@ -1,0 +1,21 @@
+name       : rocm-tensile
+version    : 4.33.0
+release    : 1
+source     :
+    - https://github.com/ROCmSoftwarePlatform/Tensile/archive/refs/tags/rocm-5.2.3.tar.gz : 840698bf2ac62e08ae76c3843f1dad5367ed098d42e6a5fa7953de70642fd2cf
+license    : MIT
+component  : programming.tools
+summary    : Stretching GPU performance for GEMMs and tensor contractions
+description: |
+    Tensile is a tool for creating benchmark-driven backend libraries for GEMMs, GEMM-like problems (such as batched GEMM), and general N-dimensional tensor contractions on a GPU. The Tensile library is mainly used as backend library to rocBLAS. Tensile acts as the performance backbone for a wide variety of 'compute' applications running on AMD GPUs.
+builddeps  :
+    - pkgconfig(msgpack)
+    - python-msgpack
+    - pyyaml
+    - rocm-hip-devel
+setup      : |
+    sed -i "s/msgpack /Msgpack /" Tensile/Source/lib/CMakeLists.txt
+build      : |
+    %python3_setup
+install    : |
+    %python3_install

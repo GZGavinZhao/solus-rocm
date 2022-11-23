@@ -1,0 +1,39 @@
+From a98767e16aaa3dfaa46b4363c33fca25193d5fd3 Mon Sep 17 00:00:00 2001
+From: Jeremy Newton <alexjnewt@hotmail.com>
+Date: Sun, 3 Jul 2022 15:47:19 -0400
+Subject: [PATCH] Revert "Add gfx1036"
+
+This reverts commit 2841ad1b1a2697a7df4a81b53d23a5fc3d90c112.
+
+Fix llvm 14 build, gfx1036 will be in llvm 15 or later.
+---
+ lib/comgr/src/comgr-isa-metadata.def    | 1 -
+ lib/comgr/test/get_data_isa_name_test.c | 1 -
+ 2 files changed, 2 deletions(-)
+
+diff --git a/lib/comgr/src/comgr-isa-metadata.def b/lib/comgr/src/comgr-isa-metadata.def
+index 1323e66..62c3838 100644
+--- a/lib/comgr/src/comgr-isa-metadata.def
++++ b/lib/comgr/src/comgr-isa-metadata.def
+@@ -79,6 +79,5 @@ HANDLE_ISA("amdgcn-amd-amdhsa-", "gfx1032",  false, false, EF_AMDGPU_MACH_AMDGCN
+ HANDLE_ISA("amdgcn-amd-amdhsa-", "gfx1033",  false, false, EF_AMDGPU_MACH_AMDGCN_GFX1033, true, 65536,  32,  4,   40, 1024,  106, 800, 106,    8, 256, 256)
+ HANDLE_ISA("amdgcn-amd-amdhsa-", "gfx1034",  false, false, EF_AMDGPU_MACH_AMDGCN_GFX1034, true, 65536,  32,  4,   40, 1024,  106, 800, 106,    8, 256, 256)
+ HANDLE_ISA("amdgcn-amd-amdhsa-", "gfx1035",  false, false, EF_AMDGPU_MACH_AMDGCN_GFX1035, true, 65536,  32,  4,   40, 1024,  106, 800, 106,    8, 256, 256)
+-HANDLE_ISA("amdgcn-amd-amdhsa-", "gfx1036",  false, false, EF_AMDGPU_MACH_AMDGCN_GFX1036, true, 65536,  32,  4,   40, 1024,  106, 800, 106,    8, 256, 256)
+ 
+ #undef HANDLE_ISA
+diff --git a/lib/comgr/test/get_data_isa_name_test.c b/lib/comgr/test/get_data_isa_name_test.c
+index 90f069f..b4afa89 100644
+--- a/lib/comgr/test/get_data_isa_name_test.c
++++ b/lib/comgr/test/get_data_isa_name_test.c
+@@ -94,7 +94,6 @@ static isa_features_t IsaFeatures[] = {
+   {"amdgcn-amd-amdhsa--gfx1033", false,     false,     none,       false,     none},
+   {"amdgcn-amd-amdhsa--gfx1034", false,     false,     none,       false,     none},
+   {"amdgcn-amd-amdhsa--gfx1035", false,     false,     none,       false,     none},
+-  {"amdgcn-amd-amdhsa--gfx1036", false,     false,     none,       false,     none},
+ };
+ 
+ static size_t IsaFeaturesSize = sizeof(IsaFeatures) / sizeof(IsaFeatures[0]);
+-- 
+2.34.1
+

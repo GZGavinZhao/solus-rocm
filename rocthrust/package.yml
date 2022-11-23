@@ -1,0 +1,40 @@
+name       : rocthrust
+version    : 5.2.3
+release    : 1
+source     :
+    - https://github.com/ROCmSoftwarePlatform/rocThrust/archive/refs/tags/rocm-5.2.3.tar.gz : 0f5ef39c5faab31eb34b48391d58096463969c133ca7ed09ab4e43caa5461b29
+license    : MIT
+component  : programming.library
+summary    : ROCm Thrust - run Thrust dependent software on AMD GPUs 
+description: |
+    Thrust is a parallel algorithm library. This library has been ported to HIP/ROCm platform, which uses the rocPRIM library. The HIP ported library works on HIP/ROCm platforms. Currently there is no CUDA backend in place.
+clang      : yes
+builddeps  :
+    - rocminfo
+    - rocm-cmake
+    - rocm-compilersupport-devel
+    - rocm-device-libs-devel
+    - rocm-hip-devel
+    - rocm-opencl-devel
+    - rocm-runtime-devel
+    - rocm-smi-devel
+    - rocprim-devel
+    - git
+environment: |
+    export ROCM_PATH=%PREFIX%
+    export ROCM_DIR=%PREFIX%
+
+    export HIP_PLATFORM=amd
+    export HIP_RUNTIME=rocclr
+    export HIP_COMPILER=clang
+    export HIP_CLANG_PATH=/usr/bin
+    export DEVICE_LIB_PATH=/usr/lib64/amdgcn/bitcode
+    export HSA_PATH=/usr/hsa
+    export LLVM_PATH=/usr
+setup      : |
+    %cmake_ninja -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/hipcc \
+                 -DAMDGPU_TARGETS='gfx1030'
+build      : |
+    %ninja_build
+install    : |
+    %ninja_install
