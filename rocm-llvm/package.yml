@@ -1,0 +1,93 @@
+name       : rocm-llvm
+version    : 5.4.0
+release    : 1
+source     :
+    - https://github.com/RadeonOpenCompute/llvm-project/archive/refs/tags/rocm-5.4.0.tar.gz : ff54f45a17723892cd775c1eaff9e5860527fcfd33d98759223c70e3362335bf
+homepage   : http://llvm.org/
+license    : Apache-2.0-with-LLVM-exception
+summary    : AMD's fork of LLVM for ROCm
+description: |
+    AMD's fork of LLVM for ROCm
+component  :
+    - programming
+debug      : no
+emul32     : no
+libsplit   : no
+clang      : yes
+patterns   :
+environment: |
+    export CCACHE_MAXSIZE=100G
+
+    # Decontaminate build environment
+    unset LDFLAGS
+    unset LD_AS_NEEDED
+    unset CFLAGS
+    unset CXXFLAGS
+
+    ## BUILD STEPS for packager reference
+    # PGO gen build
+    # PGO profiling build
+    # PGO use build
+    # EMUL32 PGO use build
+    # Install emul32 pgo use build
+    # Install PGO use build
+    # Thin LTO PGO use build
+    # BOLT instrument libclang/libLLVM from Thin LTO PGO use build
+    # BOLT profiling build
+    # BOLT optimize libclang/libLLVM from Thin LTO PGO use build
+    # Install BOLT'd Thin LTO PGO use build
+
+    export _LLVM_FLAGS_FINAL="-march=x86-64 -mtune=generic -O3 -fstack-protector -pipe "
+    export CC=clang
+    export CXX=clang++
+
+    # Identical code folding reduces size on disk.
+    export LDFLAGS="${LDFLAGS} -Wl,--icf=all -Wl,--as-needed -Wl,-z,pack-relative-relocs"
+
+    export _PROJECTS="clang;compiler-rt;lld;llvm"
+    export _TARGETS="host;AMDGPU"
+
+    # Set common build options here
+    export CMAKE_COMMON_OPTIONS="
+        -DCMAKE_BUILD_TYPE=Release \
+        -DCLANG_DEFAULT_LINKER=lld \
+        -DCLANG_DEFAULT_OBJCOPY=llvm-objcopy \
+        -DCLANG_DEFAULT_PIE_ON_LINUX=ON \
+        -DENABLE_EXPERIMENTAL_NEW_PASS_MANAGER=ON \
+        -DLLVM_INSTALL_UTILS=ON \
+        -DLLVM_INCLUDE_TESTS=OFF \
+        -DLLVM_BINUTILS_INCDIR=/usr/include \
+        -DLLVM_ENABLE_FFI=ON \
+        -DLLVM_ENABLE_ZLIB=ON \
+        -DLLVM_ENABLE_RTTI=ON \
+        -DLLVM_ENABLE_ASSERTIONS=OFF \
+        -DENABLE_LINKER_BUILD_ID=ON \
+        -DLLVM_ENABLE_PIC=ON \
+        -DLLVM_BUILD_LLVM_DYLIB=OFF \
+        -DLLVM_LINK_LLVM_DYLIB=OFF \
+        -DCLANG_LINK_CLANG_DYLIB=OFF"
+
+    # Used by everything except emul32 build
+    export CMAKE_X84_64_OPTIONS="
+         -DLLVM_DEFAULT_TARGET_TRIPLE=%HOST% \
+         -DLLVM_TARGET_ARCH=x86_64 \
+         -DLLVM_LIBDIR_SUFFIX=%LIBSUFFIX%"
+build      : |
+    ### PGO gen/use build for amd64.
+    cmake -G Ninja -B solusBuildDir -S llvm \
+        -DCMAKE_INSTALL_PREFIX=/usr/lib64/rocm-llvm \
+        ${CMAKE_COMMON_OPTIONS} \
+        ${CMAKE_X84_64_OPTIONS} \
+        -DCMAKE_C_FLAGS_RELEASE="$PGOFLAGS" \
+        -DCMAKE_CXX_FLAGS_RELEASE="$PGOFLAGS" \
+        -DLLVM_ENABLE_PROJECTS=$_PROJECTS \
+        -DLLVM_TARGETS_TO_BUILD=$_TARGETS \
+        -DLLVM_BUILD_DOCS=OFF \
+        -DLLVM_ENABLE_SPHINX=OFF \
+        -DSPHINX_EXECUTABLE="/usr/bin/sphinx-build" \
+        -DSPHINX_OUTPUT_MAN=OFF \
+        -DSPHINX_OUTPUT_HTML=OFF \
+        -DSPHINX_WARNINGS_AS_ERRORS=OFF
+    %ninja_build
+install    : |
+    %ninja_install
