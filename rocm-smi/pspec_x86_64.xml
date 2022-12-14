@@ -37,7 +37,6 @@
             <Path fileType="data">/usr/rocm_smi/lib/librocm_smi64.so</Path>
             <Path fileType="data">/usr/rocm_smi/lib/librocm_smi64.so.1</Path>
             <Path fileType="data">/usr/rocm_smi/lib/librocm_smi64.so.1.0</Path>
-            <Path fileType="doc">/usr/share/doc/rocm_smi/LICENSE.txt</Path>
         </Files>
     </Package>
     <Package>
@@ -63,9 +62,19 @@
             <Path fileType="library">/usr/lib/librocm_smi64.so</Path>
         </Files>
     </Package>
+    <Package>
+        <Name>rocm-smi-docs</Name>
+        <Summary xml:lang="en">Documentation for rocm-smi</Summary>
+        <Description xml:lang="en">ROCm System Management Interface Library
+</Description>
+        <PartOf>programming.docs</PartOf>
+        <Files>
+            <Path fileType="doc">/usr/share/doc/rocm_smi/LICENSE.txt</Path>
+        </Files>
+    </Package>
     <History>
         <Update release="2">
-            <Date>2022-11-02</Date>
+            <Date>2022-12-14</Date>
             <Version>5.2.3</Version>
             <Comment>Packaging update</Comment>
             <Name>Gavin Zhao</Name>
