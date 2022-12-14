@@ -1,0 +1,43 @@
+name       : clang-ocl
+version    : 5.2.3
+release    : 2
+source     :
+    - https://github.com/RadeonOpenCompute/clang-ocl/archive/refs/tags/rocm-5.2.3.tar.gz : 9cdb387168975207314c08ba63ae7cd11f70542117a5390eddbec77ebb84bed0
+license    : GPL-2.0-or-later # CHECK ME
+component  : programming.libraries
+summary    : OpenCL compilation with clang compiler.
+description: |
+    OpenCL compilation with clang compiler. 
+clang      : yes
+cache      : no
+builddeps  :
+    - rocminfo
+    - rocm-cmake
+    - rocm-compilersupport-devel
+    - rocm-device-libs-devel
+    - rocm-hip-devel
+    - rocm-opencl-devel
+    - rocm-runtime-devel
+    - rocm-smi-devel
+environment: |
+    export CCACHE_MAXSIZE=100G
+    export ROCM_PATH=%PREFIX%
+    export ROCM_DIR=$ROCM_PATH
+    export HIP_PLATFORM=amd
+    export HIP_RUNTIME=rocclr
+    export HIP_COMPILER=clang
+    export HIP_CLANG_PATH=/usr/lib64/rocm-llvm/bin
+    export HSA_PATH=/usr/hsa
+    export HIP_PATH=$ROCM_PATH
+    export DEVICE_LIB_PATH=/usr/lib64/amdgcn/bitcode
+
+    # unset CFLAGS CXXFLAGS LDFLAGS FFLAGS FCFLAGS
+    export CXXFLAGS="${CXXFLAGS/-fstack-protector-strong/} -fcf-protection=none -w"
+    export CMAKE_PREFIX_PATH="/usr/include;/usr/lib64/cmake;/usr/share/rocm/cmake;/usr/lib64/amdgcn"
+setup      : |
+    %cmake_ninja -DCMAKE_CXX_COMPILER=$HIP_CLANG_PATH/clang++ \
+                 -DBITCODE_DIR=/usr/lib64/amdgcn/bitcode \
+build      : |
+    %ninja_build
+install    : |
+    %ninja_install

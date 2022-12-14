@@ -1,0 +1,44 @@
+<PISI>
+    <Source>
+        <Name>clang-ocl</Name>
+        <Packager>
+            <Name>Gavin Zhao</Name>
+            <Email>me@gzgz.dev</Email>
+        </Packager>
+        <License>GPL-2.0-or-later</License>
+        <PartOf>programming.libraries</PartOf>
+        <Summary xml:lang="en">OpenCL compilation with clang compiler.</Summary>
+        <Description xml:lang="en">OpenCL compilation with clang compiler. 
+</Description>
+        <Archive type="binary" sha1sum="79eb0752a961b8e0d15c77d298c97498fbc89c5a">https://getsol.us/sources/README.Solus</Archive>
+    </Source>
+    <Package>
+        <Name>clang-ocl</Name>
+        <Summary xml:lang="en">OpenCL compilation with clang compiler.</Summary>
+        <Description xml:lang="en">OpenCL compilation with clang compiler. 
+</Description>
+        <PartOf>programming.libraries</PartOf>
+        <Files>
+            <Path fileType="executable">/usr/bin/clang-ocl</Path>
+        </Files>
+    </Package>
+    <Package>
+        <Name>clang-ocl-docs</Name>
+        <Summary xml:lang="en">Documentation for clang-ocl</Summary>
+        <Description xml:lang="en">OpenCL compilation with clang compiler. 
+</Description>
+        <PartOf>programming.docs</PartOf>
+        <Files>
+            <Path fileType="doc">/usr/share/doc/rocm-clang-ocl/LICENSE</Path>
+        </Files>
+    </Package>
+    <History>
+        <Update release="2">
+            <Date>2022-12-14</Date>
+            <Version>5.2.3</Version>
+            <Comment>Packaging update</Comment>
+            <Name>Gavin Zhao</Name>
+            <Email>me@gzgz.dev</Email>
+        </Update>
+    </History>
+</PISI>
