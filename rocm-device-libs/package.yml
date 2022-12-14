@@ -2,8 +2,8 @@ name       : rocm-device-libs
 version    : 5.2.3
 release    : 2
 source     :
-  # - https://github.com/RadeonOpenCompute/ROCm-Device-Libs/archive/refs/tags/rocm-5.2.3.tar.gz : 16b7fc7db4759bd6fb54852e9855fa16ead76c97871d7e1e9392e846381d611a
-    - git|https://github.com/RadeonOpenCompute/ROCm-Device-Libs.git : rocm-5.2.3
+    - https://github.com/RadeonOpenCompute/ROCm-Device-Libs/archive/refs/tags/rocm-5.2.3.tar.gz : 16b7fc7db4759bd6fb54852e9855fa16ead76c97871d7e1e9392e846381d611a
+    # - git|https://github.com/RadeonOpenCompute/ROCm-Device-Libs.git : rocm-5.2.3
 license    : NCSA
 component  : xorg.driver
 homepage   : https://github.com/RadeonOpenCompute
