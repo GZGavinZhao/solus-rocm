@@ -25,7 +25,6 @@
             <Path fileType="data">/usr/hsa/lib/libhsa-runtime64.so.1</Path>
             <Path fileType="library">/usr/lib/libhsa-runtime64.so.1</Path>
             <Path fileType="library">/usr/lib/libhsa-runtime64.so.1.5.0</Path>
-            <Path fileType="doc">/usr/share/doc/hsa-runtime64/LICENSE.md</Path>
         </Files>
     </Package>
     <Package>
@@ -58,9 +57,19 @@
             <Path fileType="library">/usr/lib/libhsa-runtime64.so</Path>
         </Files>
     </Package>
+    <Package>
+        <Name>rocm-runtime-docs</Name>
+        <Summary xml:lang="en">Documentation for rocm-runtime</Summary>
+        <Description xml:lang="en">The ROCm Runtime Library is a thin, user-mode API that exposes the necessary interfaces to access and interact with graphics hardware driven by the AMDGPU driver set and the AMDKFD kernel driver. Together they enable programmers to directly harness the power of AMD discrete graphics devices by allowing host applications to launch compute kernels directly to the graphics hardware.
+</Description>
+        <PartOf>programming.docs</PartOf>
+        <Files>
+            <Path fileType="doc">/usr/share/doc/hsa-runtime64/LICENSE.md</Path>
+        </Files>
+    </Package>
     <History>
         <Update release="2">
-            <Date>2022-11-02</Date>
+            <Date>2022-12-14</Date>
             <Version>5.2.3</Version>
             <Comment>Packaging update</Comment>
             <Name>Gavin Zhao</Name>
