@@ -1,0 +1,18 @@
+diff --git a/bin/hipvars.pm b/bin/hipvars.pm
+index 340a6663..af63062c 100644
+--- a/bin/hipvars.pm
++++ b/bin/hipvars.pm
+@@ -141,13 +141,6 @@ if (not defined $HIP_PLATFORM) {
+     warn("Warning: HIP_PLATFORM=nvcc is deprecated. Please use HIP_PLATFORM=nvidia. \n")
+ }
+ 
+-if ($HIP_COMPILER eq "clang") {
+-    # Windows does not have clang at linux default path
+-    if (defined $HIP_ROCCLR_HOME and (-e "$HIP_ROCCLR_HOME/bin/clang" or -e "$HIP_ROCCLR_HOME/bin/clang.exe")) {
+-        $HIP_CLANG_PATH = "$HIP_ROCCLR_HOME/bin";
+-    }
+-}
+-
+ #---
+ # Read .hipVersion
+ my %hipVersion = ();

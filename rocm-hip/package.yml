@@ -31,9 +31,12 @@ builddeps  :
     - rocm-device-libs-devel
     - rocm-opencl-devel
     - rocm-runtime-devel
-    - mold
 rundeps    :
     - rocminfo
+    - rocm-llvm
+    - devel:
+        - rocminfo
+        - rocm-llvm
 environment: |
     export HIP_CLANG_PATH="/usr/bin"
     export ROCM_PATH="/usr"
@@ -42,8 +45,6 @@ environment: |
     export HIPAMD_DIR="%workdir%/hipamd-rocm-%version%"
     export HIP_DIR="%workdir%/HIP-rocm-%version%"
     export ROCCLR_DIR="%workdir%/ROCclr-rocm-%version%"
-
-    export CXXFLAGS+=" -fuse-ld=mold"
 setup      : |
     tar -xvzf $sources/ROCclr-%version%.tar.gz
     tar -xvzf $sources/ROCm-OpenCL-Runtime-%version%.tar.gz

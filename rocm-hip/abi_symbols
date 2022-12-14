@@ -2,10 +2,6 @@ libamdhip64.so.5:_Z22hipCreateSurfaceObjectPP13__hip_surfacePK15hipResourceDesc
 libamdhip64.so.5:_Z23hipDestroySurfaceObjectP13__hip_surface
 libamdhip64.so.5:_Z24hipExtModuleLaunchKernelP18ihipModuleSymbol_tjjjjjjmP12ihipStream_tPPvS4_P11ihipEvent_tS6_j
 libamdhip64.so.5:_Z24hipHccModuleLaunchKernelP18ihipModuleSymbol_tjjjjjjmP12ihipStream_tPPvS4_P11ihipEvent_tS6_
-libamdhip64.so.5:_ZN3hip11g_ctxtStackE
-libamdhip64.so.5:_ZN3hip11g_lastErrorE
-libamdhip64.so.5:_ZN3hip8g_deviceE
-libamdhip64.so.5:_ZN6hiprtc14g_lastRtcErrorE
 libamdhip64.so.5:_ZN8hip_impl22hipLaunchKernelGGLImplEmRK4dim3S2_jP12ihipStream_tPPv
 libamdhip64.so.5:__hipGetPCH
 libamdhip64.so.5:__hipPopCallConfiguration
@@ -20,7 +16,6 @@ libamdhip64.so.5:__hipUnregisterFatBinary
 libamdhip64.so.5:amd_dbgapi_get_build_id
 libamdhip64.so.5:amd_dbgapi_get_build_name
 libamdhip64.so.5:amd_dbgapi_get_git_hash
-libamdhip64.so.5:execStack_
 libamdhip64.so.5:hipApiName
 libamdhip64.so.5:hipArray3DCreate
 libamdhip64.so.5:hipArrayCreate
@@ -410,12 +405,8 @@ libamdhip64.so.5:hiprtcGetLoweredName
 libamdhip64.so.5:hiprtcGetProgramLog
 libamdhip64.so.5:hiprtcGetProgramLogSize
 libamdhip64.so.5:hiprtcVersion
-libamdhip64.so.5:l_captureStreams
-libamdhip64.so.5:l_streamCaptureMode
-libamdhip64.so.5:streamPerThreadObj
 libhiprtc-builtins.so.5:__hipRTC_header
 libhiprtc-builtins.so.5:__hipRTC_header_size
-libhiprtc.so.5:_ZN6hiprtc14g_lastRtcErrorE
 libhiprtc.so.5:hiprtcAddNameExpression
 libhiprtc.so.5:hiprtcCompileProgram
 libhiprtc.so.5:hiprtcCreateProgram
