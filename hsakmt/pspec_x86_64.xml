@@ -19,7 +19,8 @@
 </Description>
         <PartOf>xorg.driver</PartOf>
         <Files>
-            <Path fileType="doc">/usr/share/doc/hsakmt/LICENSE.md</Path>
+            <Path fileType="library">/usr/lib64/libhsakmt.so.1</Path>
+            <Path fileType="library">/usr/lib64/libhsakmt.so.1.0.6</Path>
         </Files>
     </Package>
     <Package>
@@ -38,13 +39,23 @@
             <Path fileType="library">/usr/lib64/cmake/hsakmt/hsakmt-config.cmake</Path>
             <Path fileType="library">/usr/lib64/cmake/hsakmt/hsakmtTargets-relwithdebinfo.cmake</Path>
             <Path fileType="library">/usr/lib64/cmake/hsakmt/hsakmtTargets.cmake</Path>
-            <Path fileType="library">/usr/lib64/libhsakmt.a</Path>
+            <Path fileType="library">/usr/lib64/libhsakmt.so</Path>
             <Path fileType="data">/usr/share/pkgconfig/libhsakmt.pc</Path>
+        </Files>
+    </Package>
+    <Package>
+        <Name>hsakmt-docs</Name>
+        <Summary xml:lang="en">Documentation for hsakmt</Summary>
+        <Description xml:lang="en">libhsakmt (HSA thunk) libraries for AMD KFD
+</Description>
+        <PartOf>programming.docs</PartOf>
+        <Files>
+            <Path fileType="doc">/usr/share/doc/hsakmt/LICENSE.md</Path>
         </Files>
     </Package>
     <History>
         <Update release="2">
-            <Date>2022-11-02</Date>
+            <Date>2022-12-14</Date>
             <Version>5.2.3</Version>
             <Comment>Packaging update</Comment>
             <Name>Gavin Zhao</Name>
