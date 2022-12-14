@@ -84,4 +84,4 @@ install    : |
     #     $installdir/usr/include/rocm-opencl/CL
 
     # #Avoid file conflicts with clinfo package:
-    # mv $installdir/usr/bin/clinfo $installdir/usr/bin/rocm-clinfo
+    mv $installdir/usr/bin/clinfo $installdir/usr/bin/rocm-clinfo

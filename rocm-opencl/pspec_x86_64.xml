@@ -19,7 +19,7 @@
 </Description>
         <PartOf>programming.devel</PartOf>
         <Files>
-            <Path fileType="executable">/usr/bin/clinfo</Path>
+            <Path fileType="executable">/usr/bin/rocm-clinfo</Path>
             <Path fileType="library">/usr/lib/libamdocl64.so.5</Path>
             <Path fileType="library">/usr/lib/libamdocl64.so.5.2.3</Path>
             <Path fileType="library">/usr/lib/libcltrace.so.5</Path>
@@ -40,7 +40,6 @@
             <Path fileType="data">/usr/opencl/include/CL/opencl.h</Path>
             <Path fileType="data">/usr/opencl/lib/libamdocl64.so</Path>
             <Path fileType="data">/usr/share/OpenCL/vendors/amdocl64.icd</Path>
-            <Path fileType="doc">/usr/share/doc/opencl/LICENSE.txt</Path>
         </Files>
     </Package>
     <Package>
@@ -71,9 +70,19 @@
             <Path fileType="library">/usr/lib/libcltrace.so</Path>
         </Files>
     </Package>
+    <Package>
+        <Name>rocm-opencl-docs</Name>
+        <Summary xml:lang="en">Documentation for rocm-opencl</Summary>
+        <Description xml:lang="en">OpenCL 2.2 compatible language runtime for AMD Radeon GPUs
+</Description>
+        <PartOf>programming.docs</PartOf>
+        <Files>
+            <Path fileType="doc">/usr/share/doc/opencl/LICENSE.txt</Path>
+        </Files>
+    </Package>
     <History>
         <Update release="2">
-            <Date>2022-11-23</Date>
+            <Date>2022-12-14</Date>
             <Version>5.2.3</Version>
             <Comment>Packaging update</Comment>
             <Name>Gavin Zhao</Name>
