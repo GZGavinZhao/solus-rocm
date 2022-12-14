@@ -20,7 +20,6 @@
 </Description>
         <PartOf>programming.devel</PartOf>
         <Files>
-            <Path fileType="doc">/usr/share/doc/rocm-cmake/LICENSE</Path>
             <Path fileType="data">/usr/share/rocm/cmake/ROCMAnalyzers.cmake</Path>
             <Path fileType="data">/usr/share/rocm/cmake/ROCMCheckTargetIds.cmake</Path>
             <Path fileType="data">/usr/share/rocm/cmake/ROCMChecks.cmake</Path>
@@ -42,9 +41,19 @@
             <Path fileType="data">/usr/share/rocm/cmake/header_template.h.in</Path>
         </Files>
     </Package>
+    <Package>
+        <Name>rocm-cmake-docs</Name>
+        <Summary xml:lang="en">Documentation for rocm-cmake</Summary>
+        <Description xml:lang="en">ROCm cmake modules provides cmake modules for common build tasks needed for the ROCM software stack.
+</Description>
+        <PartOf>programming.docs</PartOf>
+        <Files>
+            <Path fileType="doc">/usr/share/doc/rocm-cmake/LICENSE</Path>
+        </Files>
+    </Package>
     <History>
         <Update release="2">
-            <Date>2022-11-02</Date>
+            <Date>2022-12-14</Date>
             <Version>5.2.3</Version>
             <Comment>Packaging update</Comment>
             <Name>Gavin Zhao</Name>
