@@ -22,7 +22,7 @@
             <Path fileType="library">/usr/lib/librocblas.so.0</Path>
             <Path fileType="library">/usr/lib/librocblas.so.0.1</Path>
             <Path fileType="library">/usr/lib/rocblas/library/Kernels.so-000-gfx1030.hsaco</Path>
-            <Path fileType="library">/usr/lib/rocblas/library/TensileLibrary.dat</Path>
+            <Path fileType="library">/usr/lib/rocblas/library/TensileLibrary.yaml</Path>
             <Path fileType="library">/usr/lib/rocblas/library/TensileManifest.txt</Path>
             <Path fileType="data">/usr/rocblas/include/internal/rocblas-auxiliary.h</Path>
             <Path fileType="data">/usr/rocblas/include/internal/rocblas-complex-types.h</Path>
@@ -40,7 +40,6 @@
             <Path fileType="data">/usr/rocblas/lib/cmake/rocblas-targets-relwithdebinfo.cmake</Path>
             <Path fileType="data">/usr/rocblas/lib/cmake/rocblas-targets.cmake</Path>
             <Path fileType="data">/usr/rocblas/lib/librocblas.so</Path>
-            <Path fileType="doc">/usr/share/doc/rocblas/LICENSE.md</Path>
         </Files>
     </Package>
     <Package>
@@ -82,9 +81,19 @@
             <Path fileType="library">/usr/lib/librocblas.so</Path>
         </Files>
     </Package>
+    <Package>
+        <Name>rocblas-docs</Name>
+        <Summary xml:lang="en">Documentation for rocblas</Summary>
+        <Description xml:lang="en">rocBLAS is the AMD library for Basic Linear Algebra Subprograms (BLAS) on the ROCm platform. It is implemented in the HIP programming language and optimized for AMD GPUs.
+</Description>
+        <PartOf>programming.docs</PartOf>
+        <Files>
+            <Path fileType="doc">/usr/share/doc/rocblas/LICENSE.md</Path>
+        </Files>
+    </Package>
     <History>
         <Update release="1">
-            <Date>2022-11-02</Date>
+            <Date>2022-12-14</Date>
             <Version>5.2.3</Version>
             <Comment>Packaging update</Comment>
             <Name>Gavin Zhao</Name>

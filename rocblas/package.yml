@@ -12,9 +12,9 @@ clang      : yes
 networking : yes
 cache      : no
 builddeps  :
-    - pkgconfig(msgpack)
-    - msgpack-cpp-devel
-    - python-msgpack
+    # - pkgconfig(msgpack)
+    # - msgpack-cpp-devel
+    # - python-msgpack
     - pkgconfig(libhsakmt)
     - perl-file-which
     - pyyaml
@@ -29,41 +29,35 @@ builddeps  :
     - rocm-smi-devel
     - git
     - virtualenv
-
-    # - rocm-tensile
 environment: |
+    export CCACHE_MAXSIZE=100G
     export ROCM_PATH=%PREFIX%
-    export ROCM_DIR=%PREFIX%
-
-    # export AMD_DEVICE_LIBS_PREFIX=%libdir%
+    export ROCM_DIR=$ROCM_PATH
     export HIP_PLATFORM=amd
     export HIP_RUNTIME=rocclr
     export HIP_COMPILER=clang
-    export HIP_CLANG_PATH=/usr/bin
-    export DEVICE_LIB_PATH=/usr/lib64/amdgcn/bitcode
-    # export HIP_DEVICE_LIB_PATH=/usr/lib64/amdgcn/bitcode
-    # export ROCM_DEVICE_LIB_PATH=/usr/lib64/amdgcn/bitcode
+    export HIP_CLANG_PATH=/usr/lib64/rocm-llvm/bin
     export HSA_PATH=/usr/hsa
-    export LLVM_PATH=/usr
-    export HIP_CLANG_HCC_COMPAT_MODE=0
-    # export HIPCC_VERBOSE=4
-    # https://github.com/ROCm-Developer-Tools/HIP/blob/rocm-5.1.x/docs/markdown/clang_options.md
+    export HIP_PATH=$ROCM_PATH
+    export DEVICE_LIB_PATH=/usr/lib64/amdgcn/bitcode
+
+    # unset CFLAGS CXXFLAGS LDFLAGS FFLAGS FCFLAGS
+    export CXX=$HIP_CLANG_PATH/clang++
+    export PATH="$HIP_CLANG_PATH:$PATH"
     export CXXFLAGS="${CXXFLAGS/-fstack-protector-strong/} -fcf-protection=none -w"
-    export CFLAGS="${CFLAGS/-fstack-protector-strong/} -fcf-protection=none -w"
+    export CMAKE_PREFIX_PATH="/usr/include;/usr/lib64/cmake;/usr/share/rocm/cmake;/usr/lib64/amdgcn"
 setup      : |
     # %patch -p1 < $pkgfiles/use-msgpack.diff
 
     %cmake_ninja -Wno-dev \
-                 -DCMAKE_CXX_COMPILER=/usr/bin/hipcc \
                  -Dpython="/usr/bin/python3" \
                  -Damd_comgr_DIR=/usr/lib64/cmake/amd_comgr \
                  -DENABLE_INLINE_ASM=1 \
                  -DBUILD_WITH_TENSILE=ON \
                  -DTensile_COMPILER=hipcc \
                  -DTensile_PRINT_DEBUG=ON \
-                 -DTensile_LIBRARY_FORMAT=msgpack \
+                 -DTensile_LIBRARY_FORMAT=yaml \
                  -DTensile_LOGIC=asm_lite \
-                 -DTensile_CODE_OBJECT_VERSION=V3 \
                  -DTensile_CPU_THREADS=6 \
                  -DBUILD_CLIENTS_TESTS=OFF \
                  -DBUILD_CLIENTS_BENCHMARKS=OFF \
@@ -72,8 +66,7 @@ setup      : |
                  -DROCM_PATH=/usr \
                  -DBUILD_FILE_REORG_BACKWARD_COMPATIBILITY=ON \
                  -DRUN_HEADER_TESTING=OFF \
-                 -DCPACK_PACKAGING_INSTALL_PREFIX=/usr \
-                 -DAMDGPU_TARGETS='gfx1032' #limiting compilation to just one GPU speeds up build time massively
+                 -DAMDGPU_TARGETS='gfx1030' #limiting compilation to just one GPU speeds up build time massively
 build      : |
     %ninja_build
 install    : |
