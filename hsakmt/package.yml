@@ -1,8 +1,8 @@
 name       : hsakmt
-version    : 5.2.3
-release    : 2
+version    : 5.3.3
+release    : 3
 source     :
-    - https://github.com/RadeonOpenCompute/ROCT-Thunk-Interface/archive/rocm-5.2.3.tar.gz : 8d313b8fd945a8d7248c00a2de9a2ee896fe77e464430a91b63400a986ec0bf0
+    - https://github.com/RadeonOpenCompute/ROCT-Thunk-Interface/archive/rocm-5.3.3.tar.gz : b5350de915997ed48072b37a21c2c44438028255f6cc147c25a196ad383c52e7
 license    : NCSA
 component  : xorg.driver
 clang      : yes
@@ -14,7 +14,8 @@ builddeps  :
     - pkgconfig(libpci)
     - pkgconfig(numa)
 setup      : |
-    %cmake_ninja -DBUILD_SHARED_LIBS=ON
+    %cmake_ninja -DBUILD_SHARED_LIBS=ON \
+                 -DFILE_REORG_BACKWARD_COMPATIBILITY=OFF
 build      : |
     %ninja_build
 install    : |
