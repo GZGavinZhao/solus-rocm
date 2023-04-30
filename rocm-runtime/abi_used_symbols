@@ -1,6 +1,10 @@
+UNKNOWN:amdgpu_device_deinitialize
+UNKNOWN:amdgpu_device_initialize
+UNKNOWN:amdgpu_query_gpu_info
 ld-linux-x86-64.so.2:__tls_get_addr
 libc.so.6:__cxa_atexit
 libc.so.6:__errno_location
+libc.so.6:__isoc99_sscanf
 libc.so.6:__libc_single_threaded
 libc.so.6:__sched_cpualloc
 libc.so.6:__sched_cpufree
@@ -17,6 +21,10 @@ libc.so.6:dlclose
 libc.so.6:dlinfo
 libc.so.6:dlopen
 libc.so.6:dlsym
+libc.so.6:eventfd
+libc.so.6:eventfd_write
+libc.so.6:fclose
+libc.so.6:fopen
 libc.so.6:fprintf
 libc.so.6:fputc
 libc.so.6:free
@@ -38,6 +46,7 @@ libc.so.6:memset
 libc.so.6:mmap
 libc.so.6:munmap
 libc.so.6:open
+libc.so.6:poll
 libc.so.6:pthread_attr_destroy
 libc.so.6:pthread_attr_init
 libc.so.6:pthread_attr_setaffinity_np
@@ -89,6 +98,8 @@ libc.so.6:uname
 libc.so.6:unlink
 libc.so.6:usleep
 libc.so.6:write
+libdrm.so.2:drmClose
+libdrm.so.2:drmOpenRender
 libelf.so.1:elf_begin
 libelf.so.1:elf_end
 libelf.so.1:elf_errmsg
@@ -113,6 +124,7 @@ libgcc_s.so.1:_Unwind_Resume
 libhsakmt.so.1:hsaKmtAcquireSystemProperties
 libhsakmt.so.1:hsaKmtAllocMemory
 libhsakmt.so.1:hsaKmtAllocQueueGWS
+libhsakmt.so.1:hsaKmtAvailableMemory
 libhsakmt.so.1:hsaKmtCloseKFD
 libhsakmt.so.1:hsaKmtCreateEvent
 libhsakmt.so.1:hsaKmtCreateQueue
@@ -131,6 +143,7 @@ libhsakmt.so.1:hsaKmtGetXNACKMode
 libhsakmt.so.1:hsaKmtMapMemoryToGPU
 libhsakmt.so.1:hsaKmtMapMemoryToGPUNodes
 libhsakmt.so.1:hsaKmtOpenKFD
+libhsakmt.so.1:hsaKmtOpenSMI
 libhsakmt.so.1:hsaKmtQueryPointerInfo
 libhsakmt.so.1:hsaKmtRegisterGraphicsHandleToNodes
 libhsakmt.so.1:hsaKmtRegisterMemoryWithFlags
@@ -210,6 +223,7 @@ libstdc++.so.6:_ZNSt6locale7classicEv
 libstdc++.so.6:_ZNSt6localeC1Ev
 libstdc++.so.6:_ZNSt6localeD1Ev
 libstdc++.so.6:_ZNSt6thread15_M_start_threadESt10unique_ptrINS_6_StateESt14default_deleteIS1_EEPFvvE
+libstdc++.so.6:_ZNSt6thread4joinEv
 libstdc++.so.6:_ZNSt6thread6_StateD2Ev
 libstdc++.so.6:_ZNSt6thread6detachEv
 libstdc++.so.6:_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE10_M_replaceEmmPKcm
@@ -234,6 +248,8 @@ libstdc++.so.6:_ZNSt7__cxx1119basic_istringstreamIcSt11char_traitsIcESaIcEEC1ERK
 libstdc++.so.6:_ZNSt7__cxx1119basic_istringstreamIcSt11char_traitsIcESaIcEED1Ev
 libstdc++.so.6:_ZNSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEEC1Ev
 libstdc++.so.6:_ZNSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEED1Ev
+libstdc++.so.6:_ZNSt8__detail15_List_node_base11_M_transferEPS0_S1_
+libstdc++.so.6:_ZNSt8__detail15_List_node_base4swapERS0_S1_
 libstdc++.so.6:_ZNSt8__detail15_List_node_base7_M_hookEPS0_
 libstdc++.so.6:_ZNSt8__detail15_List_node_base9_M_unhookEv
 libstdc++.so.6:_ZNSt8ios_base4InitC1Ev

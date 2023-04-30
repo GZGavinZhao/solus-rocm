@@ -1,11 +1,10 @@
 name       : rocm-runtime
-version    : 5.2.3
-release    : 2
+version    : 5.3.3
+release    : 3
 source     :
-    - https://github.com/RadeonOpenCompute/ROCR-Runtime/archive/refs/tags/rocm-5.2.3.tar.gz : 978de85d3455207bb82bef2254a4624e9116b1258a8c164d7a7e21a644eff12f
+    - https://github.com/RadeonOpenCompute/ROCR-Runtime/archive/refs/tags/rocm-5.3.3.tar.gz : aca88d90f169f35bd65ce3366b8670c7cdbe3abc0a2056eab805d0192cfd7130
 license    : NCSA
 component  : programming.devel
-clang      : yes
 homepage   : https://github.com/RadeonOpenCompute
 summary    : ROCm Runtime Library
 description: |
@@ -23,7 +22,8 @@ builddeps  :
     - rocm-device-libs-devel
     - vim
 setup      : |
-    %cmake_ninja -S src -DBITCODE_DIR="%libdir%/amdgcn/bitcode"
+    %cmake_ninja -S src -DBITCODE_DIR="%libdir%/amdgcn/bitcode" \
+                        -DFILE_REORG_BACKWARD_COMPATIBILITY=OFF
 build      : |
     %ninja_build
 install    : |
