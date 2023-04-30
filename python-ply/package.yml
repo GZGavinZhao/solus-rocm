@@ -1,0 +1,19 @@
+name       : python-ply
+version    : 3.11
+release    : 1
+source     :
+    - https://github.com/dabeaz/ply/archive/refs/tags/3.11.tar.gz : 928c5642612f4710b168d3c49c25f6ece2913a5e8d1c5e37fde5d6162fec3fd2
+license    : GPL-2.0-or-later # CHECK ME
+component  : programming.python
+summary    : PLEASE FILL ME IN
+description: |
+    PLEASE FILL ME IN
+builddeps  :
+    - python-build
+    - python-installer
+    - python-packaging
+    - python-wheel
+build      : |
+    %python3_setup
+install    : |
+    %python3_install
