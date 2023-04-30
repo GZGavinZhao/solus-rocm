@@ -143,6 +143,7 @@ liboam.so.1:rsmi_dev_gpu_clk_freq_set
 liboam.so.1:rsmi_dev_gpu_metrics_info_get
 liboam.so.1:rsmi_dev_gpu_reset
 liboam.so.1:rsmi_dev_id_get
+liboam.so.1:rsmi_dev_mem_overdrive_level_get
 liboam.so.1:rsmi_dev_memory_busy_percent_get
 liboam.so.1:rsmi_dev_memory_reserved_pages_get
 liboam.so.1:rsmi_dev_memory_total_get
@@ -343,6 +344,7 @@ librocm_smi64.so.1:rsmi_dev_gpu_clk_freq_set
 librocm_smi64.so.1:rsmi_dev_gpu_metrics_info_get
 librocm_smi64.so.1:rsmi_dev_gpu_reset
 librocm_smi64.so.1:rsmi_dev_id_get
+librocm_smi64.so.1:rsmi_dev_mem_overdrive_level_get
 librocm_smi64.so.1:rsmi_dev_memory_busy_percent_get
 librocm_smi64.so.1:rsmi_dev_memory_reserved_pages_get
 librocm_smi64.so.1:rsmi_dev_memory_total_get
