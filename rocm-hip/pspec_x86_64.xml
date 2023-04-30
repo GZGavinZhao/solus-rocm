@@ -22,9 +22,11 @@
             <Path fileType="executable">/usr/bin/.hipVersion</Path>
             <Path fileType="executable">/usr/bin/hip_embed_pch.sh</Path>
             <Path fileType="executable">/usr/bin/hipcc</Path>
+            <Path fileType="executable">/usr/bin/hipcc.bat</Path>
             <Path fileType="executable">/usr/bin/hipcc.pl</Path>
             <Path fileType="executable">/usr/bin/hipcc_cmake_linker_helper</Path>
             <Path fileType="executable">/usr/bin/hipconfig</Path>
+            <Path fileType="executable">/usr/bin/hipconfig.bat</Path>
             <Path fileType="executable">/usr/bin/hipconfig.pl</Path>
             <Path fileType="executable">/usr/bin/hipdemangleatp</Path>
             <Path fileType="executable">/usr/bin/hipvars.pm</Path>
@@ -33,11 +35,11 @@
             <Path fileType="executable">/usr/bin/roc-obj-ls</Path>
             <Path fileType="library">/usr/lib64/.hipInfo</Path>
             <Path fileType="library">/usr/lib64/libamdhip64.so.5</Path>
-            <Path fileType="library">/usr/lib64/libamdhip64.so.5.2.21153</Path>
+            <Path fileType="library">/usr/lib64/libamdhip64.so.5.3.22062</Path>
             <Path fileType="library">/usr/lib64/libhiprtc-builtins.so.5</Path>
-            <Path fileType="library">/usr/lib64/libhiprtc-builtins.so.5.2.21153</Path>
+            <Path fileType="library">/usr/lib64/libhiprtc-builtins.so.5.3.22062</Path>
             <Path fileType="library">/usr/lib64/libhiprtc.so.5</Path>
-            <Path fileType="library">/usr/lib64/libhiprtc.so.5.2.21153</Path>
+            <Path fileType="library">/usr/lib64/libhiprtc.so.5.3.22062</Path>
         </Files>
     </Package>
     <Package>
@@ -57,6 +59,7 @@
             <Path fileType="header">/usr/include/hip/amd_detail/amd_hip_complex.h</Path>
             <Path fileType="header">/usr/include/hip/amd_detail/amd_hip_cooperative_groups.h</Path>
             <Path fileType="header">/usr/include/hip/amd_detail/amd_hip_fp16.h</Path>
+            <Path fileType="header">/usr/include/hip/amd_detail/amd_hip_math_constants.h</Path>
             <Path fileType="header">/usr/include/hip/amd_detail/amd_hip_runtime.h</Path>
             <Path fileType="header">/usr/include/hip/amd_detail/amd_hip_runtime_pt_api.h</Path>
             <Path fileType="header">/usr/include/hip/amd_detail/amd_hip_unsafe_atomics.h</Path>
@@ -97,6 +100,7 @@
             <Path fileType="header">/usr/include/hip/hip_ext.h</Path>
             <Path fileType="header">/usr/include/hip/hip_fp16.h</Path>
             <Path fileType="header">/usr/include/hip/hip_hcc.h</Path>
+            <Path fileType="header">/usr/include/hip/hip_math_constants.h</Path>
             <Path fileType="header">/usr/include/hip/hip_profile.h</Path>
             <Path fileType="header">/usr/include/hip/hip_runtime.h</Path>
             <Path fileType="header">/usr/include/hip/hip_runtime_api.h</Path>
@@ -108,8 +112,10 @@
             <Path fileType="header">/usr/include/hip/math_functions.h</Path>
             <Path fileType="header">/usr/include/hip/nvcc_detail</Path>
             <Path fileType="header">/usr/include/hip/nvidia_detail/nvidia_channel_descriptor.h</Path>
+            <Path fileType="header">/usr/include/hip/nvidia_detail/nvidia_hip_atomics.h</Path>
             <Path fileType="header">/usr/include/hip/nvidia_detail/nvidia_hip_complex.h</Path>
             <Path fileType="header">/usr/include/hip/nvidia_detail/nvidia_hip_cooperative_groups.h</Path>
+            <Path fileType="header">/usr/include/hip/nvidia_detail/nvidia_hip_math_constants.h</Path>
             <Path fileType="header">/usr/include/hip/nvidia_detail/nvidia_hip_runtime.h</Path>
             <Path fileType="header">/usr/include/hip/nvidia_detail/nvidia_hip_runtime_api.h</Path>
             <Path fileType="header">/usr/include/hip/nvidia_detail/nvidia_hip_texture_types.h</Path>
@@ -117,6 +123,7 @@
             <Path fileType="header">/usr/include/hip/nvidia_detail/nvidia_hiprtc.h</Path>
             <Path fileType="header">/usr/include/hip/surface_types.h</Path>
             <Path fileType="header">/usr/include/hip/texture_types.h</Path>
+            <Path fileType="header">/usr/include/hip_prof_str.h</Path>
             <Path fileType="library">/usr/lib64/cmake/hip-lang/hip-lang-config-version.cmake</Path>
             <Path fileType="library">/usr/lib64/cmake/hip-lang/hip-lang-config.cmake</Path>
             <Path fileType="library">/usr/lib64/cmake/hip-lang/hip-lang-targets-relwithdebinfo.cmake</Path>
@@ -311,6 +318,8 @@
             <Path fileType="data">/usr/share/hip/samples/2_Cookbook/1_hipEvent/Makefile</Path>
             <Path fileType="data">/usr/share/hip/samples/2_Cookbook/1_hipEvent/Readme.md</Path>
             <Path fileType="data">/usr/share/hip/samples/2_Cookbook/1_hipEvent/hipEvent.cpp</Path>
+            <Path fileType="data">/usr/share/hip/samples/2_Cookbook/20_hip_vulkan/CMakeLists.txt</Path>
+            <Path fileType="data">/usr/share/hip/samples/2_Cookbook/20_hip_vulkan/SineWaveSimulation.cpp</Path>
             <Path fileType="data">/usr/share/hip/samples/2_Cookbook/20_hip_vulkan/SineWaveSimulation.h</Path>
             <Path fileType="data">/usr/share/hip/samples/2_Cookbook/20_hip_vulkan/SineWaveSimulation.hip</Path>
             <Path fileType="data">/usr/share/hip/samples/2_Cookbook/20_hip_vulkan/VulkanBaseApp.cpp</Path>
@@ -320,6 +329,12 @@
             <Path fileType="data">/usr/share/hip/samples/2_Cookbook/20_hip_vulkan/main.cpp</Path>
             <Path fileType="data">/usr/share/hip/samples/2_Cookbook/20_hip_vulkan/sinewave.frag</Path>
             <Path fileType="data">/usr/share/hip/samples/2_Cookbook/20_hip_vulkan/sinewave.vert</Path>
+            <Path fileType="data">/usr/share/hip/samples/2_Cookbook/21_cmake_hip_cxx_clang/CMakeLists.txt</Path>
+            <Path fileType="data">/usr/share/hip/samples/2_Cookbook/21_cmake_hip_cxx_clang/README.md</Path>
+            <Path fileType="data">/usr/share/hip/samples/2_Cookbook/21_cmake_hip_cxx_clang/square.cpp</Path>
+            <Path fileType="data">/usr/share/hip/samples/2_Cookbook/22_cmake_hip_lang/CMakeLists.txt</Path>
+            <Path fileType="data">/usr/share/hip/samples/2_Cookbook/22_cmake_hip_lang/README.md</Path>
+            <Path fileType="data">/usr/share/hip/samples/2_Cookbook/22_cmake_hip_lang/square.hip</Path>
             <Path fileType="data">/usr/share/hip/samples/2_Cookbook/3_shared_memory/CMakeLists.txt</Path>
             <Path fileType="data">/usr/share/hip/samples/2_Cookbook/3_shared_memory/Makefile</Path>
             <Path fileType="data">/usr/share/hip/samples/2_Cookbook/3_shared_memory/Readme.md</Path>
@@ -352,8 +367,8 @@
     </Package>
     <History>
         <Update release="3">
-            <Date>2022-12-14</Date>
-            <Version>5.2.3</Version>
+            <Date>2023-04-30</Date>
+            <Version>5.3.3</Version>
             <Comment>Packaging update</Comment>
             <Name>Gavin Zhao</Name>
             <Email>me@gzgz.dev</Email>
