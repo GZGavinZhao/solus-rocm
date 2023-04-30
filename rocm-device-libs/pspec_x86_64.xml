@@ -83,6 +83,7 @@
             <Path fileType="library">/usr/lib64/amdgcn/bitcode/oclc_wavefrontsize64_on.bc</Path>
             <Path fileType="library">/usr/lib64/amdgcn/bitcode/ocml.bc</Path>
             <Path fileType="library">/usr/lib64/amdgcn/bitcode/opencl.bc</Path>
+            <Path fileType="doc">/usr/share/doc/ROCm-Device-Libs/rocm-device-libs/LICENSE.TXT</Path>
         </Files>
     </Package>
     <Package>
@@ -104,25 +105,9 @@
             <Path fileType="library">/usr/lib64/cmake/AMDDeviceLibs/AMDDeviceLibsConfig.cmake</Path>
         </Files>
     </Package>
-    <Package>
-        <Name>rocm-device-libs-docs</Name>
-        <Summary xml:lang="en">Documentation for rocm-device-libs</Summary>
-        <Description xml:lang="en">This package contains a set of AMD specific device-side language runtime libraries in the form of bit code. Specifically:
-- Open Compute library controls
-- Open Compute Math library
-- Open Compute Kernel library
-- OpenCL built-in library
-- HIP built-in library
-- Heterogeneous Compute built-in library
-</Description>
-        <PartOf>programming.docs</PartOf>
-        <Files>
-            <Path fileType="doc">/usr/share/doc/ROCm-Device-Libs/rocm-device-libs/LICENSE.TXT</Path>
-        </Files>
-    </Package>
     <History>
         <Update release="2">
-            <Date>2022-12-14</Date>
+            <Date>2023-04-30</Date>
             <Version>5.2.3</Version>
             <Comment>Packaging update</Comment>
             <Name>Gavin Zhao</Name>

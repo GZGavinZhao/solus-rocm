@@ -19,9 +19,9 @@ description: |
 clang      : yes
 builddeps  :
     - rocm-cmake
-    - rocm-runtime-devel
 setup      : |
     %patch -p1 < $pkgfiles/0001-Use-FHS-compliant-install.patch
+    %patch -p1 < $pkgfiles/0001-fix-atomic.fadd.f32.p1.f32.patch
     %cmake_ninja
 build      : |
     %ninja_build
