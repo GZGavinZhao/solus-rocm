@@ -1,8 +1,8 @@
 name       : rocm-compilersupport
-version    : 5.2.3
-release    : 2
+version    : 5.3.3
+release    : 3
 source     :
-    - https://github.com/RadeonOpenCompute/ROCm-CompilerSupport/archive/refs/tags/rocm-5.2.3.tar.gz : 36d67dbe791d08ad0a02f0f3aedd46059848a0a232c5f999670103b0410c89dc
+    - https://github.com/RadeonOpenCompute/ROCm-CompilerSupport/archive/refs/tags/rocm-5.3.3.tar.gz : 6a4ef69e672a077b5909977248445f0eedf5e124af9812993a4d444be030c78b
 license    : NCSA
 component  : programming.devel
 homepage   : https://github.com/RadeonOpenCompute
@@ -29,7 +29,8 @@ setup      : |
     sed -i '/Args.push_back(ROCMIncludePath/,+1d' lib/comgr/src/comgr-compiler.cpp
     sed -i 's/lib\(\/clang\)/%{_lib}\1/' lib/comgr/src/comgr-compiler.cpp
 
-    %cmake -S lib/comgr -DBUILD_TESTING=ON
+    %cmake -S lib/comgr -DBUILD_TESTING=ON \
+                        -DFILE_REORG_BACKWARD_COMPATIBILITY=OFF
 build      : |
     %make
 install    : |
@@ -37,6 +38,7 @@ install    : |
 
     #remove textfiles that are not useful for the users
     rm -r %installroot%/usr/share
-# If you have an AMD GPU:
-# check      : |
-#     make test
+check      : |
+    if [ -d /dev/kfd ]; then
+        make test
+    fi
