@@ -1,9 +1,9 @@
 name       : rocm-opencl
-version    : 5.2.3
+version    : 5.3.3
 release    : 2
 source     :
-    - https://github.com/ROCm-Developer-Tools/ROCclr/archive/refs/tags/rocm-5.2.3.tar.gz#ROCclr-5.2.3.tar.gz : 0493c414d4db1af8e1eb30a651d9512044644244488ebb13478c2138a7612998
-    - https://github.com/RadeonOpenCompute/ROCm-OpenCL-Runtime/archive/refs/tags/rocm-5.2.3.tar.gz#ROCm-OpenCL-Runtime-5.2.3.tar.gz : 932ea3cd268410010c0830d977a30ef9c14b8c37617d3572a062b5d4595e2b94
+    - https://github.com/ROCm-Developer-Tools/ROCclr/archive/refs/tags/rocm-5.3.3.tar.gz#ROCclr-5.3.3.tar.gz : f8133a5934f9c53b253d324876d74f08a19e2f5b073bc94a62fe64b0d2183a18
+    - https://github.com/RadeonOpenCompute/ROCm-OpenCL-Runtime/archive/refs/tags/rocm-5.3.3.tar.gz#ROCm-OpenCL-Runtime-5.3.3.tar.gz : cab394e6ef16c35bab8de29a66b96a7dc0e7d1297aaacba3718fa1d369233c9f
 license    : MIT
 component  : programming.devel
 summary    :
@@ -13,10 +13,6 @@ summary    :
 description: |
     OpenCL 2.2 compatible language runtime for AMD Radeon GPUs
 extract    : False
-# avx2       : yes
-# optimize   :
-#     - speed
-#     - lto
 clang      : yes
 rundeps    :
     - rocminfo
@@ -32,33 +28,11 @@ builddeps  :
     - rocm-compilersupport-devel
     - rocm-device-libs-devel
     - rocm-runtime-devel
+environment: |
+    export CXXFLAGS="$CXXFLAGS -I/usr/include/amd_comgr/"
 setup      : |
     tar -xvzf $sources/ROCclr-%version%.tar.gz
     tar -xvzf $sources/ROCm-OpenCL-Runtime-%version%.tar.gz --strip-components=1
-
-    pushd ROCclr-rocm-%version%
-    # Enable experimental pre vega platforms
-    sed -i 's/\(ROC_ENABLE_PRE_VEGA.*\)false/\1true/' utils/flags.hpp
-    popd
-
-    # Add soname to amdocl and cltrace:
-    # Upstream doesn't want this because they don't guarentee ABI.
-    # Just use the package version. SOVERSION can be major.minor as patch releases
-    # are unlikely to break anything.
-    echo "set_target_properties(amdocl PROPERTIES VERSION %version% SOVERSION $(v=%version%;echo ${v%%.*}))" \
-        >> amdocl/CMakeLists.txt
-    echo "libamdocl64.so.%{rocm_release}" > config/amdocl64.icd
-    echo "set_target_properties(cltrace PROPERTIES VERSION %version% SOVERSION $(v=%version%;echo ${v%%.*}))" \
-        >> tools/cltrace/CMakeLists.txt
-
-    #Clean up unused bundled code:
-    # bundled opencl2.2 headers are needed as ocl doesn't compile against latest:
-    ls -d khronos/* | grep -v headers | xargs rm -r
-    ls -d khronos/headers/* | grep -v opencl2.2 | xargs rm -r
-    # unused opencl 2.2 test code:
-    rm -r khronos/headers/opencl2.2/tests/
-
-    %patch -p1 < $pkgfiles/0004-SWDEV-336248-Don-t-exclude-cl_egl.h-from-install.patch
 
     %cmake_ninja -Wno-dev  \
         -DAMD_OPENCL_PATH="%workdir%" \
@@ -67,7 +41,7 @@ setup      : |
         -DBUILD_ICD=OFF \
         -DROCM_DIR=%PREFIX% \
         -DUSE_COMGR_LIBRARY=ON \
-        -DFILE_REORG_BACKWARD_COMPATIBILITY=ON \
+        -DFILE_REORG_BACKWARD_COMPATIBILITY=OFF \
 build      : |
     %ninja_build
 install    : |
