@@ -1,8 +1,8 @@
 name       : rocminfo
-version    : 5.2.3
-release    : 1
+version    : 5.3.3
+release    : 2
 source     :
-    - https://github.com/RadeonOpenCompute/rocminfo/archive/refs/tags/rocm-5.2.3.tar.gz : 38fe8db21077100ee2242bd087371f6b8e0078d3a269e145d3a4ab314d0b8902
+    - https://github.com/RadeonOpenCompute/rocminfo/archive/refs/tags/rocm-5.3.3.tar.gz : 77e6adc81da6c1d153517e1d28db774205531a2ec188e6518f998328ef7897c6
 homepage   : https://github.com/RadeonOpenCompute/rocminfo/
 license    : NCSA
 component  : programming.devel
@@ -16,7 +16,8 @@ builddeps  :
 setup      : |
     %cmake_ninja -DROCM_DIR=%PREFIX% \
                  -DROCRTST_BLD_TYPE="Release" \
-                 -DROCRTST_BLD_BITS=64
+                 -DROCRTST_BLD_BITS=64 \
+                 -DFILE_REORG_BACKWARD_COMPATIBILITY=OFF
 build      : |
     %ninja_build
 install    : |
