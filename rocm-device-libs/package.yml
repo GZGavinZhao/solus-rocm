@@ -1,9 +1,8 @@
 name       : rocm-device-libs
-version    : 5.2.3
-release    : 2
+version    : 5.3.3
+release    : 3
 source     :
-    - https://github.com/RadeonOpenCompute/ROCm-Device-Libs/archive/refs/tags/rocm-5.2.3.tar.gz : 16b7fc7db4759bd6fb54852e9855fa16ead76c97871d7e1e9392e846381d611a
-    # - git|https://github.com/RadeonOpenCompute/ROCm-Device-Libs.git : rocm-5.2.3
+    - https://github.com/RadeonOpenCompute/ROCm-Device-Libs/archive/refs/tags/rocm-5.3.3.tar.gz : 963c9a0561111788b55a8c3b492e2a5737047914752376226c97a28122a4d768
 license    : NCSA
 component  : xorg.driver
 homepage   : https://github.com/RadeonOpenCompute
@@ -20,12 +19,14 @@ clang      : yes
 builddeps  :
     - rocm-cmake
 setup      : |
-    %patch -p1 < $pkgfiles/0001-Use-FHS-compliant-install.patch
+    # %patch -p1 < $pkgfiles/0001-Use-FHS-compliant-install.patch
     %patch -p1 < $pkgfiles/0001-fix-atomic.fadd.f32.p1.f32.patch
-    %cmake_ninja
+    %cmake_ninja -DFILE_REORG_BACKWARD_COMPATIBILITY=OFF
 build      : |
     %ninja_build
 install    : |
     %ninja_install
+
+    mv $installdir/usr/amdgcn $installdir/%libdir%/
 check      : |
     %ninja_check

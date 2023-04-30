@@ -54,6 +54,10 @@
             <Path fileType="library">/usr/lib64/amdgcn/bitcode/oclc_isa_version_1034.bc</Path>
             <Path fileType="library">/usr/lib64/amdgcn/bitcode/oclc_isa_version_1035.bc</Path>
             <Path fileType="library">/usr/lib64/amdgcn/bitcode/oclc_isa_version_1036.bc</Path>
+            <Path fileType="library">/usr/lib64/amdgcn/bitcode/oclc_isa_version_1100.bc</Path>
+            <Path fileType="library">/usr/lib64/amdgcn/bitcode/oclc_isa_version_1101.bc</Path>
+            <Path fileType="library">/usr/lib64/amdgcn/bitcode/oclc_isa_version_1102.bc</Path>
+            <Path fileType="library">/usr/lib64/amdgcn/bitcode/oclc_isa_version_1103.bc</Path>
             <Path fileType="library">/usr/lib64/amdgcn/bitcode/oclc_isa_version_600.bc</Path>
             <Path fileType="library">/usr/lib64/amdgcn/bitcode/oclc_isa_version_601.bc</Path>
             <Path fileType="library">/usr/lib64/amdgcn/bitcode/oclc_isa_version_602.bc</Path>
@@ -83,7 +87,7 @@
             <Path fileType="library">/usr/lib64/amdgcn/bitcode/oclc_wavefrontsize64_on.bc</Path>
             <Path fileType="library">/usr/lib64/amdgcn/bitcode/ocml.bc</Path>
             <Path fileType="library">/usr/lib64/amdgcn/bitcode/opencl.bc</Path>
-            <Path fileType="doc">/usr/share/doc/ROCm-Device-Libs/rocm-device-libs/LICENSE.TXT</Path>
+            <Path fileType="doc">/usr/share/doc/ROCm-Device-Libs/LICENSE.TXT</Path>
         </Files>
     </Package>
     <Package>
@@ -99,16 +103,16 @@
 </Description>
         <PartOf>programming.devel</PartOf>
         <RuntimeDependencies>
-            <Dependency release="2">rocm-device-libs</Dependency>
+            <Dependency release="3">rocm-device-libs</Dependency>
         </RuntimeDependencies>
         <Files>
             <Path fileType="library">/usr/lib64/cmake/AMDDeviceLibs/AMDDeviceLibsConfig.cmake</Path>
         </Files>
     </Package>
     <History>
-        <Update release="2">
+        <Update release="3">
             <Date>2023-04-30</Date>
-            <Version>5.2.3</Version>
+            <Version>5.3.3</Version>
             <Comment>Packaging update</Comment>
             <Name>Gavin Zhao</Name>
             <Email>me@gzgz.dev</Email>
