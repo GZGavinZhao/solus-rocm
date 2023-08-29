@@ -21,7 +21,10 @@
         <PartOf>programming.devel</PartOf>
         <Files>
             <Path fileType="library">/usr/lib64/libamd_comgr.so.2</Path>
-            <Path fileType="library">/usr/lib64/libamd_comgr.so.2.4</Path>
+            <Path fileType="library">/usr/lib64/libamd_comgr.so.2.5</Path>
+            <Path fileType="doc">/usr/share/doc/amd_comgr/LICENSE.txt</Path>
+            <Path fileType="doc">/usr/share/doc/amd_comgr/NOTICES.txt</Path>
+            <Path fileType="doc">/usr/share/doc/amd_comgr/README.md</Path>
         </Files>
     </Package>
     <Package>
@@ -31,10 +34,10 @@
 </Description>
         <PartOf>programming.devel</PartOf>
         <RuntimeDependencies>
-            <Dependency release="2">rocm-compilersupport</Dependency>
+            <Dependency release="3">rocm-compilersupport</Dependency>
         </RuntimeDependencies>
         <Files>
-            <Path fileType="header">/usr/include/amd_comgr.h</Path>
+            <Path fileType="header">/usr/include/amd_comgr/amd_comgr.h</Path>
             <Path fileType="library">/usr/lib64/cmake/amd_comgr/amd_comgr-config-version.cmake</Path>
             <Path fileType="library">/usr/lib64/cmake/amd_comgr/amd_comgr-config.cmake</Path>
             <Path fileType="library">/usr/lib64/cmake/amd_comgr/amd_comgr-targets-relwithdebinfo.cmake</Path>
@@ -43,9 +46,9 @@
         </Files>
     </Package>
     <History>
-        <Update release="2">
-            <Date>2022-12-14</Date>
-            <Version>5.2.3</Version>
+        <Update release="3">
+            <Date>2023-08-29</Date>
+            <Version>5.5.1</Version>
             <Comment>Packaging update</Comment>
             <Name>Gavin Zhao</Name>
             <Email>me@gzgz.dev</Email>
