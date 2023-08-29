@@ -1,9 +1,9 @@
 name       : rocm-opencl
-version    : 5.2.3
+version    : 5.5.1
 release    : 2
 source     :
-    - https://github.com/ROCm-Developer-Tools/ROCclr/archive/refs/tags/rocm-5.2.3.tar.gz#ROCclr-5.2.3.tar.gz : 0493c414d4db1af8e1eb30a651d9512044644244488ebb13478c2138a7612998
-    - https://github.com/RadeonOpenCompute/ROCm-OpenCL-Runtime/archive/refs/tags/rocm-5.2.3.tar.gz#ROCm-OpenCL-Runtime-5.2.3.tar.gz : 932ea3cd268410010c0830d977a30ef9c14b8c37617d3572a062b5d4595e2b94
+    - https://github.com/ROCm-Developer-Tools/ROCclr/archive/refs/tags/rocm-5.5.1.tar.gz#ROCclr-5.5.1.tar.gz : 1375fc7723cfaa0ae22a78682186d4804188b0a54990bfd9c0b8eb421b85e37e
+    - https://github.com/RadeonOpenCompute/ROCm-OpenCL-Runtime/archive/refs/tags/rocm-5.5.1.tar.gz#ROCm-OpenCL-Runtime-5.5.1.tar.gz : a8a62a7c6fc5398406d2203b8cb75621a24944688e545d917033d87de2724498
 license    : MIT
 component  : programming.devel
 summary    :
@@ -13,10 +13,6 @@ summary    :
 description: |
     OpenCL 2.2 compatible language runtime for AMD Radeon GPUs
 extract    : False
-# avx2       : yes
-# optimize   :
-#     - speed
-#     - lto
 clang      : yes
 rundeps    :
     - rocminfo
@@ -32,14 +28,32 @@ builddeps  :
     - rocm-compilersupport-devel
     - rocm-device-libs-devel
     - rocm-runtime-devel
+environment: |
+    declare -A rocm_vars
+    rocm_vars=(
+        ["HIP_DEVICE_LIB_PATH"]="/usr/share/amdgcn/bitcode"
+        ["HIP_CLANG_PATH"]="/usr/bin"
+        ["HIP_COMPILER"]="clang"
+        ["HIP_LIB_PATH"]="/usr/lib64"
+        ["HIP_PATH"]="/usr"
+        ["HIP_PLATFORM"]="amd"
+        ["HIP_ROCCLR_HOME"]="/usr"
+        ["ROCM_PATH"]="/usr"
+    )
+
+    for name in "${!rocm_vars[@]}"; do
+        echo "Setting $name to ${rocm_vars[$name]}";
+        export "$name"="${rocm_vars[$name]}";
+        export ROCM_CMAKE_FLAGS="$ROCM_CMAKE_FLAGS -D$name=${rocm_vars[$name]}";
+    done
 setup      : |
     tar -xvzf $sources/ROCclr-%version%.tar.gz
     tar -xvzf $sources/ROCm-OpenCL-Runtime-%version%.tar.gz --strip-components=1
 
-    pushd ROCclr-rocm-%version%
-    # Enable experimental pre vega platforms
-    sed -i 's/\(ROC_ENABLE_PRE_VEGA.*\)false/\1true/' utils/flags.hpp
-    popd
+    # pushd ROCclr-rocm-%version%
+    # # Enable experimental pre vega platforms
+    # sed -i 's/\(ROC_ENABLE_PRE_VEGA.*\)false/\1true/' utils/flags.hpp
+    # popd
 
     # Add soname to amdocl and cltrace:
     # Upstream doesn't want this because they don't guarentee ABI.
@@ -51,23 +65,21 @@ setup      : |
     echo "set_target_properties(cltrace PROPERTIES VERSION %version% SOVERSION $(v=%version%;echo ${v%%.*}))" \
         >> tools/cltrace/CMakeLists.txt
 
-    #Clean up unused bundled code:
-    # bundled opencl2.2 headers are needed as ocl doesn't compile against latest:
-    ls -d khronos/* | grep -v headers | xargs rm -r
-    ls -d khronos/headers/* | grep -v opencl2.2 | xargs rm -r
-    # unused opencl 2.2 test code:
-    rm -r khronos/headers/opencl2.2/tests/
+    # #Clean up unused bundled code:
+    # # bundled opencl2.2 headers are needed as ocl doesn't compile against latest:
+    # ls -d khronos/* | grep -v headers | xargs rm -r
+    # ls -d khronos/headers/* | grep -v opencl2.2 | xargs rm -r
+    # # unused opencl 2.2 test code:
+    # rm -r khronos/headers/opencl2.2/tests/
 
-    %patch -p1 < $pkgfiles/0004-SWDEV-336248-Don-t-exclude-cl_egl.h-from-install.patch
-
-    %cmake_ninja -Wno-dev  \
-        -DAMD_OPENCL_PATH="%workdir%" \
-        -DROCM_PATH=%PREFIX% \
-        -DROCCLR_PATH="%workdir%/ROCclr-rocm-%version%" \
-        -DBUILD_ICD=OFF \
-        -DROCM_DIR=%PREFIX% \
-        -DUSE_COMGR_LIBRARY=ON \
-        -DFILE_REORG_BACKWARD_COMPATIBILITY=ON \
+    %cmake_ninja $ROCM_CMAKE_FLAGS -Wno-dev  \
+                                   -DAMD_OPENCL_PATH="%workdir%" \
+                                   -DROCM_PATH=%PREFIX% \
+                                   -DROCCLR_PATH="%workdir%/ROCclr-rocm-%version%" \
+                                   -DBUILD_ICD=OFF \
+                                   -DROCM_DIR=%PREFIX% \
+                                   -DUSE_COMGR_LIBRARY=ON \
+                                   -DFILE_REORG_BACKWARD_COMPATIBILITY=OFF \
 build      : |
     %ninja_build
 install    : |
@@ -78,10 +90,6 @@ install    : |
     # Avoid file conflicts with opencl-headers package:
     mkdir -p $installdir/usr/include/rocm-opencl
     mv $installdir/usr/include/CL $installdir/usr/include/rocm-opencl/CL
-
-    # # CMake excludes installing this for some reason
-    # install -Dm00644 khronos/headers/opencl2.2/CL/cl_egl.h \
-    #     $installdir/usr/include/rocm-opencl/CL
 
     # #Avoid file conflicts with clinfo package:
     mv $installdir/usr/bin/clinfo $installdir/usr/bin/rocm-clinfo

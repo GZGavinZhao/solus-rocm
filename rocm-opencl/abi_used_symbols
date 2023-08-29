@@ -25,7 +25,6 @@ libc.so.6:__libc_start_main
 libc.so.6:__stack_chk_fail
 libc.so.6:__vfprintf_chk
 libc.so.6:__vsnprintf_chk
-libc.so.6:__wmemcpy_chk
 libc.so.6:_exit
 libc.so.6:abort
 libc.so.6:basename
@@ -159,6 +158,7 @@ libhsa-runtime64.so.1:hsa_executable_create_alt
 libhsa-runtime64.so.1:hsa_executable_destroy
 libhsa-runtime64.so.1:hsa_executable_freeze
 libhsa-runtime64.so.1:hsa_executable_get_symbol_by_name
+libhsa-runtime64.so.1:hsa_executable_iterate_symbols
 libhsa-runtime64.so.1:hsa_executable_load_agent_code_object
 libhsa-runtime64.so.1:hsa_executable_symbol_get_info
 libhsa-runtime64.so.1:hsa_ext_image_create
@@ -246,9 +246,8 @@ libstdc++.so.6:_ZNSolsEs
 libstdc++.so.6:_ZNSt11regex_errorD1Ev
 libstdc++.so.6:_ZNSt13basic_filebufIcSt11char_traitsIcEE4openEPKcSt13_Ios_Openmode
 libstdc++.so.6:_ZNSt13basic_filebufIcSt11char_traitsIcEE5closeEv
-libstdc++.so.6:_ZNSt13basic_filebufIcSt11char_traitsIcEED2Ev
 libstdc++.so.6:_ZNSt13basic_fstreamIcSt11char_traitsIcEEC1Ev
-libstdc++.so.6:_ZNSt13basic_fstreamIcSt11char_traitsIcEED1Ev
+libstdc++.so.6:_ZNSt13basic_fstreamIcSt11char_traitsIcEED2Ev
 libstdc++.so.6:_ZNSt13random_device7_M_finiEv
 libstdc++.so.6:_ZNSt13random_device7_M_initERKNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEE
 libstdc++.so.6:_ZNSt13random_device9_M_getvalEv
@@ -256,7 +255,7 @@ libstdc++.so.6:_ZNSt13runtime_errorC2EPKc
 libstdc++.so.6:_ZNSt14basic_ifstreamIcSt11char_traitsIcEEC1EPKcSt13_Ios_Openmode
 libstdc++.so.6:_ZNSt14basic_ifstreamIcSt11char_traitsIcEEC1ERKNSt7__cxx1112basic_stringIcS1_SaIcEEESt13_Ios_Openmode
 libstdc++.so.6:_ZNSt14basic_ifstreamIcSt11char_traitsIcEEC1Ev
-libstdc++.so.6:_ZNSt14basic_ifstreamIcSt11char_traitsIcEED1Ev
+libstdc++.so.6:_ZNSt14basic_ifstreamIcSt11char_traitsIcEED2Ev
 libstdc++.so.6:_ZNSt14basic_ofstreamIcSt11char_traitsIcEE5closeEv
 libstdc++.so.6:_ZNSt14basic_ofstreamIcSt11char_traitsIcEEC1EPKcSt13_Ios_Openmode
 libstdc++.so.6:_ZNSt14basic_ofstreamIcSt11char_traitsIcEEC1ERKNSt7__cxx1112basic_stringIcS1_SaIcEEESt13_Ios_Openmode
@@ -278,14 +277,12 @@ libstdc++.so.6:_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_appendEP
 libstdc++.so.6:_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_assignERKS4_
 libstdc++.so.6:_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_createERmm
 libstdc++.so.6:_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEE9_M_mutateEmmPKcm
-libstdc++.so.6:_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC2EPKcRKS3_
 libstdc++.so.6:_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEED2Ev
 libstdc++.so.6:_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEOS4_
 libstdc++.so.6:_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEPKc
 libstdc++.so.6:_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLEPKc
 libstdc++.so.6:_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEpLERKS4_
 libstdc++.so.6:_ZNSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEE10_M_replaceEmmPKwm
-libstdc++.so.6:_ZNSt7__cxx1112basic_stringIwSt11char_traitsIwESaIwEE9_M_createERmm
 libstdc++.so.6:_ZNSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEEC1ERKNS_12basic_stringIcS2_S3_EESt13_Ios_Openmode
 libstdc++.so.6:_ZNSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEEC1Ev
 libstdc++.so.6:_ZNSt7__cxx1118basic_stringstreamIcSt11char_traitsIcESaIcEED1Ev
@@ -333,6 +330,7 @@ libstdc++.so.6:_ZSt9terminatev
 libstdc++.so.6:_ZSt9use_facetINSt7__cxx117collateIcEEERKT_RKSt6locale
 libstdc++.so.6:_ZSt9use_facetISt5ctypeIcEERKT_RKSt6locale
 libstdc++.so.6:_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc
+libstdc++.so.6:_ZStrsIcSt11char_traitsIcEERSt13basic_istreamIT_T0_ES6_RS3_
 libstdc++.so.6:_ZStrsIcSt11char_traitsIcESaIcEERSt13basic_istreamIT_T0_ES7_RNSt7__cxx1112basic_stringIS4_S5_T1_EE
 libstdc++.so.6:_ZTINSt6locale5facetE
 libstdc++.so.6:_ZTISt11regex_error
@@ -345,7 +343,6 @@ libstdc++.so.6:_ZTTNSt7__cxx1119basic_istringstreamIcSt11char_traitsIcESaIcEEE
 libstdc++.so.6:_ZTTNSt7__cxx1119basic_ostringstreamIcSt11char_traitsIcESaIcEEE
 libstdc++.so.6:_ZTTSt13basic_fstreamIcSt11char_traitsIcEE
 libstdc++.so.6:_ZTTSt14basic_ifstreamIcSt11char_traitsIcEE
-libstdc++.so.6:_ZTTSt14basic_ofstreamIcSt11char_traitsIcEE
 libstdc++.so.6:_ZTVN10__cxxabiv117__class_type_infoE
 libstdc++.so.6:_ZTVN10__cxxabiv120__si_class_type_infoE
 libstdc++.so.6:_ZTVN10__cxxabiv121__vmi_class_type_infoE
