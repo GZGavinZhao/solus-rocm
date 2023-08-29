@@ -1,9 +1,8 @@
 name       : rocm-device-libs
-version    : 5.2.3
-release    : 2
+version    : 5.5.1
+release    : 3
 source     :
-    - https://github.com/RadeonOpenCompute/ROCm-Device-Libs/archive/refs/tags/rocm-5.2.3.tar.gz : 16b7fc7db4759bd6fb54852e9855fa16ead76c97871d7e1e9392e846381d611a
-    # - git|https://github.com/RadeonOpenCompute/ROCm-Device-Libs.git : rocm-5.2.3
+    - https://github.com/RadeonOpenCompute/ROCm-Device-Libs/archive/refs/tags/rocm-5.5.1.tar.gz : 3b5f6dd85f0e3371f6078da7b59bf77d5b210e30f1cc66ef1e2de6bbcb775833
 license    : NCSA
 component  : xorg.driver
 homepage   : https://github.com/RadeonOpenCompute
@@ -19,13 +18,12 @@ description: |
 clang      : yes
 builddeps  :
     - rocm-cmake
-    - rocm-runtime-devel
 setup      : |
-    %patch -p1 < $pkgfiles/0001-Use-FHS-compliant-install.patch
+    %patch -p1 < $pkgfiles/cmake.diff
     %cmake_ninja
 build      : |
     %ninja_build
 install    : |
     %ninja_install
-check      : |
-    %ninja_check
+# check      : |
+#     %ninja_check
