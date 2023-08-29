@@ -16,3 +16,16 @@ index 773c6f6..c334a1b 100644
  
  # Set `inc_options` to contain Clang command-line for include directories for
  # current source directory.
+diff --git a/cmake/Packages.cmake b/cmake/Packages.cmake
+index 07c60eb..bc309ec 100644
+--- a/cmake/Packages.cmake
++++ b/cmake/Packages.cmake
+@@ -16,7 +16,7 @@ configure_file(AMDDeviceLibsConfig.cmake.in
+   @ONLY)
+ 
+ 
+-set(install_path_suffix "amdgcn/bitcode")
++set(install_path_suffix "${CMAKE_INSTALL_DATADIR}/amdgcn/bitcode")
+ 
+ # Generate the install-tree package.
+ # We do not know the absolute path to the intall tree until we are installed,
