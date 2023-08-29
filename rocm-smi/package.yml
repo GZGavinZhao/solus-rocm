@@ -1,16 +1,34 @@
 name       : rocm-smi
-version    : 5.2.3
-release    : 2
+version    : 5.5.1
+release    : 3
 source     :
-    - https://github.com/RadeonOpenCompute/rocm_smi_lib/archive/refs/tags/rocm-5.2.3.tar.gz : fcf4f75a8daeca81ecb107989712c5f3776ee11e6eed870cb93efbf66ff1c384
+    - https://github.com/RadeonOpenCompute/rocm_smi_lib/archive/refs/tags/rocm-5.5.1.tar.gz : 37f32350bfaf6c697312628696d1b1d5fd9165f183882759bc6cb9a5d65b9430
 license    : NCSA
 component  : programming.devel
 summary    : ROCm System Management Interface Library
 description: |
     ROCm System Management Interface Library
+environment: |
+    declare -A rocm_vars
+    rocm_vars=(
+        ["HIP_DEVICE_LIB_PATH"]="/usr/share/amdgcn/bitcode"
+        ["HIP_CLANG_PATH"]="/usr/bin"
+        ["HIP_COMPILER"]="clang"
+        ["HIP_LIB_PATH"]="/usr/lib64"
+        ["HIP_PATH"]="/usr"
+        ["HIP_PLATFORM"]="amd"
+        ["HIP_ROCCLR_HOME"]="/usr"
+        ["ROCM_PATH"]="/usr"
+    )
+
+    for name in "${!rocm_vars[@]}"; do
+        echo "Setting $name to ${rocm_vars[$name]}";
+        export "$name"="${rocm_vars[$name]}";
+        export ROCM_CMAKE_FLAGS="$ROCM_CMAKE_FLAGS -D$name=${rocm_vars[$name]}";
+    done
 setup      : |
-    %patch -p1 < $pkgfiles/0001-Add-missing-string-header-for-memcpy.patch
-    %cmake_ninja
+    %cmake_ninja $ROCM_CMAKE_FLAGS \
+                 -DFILE_REORG_BACKWARD_COMPATIBILITY=OFF
 build      : |
     %ninja_build
 install    : |
