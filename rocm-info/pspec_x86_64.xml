@@ -22,22 +22,13 @@
         <Files>
             <Path fileType="executable">/usr/bin/rocm_agent_enumerator</Path>
             <Path fileType="executable">/usr/bin/rocminfo</Path>
-        </Files>
-    </Package>
-    <Package>
-        <Name>rocminfo-docs</Name>
-        <Summary xml:lang="en">Documentation for rocminfo</Summary>
-        <Description xml:lang="en">ROCm Application for Reporting System Info
-</Description>
-        <PartOf>programming.docs</PartOf>
-        <Files>
             <Path fileType="doc">/usr/share/doc/rocminfo/License.txt</Path>
         </Files>
     </Package>
     <History>
-        <Update release="1">
-            <Date>2022-12-14</Date>
-            <Version>5.2.3</Version>
+        <Update release="2">
+            <Date>2023-08-29</Date>
+            <Version>5.5.1</Version>
             <Comment>Packaging update</Comment>
             <Name>Gavin Zhao</Name>
             <Email>me@gzgz.dev</Email>
