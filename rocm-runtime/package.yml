@@ -1,19 +1,14 @@
 name       : rocm-runtime
-version    : 5.2.3
-release    : 2
+version    : 5.5.1
+release    : 3
 source     :
-    - https://github.com/RadeonOpenCompute/ROCR-Runtime/archive/refs/tags/rocm-5.2.3.tar.gz : 978de85d3455207bb82bef2254a4624e9116b1258a8c164d7a7e21a644eff12f
+    - https://github.com/RadeonOpenCompute/ROCR-Runtime/archive/refs/tags/rocm-5.5.1.tar.gz : 53d84ad5ba5086ed4ad67ad892c52c0e4eba8ddfa85c2dd341bf825f4d5fe4ee
 license    : NCSA
 component  : programming.devel
-clang      : yes
 homepage   : https://github.com/RadeonOpenCompute
 summary    : ROCm Runtime Library
 description: |
     The ROCm Runtime Library is a thin, user-mode API that exposes the necessary interfaces to access and interact with graphics hardware driven by the AMDGPU driver set and the AMDKFD kernel driver. Together they enable programmers to directly harness the power of AMD discrete graphics devices by allowing host applications to launch compute kernels directly to the graphics hardware.
-# avx2       : yes
-# optimize   :
-#     - speed
-#     - lto
 clang      : yes
 builddeps  :
     - pkgconfig(libdrm)
@@ -22,8 +17,26 @@ builddeps  :
     - pkgconfig(numa)
     - rocm-device-libs-devel
     - vim
+environment: |
+    declare -A rocm_vars
+    rocm_vars=(
+        ["HIP_DEVICE_LIB_PATH"]="/usr/share/amdgcn/bitcode"
+        ["HIP_CLANG_PATH"]="/usr/bin"
+        ["HIP_COMPILER"]="clang"
+        ["HIP_LIB_PATH"]="/usr/lib64"
+        ["HIP_PATH"]="/usr"
+        ["HIP_PLATFORM"]="amd"
+        ["HIP_ROCCLR_HOME"]="/usr"
+        ["ROCM_PATH"]="/usr"
+    )
+
+    for name in "${!rocm_vars[@]}"; do
+        echo "Setting $name to ${rocm_vars[$name]}";
+        export "$name"="${rocm_vars[$name]}";
+        export ROCM_CMAKE_FLAGS="$ROCM_CMAKE_FLAGS -D$name=${rocm_vars[$name]}";
+    done
 setup      : |
-    %cmake_ninja -S src -DBITCODE_DIR="%libdir%/amdgcn/bitcode"
+    %cmake_ninja $ROCM_CMAKE_FLAGS -S src -DBITCODE_DIR="/usr/share/amdgcn/bitcode" -DINCLUDE_PATH_COMPATIBILITY=OFF
 build      : |
     %ninja_build
 install    : |
