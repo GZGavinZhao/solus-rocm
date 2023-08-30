@@ -1,8 +1,8 @@
 name       : rocmlir
-version    : 5.2.3
-release    : 1
+version    : 5.5.0
+release    : 2
 source     :
-    - https://github.com/ROCmSoftwarePlatform/rocMLIR/archive/refs/tags/rocm-5.2.3.tar.gz : 29e1c352d203622fa083432d5d368caccb53ba141119fbb7e8d5247d99854625 
+    - https://github.com/ROCmSoftwarePlatform/rocMLIR/archive/refs/tags/rocm-5.5.0.tar.gz : a5f62769d28a73e60bc8d61022820f050e97c977c8f6f6275488db31512e1f42
 license    : Apache-2.0
 component  : programming.devel
 summary    : MLIR-based convolution and GEMM kernel generator for ROCm
@@ -19,22 +19,33 @@ builddeps  :
     - rocm-opencl-devel
     - rocm-runtime-devel
     - rocm-smi-devel
-# environment: |
-#     # export CFLAGS="$CFLAGS --gcc-toolchain=/usr/lib64/gcc/x86_64-solus-linux/12"
-#     # export CXXFLAGS="$CXXFLAGS --gcc-toolchain=/usr/lib64/gcc/x86_64-solus-linux/12"
-#     # export CXXFLAGS="${CXXFLAGS/-fstack-protector-strong/} -fcf-protection=none"
+    - rocblas-devel
+environment: |
+    declare -A rocm_vars
+    rocm_vars=(
+        ["HIP_DEVICE_LIB_PATH"]="/usr/share/amdgcn/bitcode"
+        ["DEVICE_LIB_PATH"]="/usr/share/amdgcn/bitcode"
+        ["HIP_CLANG_PATH"]="/usr/bin"
+        ["HIP_COMPILER"]="clang"
+        ["HIP_LIB_PATH"]="/usr/lib64"
+        ["HIP_PATH"]="/usr"
+        ["HIP_PLATFORM"]="amd"
+        ["HIP_ROCCLR_HOME"]="/usr"
+        ["ROCM_PATH"]="/usr"
+        ["AMDGPU_TARGETS"]="gfx1030"
+        ["HCC_AMDGPU_TARGETS"]="gfx1030"
+        ["BUILD_FILE_REORG_BACKWARD_COMPATIBILITY"]="OFF"
+        ["HIPCC_VERBOSE"]="0"
+    )
+
+    for name in "${!rocm_vars[@]}"; do
+        echo "Setting $name to ${rocm_vars[$name]}";
+        export "$name"="${rocm_vars[$name]}";
+        export ROCM_CMAKE_FLAGS="$ROCM_CMAKE_FLAGS -D$name=${rocm_vars[$name]}";
+    done
 setup      : |
-    %cmake_ninja -DBUILD_FAT_LIBROCKCOMPILER=ON \
-                 -DLLVM_BUILD_UTILS:BOOL=OFF \
-                 -DMLIR_INCLUDE_DOCS:BOOL=OFF \
-                 -DMLIR_INCLUDE_TESTS:BOOL=OFF \
-                 -DMLIR_INCLUDE_INTEGRATION_TESTS:BOOL=OFF \
-                 # -DMLIR_BUILD_MLIR_C_DYLIB=ON \
-                 # -DCMAKE_PREFIX_PATH=%{_libdir}/cmake/llvm/ \
-                 # -DLLVM_EXTERNAL_LIT=%{_bindir}/lit \
-                 # -DBUILD_SHARED_LIBS=OFF \
-                 # -DMLIR_INSTALL_AGGREGATE_OBJECTS=OFF \
+    %cmake_ninja -DBUILD_FAT_LIBROCKCOMPILER=ON
 build      : |
-    %ninja_build
+    %ninja_build librockCompiler
 install    : |
     %ninja_install
