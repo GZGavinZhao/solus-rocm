@@ -1,11 +1,11 @@
 name       : rocsolver
-version    : 5.2.3
-release    : 1
+version    : 5.5.1
+release    : 2
 source     :
-    - https://github.com/ROCmSoftwarePlatform/rocSOLVER/archive/refs/tags/rocm-5.2.3.tar.gz : b278a1640f31fb1905f18dc5127d57e2b1d36fd2b4f39ae811b5537fa6ce87d4
+    - https://github.com/ROCmSoftwarePlatform/rocSOLVER/archive/refs/tags/rocm-5.5.1.tar.gz : 8bf843e42d2e89203ea5fdb6e6082cea90da8d02920ab4c09bcc2b6f69909760
 license    : MIT
 component  : programming.library
-summary    : Next generation LAPACK implementation for ROCm platform 
+summary    : Next generation LAPACK implementation for ROCm platform
 description: |
     rocSOLVER is a work-in-progress implementation of a subset of LAPACK functionality on the ROCm platform.
 clang      : yes
@@ -22,32 +22,37 @@ builddeps  :
     - rocm-runtime-devel
     - rocm-smi-devel
 environment: |
-    export CCACHE_MAXSIZE=100G
+    declare -A rocm_vars
+    rocm_vars=(
+        ["HIP_DEVICE_LIB_PATH"]="/usr/share/amdgcn/bitcode"
+        ["DEVICE_LIB_PATH"]="/usr/share/amdgcn/bitcode"
+        ["HIP_CLANG_PATH"]="/usr/bin"
+        ["HIP_COMPILER"]="clang"
+        ["HIP_LIB_PATH"]="/usr/lib64"
+        ["HIP_PATH"]="/usr"
+        ["HIP_PLATFORM"]="amd"
+        ["HIP_ROCCLR_HOME"]="/usr"
+        ["ROCM_PATH"]="/usr"
+        ["AMDGPU_TARGETS"]="gfx1030"
+        ["HCC_AMDGPU_TARGETS"]="gfx1030"
+        ["BUILD_FILE_REORG_BACKWARD_COMPATIBILITY"]="OFF"
+        ["HIPCC_VERBOSE"]="0"
+    )
 
-    export ROCM_PATH=%PREFIX%
-    export ROCM_DIR=%PREFIX%
+    for name in "${!rocm_vars[@]}"; do
+        echo "Setting $name to ${rocm_vars[$name]}";
+        export "$name"="${rocm_vars[$name]}";
+        export ROCM_CMAKE_FLAGS="$ROCM_CMAKE_FLAGS -D$name=${rocm_vars[$name]}";
+    done
 
-    export HIP_PLATFORM=amd
-    export HIP_RUNTIME=rocclr
-    export DEVICE_LIB_PATH=/usr/lib64/amdgcn/bitcode
-    export HIP_DEVICE_LIB_PATH=/usr/lib64/amdgcn/bitcode
-    export HSA_PATH=/usr/hsa
-    export LLVM_PATH=/usr
-
-    # Some flags are causing trouble, I don't know what...
-    # ld.lld: error: relocation R_X86_64_64 cannot be used against local symbol; recompile with -fPIC
-    unset CFLAGS CXXFLAGS LDFLAGS
-    export CFLAGS="-w"
-    export CXXFLAGS="-w"
-    # https://github.com/ROCm-Developer-Tools/HIP/blob/rocm-5.1.x/docs/markdown/clang_options.md
-    # export CFLAGS="${CFLAGS/-fstack-protector-strong/} -fcf-protection=none -mcmodel=medany -fPIC -w"
-    # export CXXFLAGS="${CXXFLAGS/-fstack-protector-strong/} -fcf-protection=none -mcmodel=medany -fPIC -w"
-    # export LDFLAGS="${LDFLAGS} -mcmodel=medany -fPIC -w"
+    unset CFLAGS
+    unset CXXFLAGS
+    unset LDFLAGS
+    export CXXFLAGS="-fcf-protection=none -mllvm -amdgpu-opt-vgpr-liverange=0"
 setup      : |
-    %cmake_ninja -DBUILD_FILE_REORG_BACKWARD_COMPATIBILITY=ON \
+    %cmake_ninja $ROCM_CMAKE_FLAGS \
                  -DROCSOLVER_EMBED_FMT=ON \
-                 -DAMDGPU_TARGETS='gfx1030' #limiting compilation to just one GPU speeds up build time massively
 build      : |
-    %ninja_build -j6
+    %ninja_build
 install    : |
     %ninja_install
