@@ -30,9 +30,6 @@
             <Path fileType="library">/usr/lib/librocfft-device-3.so.0.1</Path>
             <Path fileType="library">/usr/lib/librocfft.so.0</Path>
             <Path fileType="library">/usr/lib/librocfft.so.0.1</Path>
-            <Path fileType="data">/usr/rocfft/include/rocfft-export.h</Path>
-            <Path fileType="data">/usr/rocfft/include/rocfft-version.h</Path>
-            <Path fileType="data">/usr/rocfft/include/rocfft.h</Path>
             <Path fileType="data">/usr/rocfft/lib/cmake/rocfft-config-version.cmake</Path>
             <Path fileType="data">/usr/rocfft/lib/cmake/rocfft-config.cmake</Path>
             <Path fileType="data">/usr/rocfft/lib/cmake/rocfft-targets-relwithdebinfo.cmake</Path>
@@ -55,8 +52,6 @@
             <Dependency release="1">rocfft</Dependency>
         </RuntimeDependencies>
         <Files>
-            <Path fileType="header">/usr/include/rocfft-export.h</Path>
-            <Path fileType="header">/usr/include/rocfft-version.h</Path>
             <Path fileType="header">/usr/include/rocfft.h</Path>
             <Path fileType="header">/usr/include/rocfft/rocfft-export.h</Path>
             <Path fileType="header">/usr/include/rocfft/rocfft-version.h</Path>
@@ -74,7 +69,7 @@
     </Package>
     <History>
         <Update release="1">
-            <Date>2022-11-02</Date>
+            <Date>2023-08-29</Date>
             <Version>5.2.3</Version>
             <Comment>Packaging update</Comment>
             <Name>Gavin Zhao</Name>

@@ -25,6 +25,9 @@ libhipblas.so.0:hipblasCgbmvStridedBatched
 libhipblas.so.0:hipblasCgeam
 libhipblas.so.0:hipblasCgeamBatched
 libhipblas.so.0:hipblasCgeamStridedBatched
+libhipblas.so.0:hipblasCgels
+libhipblas.so.0:hipblasCgelsBatched
+libhipblas.so.0:hipblasCgelsStridedBatched
 libhipblas.so.0:hipblasCgemm
 libhipblas.so.0:hipblasCgemmBatched
 libhipblas.so.0:hipblasCgemmStridedBatched
@@ -172,6 +175,9 @@ libhipblas.so.0:hipblasDgbmvStridedBatched
 libhipblas.so.0:hipblasDgeam
 libhipblas.so.0:hipblasDgeamBatched
 libhipblas.so.0:hipblasDgeamStridedBatched
+libhipblas.so.0:hipblasDgels
+libhipblas.so.0:hipblasDgelsBatched
+libhipblas.so.0:hipblasDgelsStridedBatched
 libhipblas.so.0:hipblasDgemm
 libhipblas.so.0:hipblasDgemmBatched
 libhipblas.so.0:hipblasDgemmStridedBatched
@@ -288,6 +294,7 @@ libhipblas.so.0:hipblasGemmBatchedEx
 libhipblas.so.0:hipblasGemmEx
 libhipblas.so.0:hipblasGemmStridedBatchedEx
 libhipblas.so.0:hipblasGetAtomicsMode
+libhipblas.so.0:hipblasGetInt8Datatype
 libhipblas.so.0:hipblasGetMatrix
 libhipblas.so.0:hipblasGetMatrixAsync
 libhipblas.so.0:hipblasGetPointerMode
@@ -358,6 +365,7 @@ libhipblas.so.0:hipblasSdot
 libhipblas.so.0:hipblasSdotBatched
 libhipblas.so.0:hipblasSdotStridedBatched
 libhipblas.so.0:hipblasSetAtomicsMode
+libhipblas.so.0:hipblasSetInt8Datatype
 libhipblas.so.0:hipblasSetMatrix
 libhipblas.so.0:hipblasSetMatrixAsync
 libhipblas.so.0:hipblasSetPointerMode
@@ -370,6 +378,9 @@ libhipblas.so.0:hipblasSgbmvStridedBatched
 libhipblas.so.0:hipblasSgeam
 libhipblas.so.0:hipblasSgeamBatched
 libhipblas.so.0:hipblasSgeamStridedBatched
+libhipblas.so.0:hipblasSgels
+libhipblas.so.0:hipblasSgelsBatched
+libhipblas.so.0:hipblasSgelsStridedBatched
 libhipblas.so.0:hipblasSgemm
 libhipblas.so.0:hipblasSgemmBatched
 libhipblas.so.0:hipblasSgemmStridedBatched
@@ -501,6 +512,9 @@ libhipblas.so.0:hipblasZgbmvStridedBatched
 libhipblas.so.0:hipblasZgeam
 libhipblas.so.0:hipblasZgeamBatched
 libhipblas.so.0:hipblasZgeamStridedBatched
+libhipblas.so.0:hipblasZgels
+libhipblas.so.0:hipblasZgelsBatched
+libhipblas.so.0:hipblasZgelsStridedBatched
 libhipblas.so.0:hipblasZgemm
 libhipblas.so.0:hipblasZgemmBatched
 libhipblas.so.0:hipblasZgemmStridedBatched

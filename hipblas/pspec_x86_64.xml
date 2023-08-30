@@ -19,10 +19,6 @@
 </Description>
         <PartOf>programming.library</PartOf>
         <Files>
-            <Path fileType="data">/usr/hipblas/include/hipblas-export.h</Path>
-            <Path fileType="data">/usr/hipblas/include/hipblas-version.h</Path>
-            <Path fileType="data">/usr/hipblas/include/hipblas.h</Path>
-            <Path fileType="data">/usr/hipblas/include/hipblas_module.f90</Path>
             <Path fileType="data">/usr/hipblas/lib/cmake/hipblas-config-version.cmake</Path>
             <Path fileType="data">/usr/hipblas/lib/cmake/hipblas-config.cmake</Path>
             <Path fileType="data">/usr/hipblas/lib/cmake/hipblas-targets-relwithdebinfo.cmake</Path>
@@ -40,17 +36,13 @@
 </Description>
         <PartOf>programming.devel</PartOf>
         <RuntimeDependencies>
-            <Dependency release="1">hipblas</Dependency>
+            <Dependency release="2">hipblas</Dependency>
         </RuntimeDependencies>
         <Files>
-            <Path fileType="header">/usr/include/hipblas-export.h</Path>
-            <Path fileType="header">/usr/include/hipblas-version.h</Path>
-            <Path fileType="header">/usr/include/hipblas.h</Path>
             <Path fileType="header">/usr/include/hipblas/hipblas-export.h</Path>
             <Path fileType="header">/usr/include/hipblas/hipblas-version.h</Path>
             <Path fileType="header">/usr/include/hipblas/hipblas.h</Path>
             <Path fileType="header">/usr/include/hipblas/hipblas_module.f90</Path>
-            <Path fileType="header">/usr/include/hipblas_module.f90</Path>
             <Path fileType="library">/usr/lib/cmake/hipblas/hipblas-config-version.cmake</Path>
             <Path fileType="library">/usr/lib/cmake/hipblas/hipblas-config.cmake</Path>
             <Path fileType="library">/usr/lib/cmake/hipblas/hipblas-targets-relwithdebinfo.cmake</Path>
@@ -59,9 +51,9 @@
         </Files>
     </Package>
     <History>
-        <Update release="1">
-            <Date>2022-11-02</Date>
-            <Version>5.2.3</Version>
+        <Update release="2">
+            <Date>2023-08-29</Date>
+            <Version>5.5.1</Version>
             <Comment>Packaging update</Comment>
             <Name>Gavin Zhao</Name>
             <Email>me@gzgz.dev</Email>
