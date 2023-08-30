@@ -1,11 +1,11 @@
 name       : rccl
-version    : 5.2.3
-release    : 1
+version    : 5.5.1
+release    : 2
 source     :
-    - https://github.com/ROCmSoftwarePlatform/rccl/archive/refs/tags/rocm-5.2.3.tar.gz : ecba09f4c95b4b2dae81b88231a972ac956d29909b5e712e21cf2a74bd251ff4
+    - https://github.com/ROCmSoftwarePlatform/rccl/archive/refs/tags/rocm-5.5.1.tar.gz : f6b9dc6dafeb49d95c085825876b09317d8252771c746ccf5aa19a9204a404b2
 license    : MIT
 component  : programming.library
-summary    : ROCm Communication Collectives Library (RCCL) 
+summary    : ROCm Communication Collectives Library (RCCL)
 description: |
     RCCL (pronounced "Rickle") is a stand-alone library of standard collective communication routines for GPUs, implementing all-reduce, all-gather, reduce, broadcast, reduce-scatter, gather, scatter, and all-to-all. There is also initial support for direct GPU-to-GPU send and receive operations. It has been optimized to achieve high bandwidth on platforms using PCIe, xGMI as well as networking using InfiniBand Verbs or TCP/IP sockets. RCCL supports an arbitrary number of GPUs installed in a single node or multiple nodes, and can be used in either single- or multi-process (e.g., MPI) applications.
 clang      : yes
@@ -18,31 +18,43 @@ builddeps  :
     - rocm-opencl-devel
     - rocm-runtime-devel
     - rocm-smi-devel
-    - git
+    - rocm-hipify
 environment: |
-    export CCACHE_MAXSIZE=100G
+    declare -A rocm_vars
+    rocm_vars=(
+        ["HIP_DEVICE_LIB_PATH"]="/usr/share/amdgcn/bitcode"
+        ["DEVICE_LIB_PATH"]="/usr/share/amdgcn/bitcode"
+        ["HIP_CLANG_PATH"]="/usr/bin"
+        ["HIP_COMPILER"]="clang"
+        ["HIP_LIB_PATH"]="/usr/lib64"
+        ["HIP_PATH"]="/usr"
+        ["HIP_PLATFORM"]="amd"
+        ["HIP_ROCCLR_HOME"]="/usr"
+        ["ROCM_PATH"]="/usr"
+        ["AMDGPU_TARGETS"]="gfx1030"
+        ["HCC_AMDGPU_TARGETS"]="gfx1030"
+        ["BUILD_FILE_REORG_BACKWARD_COMPATIBILITY"]="OFF"
+        ["HIPCC_VERBOSE"]="0"
+        ["CMAKE_POSITION_INDEPENDENT_CODE"]="ON"
+    )
 
-    export ROCM_PATH=%PREFIX%
-    export ROCM_DIR=%PREFIX%
+    for name in "${!rocm_vars[@]}"; do
+        echo "Setting $name to ${rocm_vars[$name]}";
+        export "$name"="${rocm_vars[$name]}";
+        export ROCM_CMAKE_FLAGS="$ROCM_CMAKE_FLAGS -D$name=${rocm_vars[$name]}";
+    done
 
-    export HIP_PLATFORM=amd
-    export HIP_RUNTIME=rocclr
-    export HIP_COMPILER=clang
-    export HIP_CLANG_PATH=/usr/bin
-    export DEVICE_LIB_PATH=/usr/lib64/amdgcn/bitcode
-    export HSA_PATH=/usr/hsa
-    export LLVM_PATH=/usr
-
-    # CXXFLAGS="${CXXFLAGS/-fstack-protector-strong/} -fcf-protection=none"
-    # unset LDFLAGS FFLAGS FCFLAGS 
-    export CXXFLAGS="${CXXFLAGS/-fstack-protector-strong/} -fcf-protection=none -mllvm -amdgpu-opt-vgpr-liverange=false -w"
-    # export LDFLAGS="-mllvm -amdgpu-opt-vgpr-liverange=false"
-    # export CXXFLAGS="${CXXFLAGS/-fstack-protector-strong/} -fcf-protection=none"
+    unset CFLAGS
+    unset CXXFLAGS
+    unset LDFLAGS
+    export CXXFLAGS="-w -fcf-protection=none -mllvm -amdgpu-opt-vgpr-liverange=0"
 setup      : |
-    %cmake_ninja -DCMAKE_CXX_COMPILER=/usr/bin/hipcc -DBUILD_TESTS=OFF \
-                 -DHIP_COMPILER=clang \
-                 -DAMDGPU_TARGETS="gfx1030" \
+    %cmake -B build -S . $ROCM_CMAKE_FLAGS \
+           -DCMAKE_CXX_COMPILER=hipcc \
+           -DBUILD_STATIC=OFF \
+           -DBUILD_TESTS=OFF \
+           -L
 build      : |
-    %ninja_build
+    %make -C build
 install    : |
-    %ninja_install
+    %make_install -C build

@@ -21,7 +21,6 @@
         <Files>
             <Path fileType="library">/usr/lib/librccl.so.1</Path>
             <Path fileType="library">/usr/lib/librccl.so.1.0</Path>
-            <Path fileType="data">/usr/rccl/include/rccl.h</Path>
             <Path fileType="data">/usr/rccl/lib/cmake/rccl-config-version.cmake</Path>
             <Path fileType="data">/usr/rccl/lib/cmake/rccl-config.cmake</Path>
             <Path fileType="data">/usr/rccl/lib/cmake/rccl-targets-relwithdebinfo.cmake</Path>
@@ -37,10 +36,10 @@
 </Description>
         <PartOf>programming.devel</PartOf>
         <RuntimeDependencies>
-            <Dependency release="1">rccl</Dependency>
+            <Dependency release="2">rccl</Dependency>
         </RuntimeDependencies>
         <Files>
-            <Path fileType="header">/usr/include/rccl.h</Path>
+            <Path fileType="header">/usr/include/rccl/nccl_net.h</Path>
             <Path fileType="header">/usr/include/rccl/rccl.h</Path>
             <Path fileType="library">/usr/lib/cmake/rccl/rccl-config-version.cmake</Path>
             <Path fileType="library">/usr/lib/cmake/rccl/rccl-config.cmake</Path>
@@ -50,9 +49,9 @@
         </Files>
     </Package>
     <History>
-        <Update release="1">
-            <Date>2022-11-02</Date>
-            <Version>5.2.3</Version>
+        <Update release="2">
+            <Date>2023-08-30</Date>
+            <Version>5.5.1</Version>
             <Comment>Packaging update</Comment>
             <Name>Gavin Zhao</Name>
             <Email>me@gzgz.dev</Email>
