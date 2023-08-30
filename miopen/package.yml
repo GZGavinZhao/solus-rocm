@@ -1,17 +1,17 @@
 name       : miopen
-version    : 2.16.0
-release    : 1
+version    : 2.19.0
+release    : 2
 source     :
-    # - https://github.com/ROCmSoftwarePlatform/MIOpen/archive/refs/tags/2.14.0.tar.gz : 6e9a6f925b976eb21fadb02187b9e8d7eb5475ca595ca29610c337416c1dbb77
-    - https://github.com/ROCmSoftwarePlatform/MIOpen/archive/refs/tags/2.16.0.tar.gz : 47d3d3fc1290c9034c044c03b39b6577b8f3142763ce63d7e92784dc1d4fabf6
+    - https://github.com/ROCmSoftwarePlatform/MIOpen/archive/refs/tags/rocm-5.5.1.tar.gz : 2cd75071b8ee876c69a94f028b6c8a9346d6d2fde7d4b64e6d635f3b6c994262
 license    : MIT
 component  : programming.library
-summary    : AMD's Machine Intelligence Library 
+summary    : AMD's Machine Intelligence Library
 description: |
     MIOpen is AMD's library for high performance machine learning primitives.
 clang      : yes
 builddeps  :
     - pkgconfig(sqlite3)
+    - pkgconfig(nlohmann_json)
     - bzip2-devel
     - rocminfo
     - rocm-cmake
@@ -21,40 +21,62 @@ builddeps  :
     - rocm-opencl-devel
     - rocm-runtime-devel
     - rocm-smi-devel
-      # - rocm-tensile
+    # - rocm-tensile
     - rocmlir-devel
     - half-devel
     - libboost-devel
-    - clang-ocl
     - rocblas-devel
+    - miopengemm-devel
+    - opencl-headers
+    - opencl-clhpp
+    # Takes too long to build, no proper release, hence not worth pursuing.
+    # - composable-kernel-devel
 environment: |
-    export ROCM_PATH=%PREFIX%
-    export ROCM_DIR=%PREFIX%
+    declare -A rocm_vars
+    rocm_vars=(
+        ["HIP_DEVICE_LIB_PATH"]="/usr/share/amdgcn/bitcode"
+        ["DEVICE_LIB_PATH"]="/usr/share/amdgcn/bitcode"
+        ["HIP_CLANG_PATH"]="/usr/bin"
+        ["HIP_COMPILER"]="clang"
+        ["HIP_LIB_PATH"]="/usr/lib64"
+        ["HIP_PATH"]="/usr"
+        ["HIP_PLATFORM"]="amd"
+        ["HIP_ROCCLR_HOME"]="/usr"
+        ["ROCM_PATH"]="/usr"
+        ["AMDGPU_TARGETS"]="gfx1030"
+        ["HCC_AMDGPU_TARGETS"]="gfx1030"
+        ["BUILD_FILE_REORG_BACKWARD_COMPATIBILITY"]="OFF"
+        ["HIPCC_VERBOSE"]="0"
+        ["CMAKE_POSITION_INDEPENDENT_CODE"]="ON"
+    )
 
-    export HIP_PLATFORM=amd
-    export HIP_RUNTIME=rocclr
-    export HIP_CLANG_PATH=/usr/bin
-    export HIP_CLANG_INCLUDE_PATH=/usr/include/hip
-    export HIP_CLANG_ROOT=/usr
-    export DEVICE_LIB_PATH=/usr/lib64/amdgcn/bitcode
-    export HIP_DEVICE_LIB_PATH=/usr/lib64/amdgcn/bitcode
-    export HSA_PATH=/usr/hsa
-    export LLVM_PATH=/usr
-    # https://github.com/ROCm-Developer-Tools/HIP/blob/rocm-5.1.x/docs/markdown/clang_options.md
-    # export CXXFLAGS="${CXXFLAGS/-fstack-protector-strong/} -fcf-protection=none"
+    for name in "${!rocm_vars[@]}"; do
+        echo "Setting $name to ${rocm_vars[$name]}";
+        export "$name"="${rocm_vars[$name]}";
+        export ROCM_CMAKE_FLAGS="$ROCM_CMAKE_FLAGS -D$name=${rocm_vars[$name]}";
+    done
+
+    unset CFLAGS
+    unset CXXFLAGS
+    unset LDFLAGS
+    export CXXFLAGS="-w -fcf-protection=none -mllvm -amdgpu-opt-vgpr-liverange=0"
 setup      : |
-    sed -i "s|MLIRMIOpen|rocMLIR|" CMakeLists.txt
+    sed -i "s|enable_testing()||" CMakeLists.txt
+    sed -i "s|add_subdirectory(doc)||" CMakeLists.txt
+    sed -i "s|add_subdirectory(test)||" CMakeLists.txt
+    sed -i "s|add_subdirectory(speedtests)||" CMakeLists.txt
 
-    %cmake_ninja -DMIOPEN_TEST_ALL=OFF \
+    %cmake_ninja $ROCM_CMAKE_FLAGS \
+                 -DBoost_USE_STATIC_LIBS=OFF \
+                 -DMIOPEN_TEST_ALL=OFF \
                  -DMIOPEN_USE_COMGR=ON \
                  -DMIOPEN_BACKEND=HIP \
-                 -DMIOPEN_USE_MIOPENGEMM=OFF \
-                 -DMIOPEN_USE_MLIR=OFF \
+                 -DMIOPEN_USE_COMPOSABLEKERNEL=OFF \
+                 -DMIOPEN_USE_MIOPENGEMM=ON \
+                 -DMIOPEN_USE_MLIR=ON \
                  -DMIOPEN_USE_MIOPENTENSILE=OFF \
-                 -DBoost_USE_STATIC_LIBS=OFF \
-                 -DCMAKE_CXX_COMPILER=/usr/bin/clang++ \
-                 -DAMD_GPU_TARGETS="gfx900;gfx906;gfx908;gfx90a;Vega20;Vega10;gfx1030;gfx1032" \
-                 # -DAMD_GPU_TARGETS="gfx1030" \
+                 -DMIOPEN_USE_ROCBLAS=ON \
+                 -L \
 build      : |
     %ninja_build
 install    : |
