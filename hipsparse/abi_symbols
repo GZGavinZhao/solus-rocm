@@ -115,6 +115,8 @@ libhipsparse.so.0:hipsparseCreatePruneInfo
 libhipsparse.so.0:hipsparseCreateSpVec
 libhipsparse.so.0:hipsparseCscSetPointers
 libhipsparse.so.0:hipsparseCsctr
+libhipsparse.so.0:hipsparseCsr2cscEx2
+libhipsparse.so.0:hipsparseCsr2cscEx2_bufferSize
 libhipsparse.so.0:hipsparseCsrGet
 libhipsparse.so.0:hipsparseCsrSetPointers
 libhipsparse.so.0:hipsparseCsrSetStridedBatch
