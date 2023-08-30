@@ -1,11 +1,11 @@
 name       : rocthrust
-version    : 5.2.3
-release    : 1
+version    : 5.5.1
+release    : 2
 source     :
-    - https://github.com/ROCmSoftwarePlatform/rocThrust/archive/refs/tags/rocm-5.2.3.tar.gz : 0f5ef39c5faab31eb34b48391d58096463969c133ca7ed09ab4e43caa5461b29
+    - https://github.com/ROCmSoftwarePlatform/rocThrust/archive/refs/tags/rocm-5.5.1.tar.gz : 66f126e5ea46ca761533411f81e83402773f95d3184cb7645ca73df227413023
 license    : MIT
 component  : programming.library
-summary    : ROCm Thrust - run Thrust dependent software on AMD GPUs 
+summary    : ROCm Thrust - run Thrust dependent software on AMD GPUs
 description: |
     Thrust is a parallel algorithm library. This library has been ported to HIP/ROCm platform, which uses the rocPRIM library. The HIP ported library works on HIP/ROCm platforms. Currently there is no CUDA backend in place.
 clang      : yes
@@ -19,21 +19,37 @@ builddeps  :
     - rocm-runtime-devel
     - rocm-smi-devel
     - rocprim-devel
-    - git
 environment: |
-    export ROCM_PATH=%PREFIX%
-    export ROCM_DIR=%PREFIX%
+    declare -A rocm_vars
+    rocm_vars=(
+        ["HIP_DEVICE_LIB_PATH"]="/usr/share/amdgcn/bitcode"
+        ["DEVICE_LIB_PATH"]="/usr/share/amdgcn/bitcode"
+        ["HIP_CLANG_PATH"]="/usr/bin"
+        ["HIP_COMPILER"]="clang"
+        ["HIP_LIB_PATH"]="/usr/lib64"
+        ["HIP_PATH"]="/usr"
+        ["HIP_PLATFORM"]="amd"
+        ["HIP_ROCCLR_HOME"]="/usr"
+        ["ROCM_PATH"]="/usr"
+        ["AMDGPU_TARGETS"]="gfx1030"
+        ["HCC_AMDGPU_TARGETS"]="gfx1030"
+        ["BUILD_FILE_REORG_BACKWARD_COMPATIBILITY"]="OFF"
+        ["HIPCC_VERBOSE"]="0"
+    )
 
-    export HIP_PLATFORM=amd
-    export HIP_RUNTIME=rocclr
-    export HIP_COMPILER=clang
-    export HIP_CLANG_PATH=/usr/bin
-    export DEVICE_LIB_PATH=/usr/lib64/amdgcn/bitcode
-    export HSA_PATH=/usr/hsa
-    export LLVM_PATH=/usr
+    for name in "${!rocm_vars[@]}"; do
+        echo "Setting $name to ${rocm_vars[$name]}";
+        export "$name"="${rocm_vars[$name]}";
+        export ROCM_CMAKE_FLAGS="$ROCM_CMAKE_FLAGS -D$name=${rocm_vars[$name]}";
+    done
+
+    unset CFLAGS
+    unset CXXFLAGS
+    unset LDFLAGS
+    export CXXFLAGS="-fcf-protection=none -mllvm -amdgpu-opt-vgpr-liverange=0"
 setup      : |
-    %cmake_ninja -DCMAKE_C_COMPILER=/usr/bin/clang -DCMAKE_CXX_COMPILER=/usr/bin/hipcc \
-                 -DAMDGPU_TARGETS='gfx1030'
+    %cmake_ninja $ROCM_CMAKE_FLAGS \
+                 -DCMAKE_CXX_COMPILER=hipcc
 build      : |
     %ninja_build
 install    : |
