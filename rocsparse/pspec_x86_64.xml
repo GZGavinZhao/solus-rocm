@@ -21,15 +21,6 @@
         <Files>
             <Path fileType="library">/usr/lib/librocsparse.so.0</Path>
             <Path fileType="library">/usr/lib/librocsparse.so.0.1</Path>
-            <Path fileType="data">/usr/rocsparse/include/rocsparse-auxiliary.h</Path>
-            <Path fileType="data">/usr/rocsparse/include/rocsparse-complex-types.h</Path>
-            <Path fileType="data">/usr/rocsparse/include/rocsparse-export.h</Path>
-            <Path fileType="data">/usr/rocsparse/include/rocsparse-functions.h</Path>
-            <Path fileType="data">/usr/rocsparse/include/rocsparse-types.h</Path>
-            <Path fileType="data">/usr/rocsparse/include/rocsparse-version.h</Path>
-            <Path fileType="data">/usr/rocsparse/include/rocsparse.f90</Path>
-            <Path fileType="data">/usr/rocsparse/include/rocsparse.h</Path>
-            <Path fileType="data">/usr/rocsparse/include/rocsparse_enums.f90</Path>
             <Path fileType="data">/usr/rocsparse/lib/cmake/rocsparse-config-version.cmake</Path>
             <Path fileType="data">/usr/rocsparse/lib/cmake/rocsparse-config.cmake</Path>
             <Path fileType="data">/usr/rocsparse/lib/cmake/rocsparse-targets-relwithdebinfo.cmake</Path>
@@ -45,17 +36,9 @@
 </Description>
         <PartOf>programming.devel</PartOf>
         <RuntimeDependencies>
-            <Dependency release="1">rocsparse</Dependency>
+            <Dependency release="2">rocsparse</Dependency>
         </RuntimeDependencies>
         <Files>
-            <Path fileType="header">/usr/include/rocsparse-auxiliary.h</Path>
-            <Path fileType="header">/usr/include/rocsparse-complex-types.h</Path>
-            <Path fileType="header">/usr/include/rocsparse-export.h</Path>
-            <Path fileType="header">/usr/include/rocsparse-functions.h</Path>
-            <Path fileType="header">/usr/include/rocsparse-types.h</Path>
-            <Path fileType="header">/usr/include/rocsparse-version.h</Path>
-            <Path fileType="header">/usr/include/rocsparse.f90</Path>
-            <Path fileType="header">/usr/include/rocsparse.h</Path>
             <Path fileType="header">/usr/include/rocsparse/rocsparse-auxiliary.h</Path>
             <Path fileType="header">/usr/include/rocsparse/rocsparse-complex-types.h</Path>
             <Path fileType="header">/usr/include/rocsparse/rocsparse-export.h</Path>
@@ -65,7 +48,6 @@
             <Path fileType="header">/usr/include/rocsparse/rocsparse.f90</Path>
             <Path fileType="header">/usr/include/rocsparse/rocsparse.h</Path>
             <Path fileType="header">/usr/include/rocsparse/rocsparse_enums.f90</Path>
-            <Path fileType="header">/usr/include/rocsparse_enums.f90</Path>
             <Path fileType="library">/usr/lib/cmake/rocsparse/rocsparse-config-version.cmake</Path>
             <Path fileType="library">/usr/lib/cmake/rocsparse/rocsparse-config.cmake</Path>
             <Path fileType="library">/usr/lib/cmake/rocsparse/rocsparse-targets-relwithdebinfo.cmake</Path>
@@ -74,9 +56,9 @@
         </Files>
     </Package>
     <History>
-        <Update release="1">
-            <Date>2022-11-02</Date>
-            <Version>5.2.3</Version>
+        <Update release="2">
+            <Date>2023-08-29</Date>
+            <Version>5.5.1</Version>
             <Comment>Packaging update</Comment>
             <Name>Gavin Zhao</Name>
             <Email>me@gzgz.dev</Email>
