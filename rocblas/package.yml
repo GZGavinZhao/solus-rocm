@@ -1,8 +1,8 @@
 name       : rocblas
-version    : 5.2.3
-release    : 1
+version    : 5.5.1
+release    : 2
 source     :
-    - https://github.com/ROCmSoftwarePlatform/rocBLAS/archive/refs/tags/rocm-5.2.3.tar.gz : 36f74ce53b82331a756c42f95f3138498d6f4a66f2fd370cff9ab18281bb12d5
+    - https://github.com/ROCmSoftwarePlatform/rocBLAS/archive/refs/tags/rocm-5.5.1.tar.gz : 7916a8d238d51cc239949d799f0b61c9d5cd63c6ccaed0e16749489b89ca8ff3
 license    : MIT
 component  : programming.library
 summary    : Next generation BLAS implementation for ROCm platform
@@ -30,43 +30,49 @@ builddeps  :
     - git
     - virtualenv
 environment: |
-    export CCACHE_MAXSIZE=100G
-    export ROCM_PATH=%PREFIX%
-    export ROCM_DIR=$ROCM_PATH
-    export HIP_PLATFORM=amd
-    export HIP_RUNTIME=rocclr
-    export HIP_COMPILER=clang
-    export HIP_CLANG_PATH=/usr/lib64/rocm-llvm/bin
-    export HSA_PATH=/usr/hsa
-    export HIP_PATH=$ROCM_PATH
-    export DEVICE_LIB_PATH=/usr/lib64/amdgcn/bitcode
+    declare -A rocm_vars
+    rocm_vars=(
+        ["HIP_DEVICE_LIB_PATH"]="/usr/share/amdgcn/bitcode"
+        ["DEVICE_LIB_PATH"]="/usr/share/amdgcn/bitcode"
+        ["HIP_CLANG_PATH"]="/usr/bin"
+        ["HIP_COMPILER"]="clang"
+        ["HIP_LIB_PATH"]="/usr/lib64"
+        ["HIP_PATH"]="/usr"
+        ["HIP_PLATFORM"]="amd"
+        ["HIP_ROCCLR_HOME"]="/usr"
+        ["ROCM_PATH"]="/usr"
+        ["AMDGPU_TARGETS"]="gfx1030"
+        ["HCC_AMDGPU_TARGETS"]="gfx1030"
+        ["BUILD_FILE_REORG_BACKWARD_COMPATIBILITY"]="OFF"
+        ["HIPCC_VERBOSE"]="0"
+    )
 
-    # unset CFLAGS CXXFLAGS LDFLAGS FFLAGS FCFLAGS
-    export CXX=$HIP_CLANG_PATH/clang++
-    export PATH="$HIP_CLANG_PATH:$PATH"
-    export CXXFLAGS="${CXXFLAGS/-fstack-protector-strong/} -fcf-protection=none -w"
-    export CMAKE_PREFIX_PATH="/usr/include;/usr/lib64/cmake;/usr/share/rocm/cmake;/usr/lib64/amdgcn"
+    for name in "${!rocm_vars[@]}"; do
+        echo "Setting $name to ${rocm_vars[$name]}";
+        export "$name"="${rocm_vars[$name]}";
+        export ROCM_CMAKE_FLAGS="$ROCM_CMAKE_FLAGS -D$name=${rocm_vars[$name]}";
+    done
+
+    unset CFLAGS
+    unset CXXFLAGS
+    unset LDFLAGS
+    export CXXFLAGS="-fcf-protection=none -mllvm -amdgpu-opt-vgpr-liverange=0"
 setup      : |
     # %patch -p1 < $pkgfiles/use-msgpack.diff
 
-    %cmake_ninja -Wno-dev \
+    %cmake_ninja $ROCM_CMAKE_FLAGS -Wno-dev \
+                 -L \
                  -Dpython="/usr/bin/python3" \
-                 -Damd_comgr_DIR=/usr/lib64/cmake/amd_comgr \
                  -DENABLE_INLINE_ASM=1 \
-                 -DBUILD_WITH_TENSILE=ON \
-                 -DTensile_COMPILER=hipcc \
+                 -DBUILD_WITH_TENSILE=OFF \
                  -DTensile_PRINT_DEBUG=ON \
                  -DTensile_LIBRARY_FORMAT=yaml \
                  -DTensile_LOGIC=asm_lite \
-                 -DTensile_CPU_THREADS=6 \
+                 -DTensile_CPU_THREADS=%YJOBS% \
                  -DBUILD_CLIENTS_TESTS=OFF \
                  -DBUILD_CLIENTS_BENCHMARKS=OFF \
                  -DBUILD_CLIENTS_SAMPLES=OFF \
                  -DBUILD_TESTING=OFF \
-                 -DROCM_PATH=/usr \
-                 -DBUILD_FILE_REORG_BACKWARD_COMPATIBILITY=ON \
-                 -DRUN_HEADER_TESTING=OFF \
-                 -DAMDGPU_TARGETS='gfx1030' #limiting compilation to just one GPU speeds up build time massively
 build      : |
     %ninja_build
 install    : |
