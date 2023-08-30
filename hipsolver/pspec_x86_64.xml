@@ -19,13 +19,6 @@
 </Description>
         <PartOf>programming.library</PartOf>
         <Files>
-            <Path fileType="data">/usr/hipsolver/include/hipsolver.h</Path>
-            <Path fileType="data">/usr/hipsolver/include/hipsolver_module.f90</Path>
-            <Path fileType="data">/usr/hipsolver/include/internal/hipsolver-compat.h</Path>
-            <Path fileType="data">/usr/hipsolver/include/internal/hipsolver-export.h</Path>
-            <Path fileType="data">/usr/hipsolver/include/internal/hipsolver-functions.h</Path>
-            <Path fileType="data">/usr/hipsolver/include/internal/hipsolver-types.h</Path>
-            <Path fileType="data">/usr/hipsolver/include/internal/hipsolver-version.h</Path>
             <Path fileType="data">/usr/hipsolver/lib/cmake/hipsolver-config-version.cmake</Path>
             <Path fileType="data">/usr/hipsolver/lib/cmake/hipsolver-config.cmake</Path>
             <Path fileType="data">/usr/hipsolver/lib/cmake/hipsolver-targets-relwithdebinfo.cmake</Path>
@@ -43,10 +36,9 @@
 </Description>
         <PartOf>programming.devel</PartOf>
         <RuntimeDependencies>
-            <Dependency release="1">hipsolver</Dependency>
+            <Dependency release="2">hipsolver</Dependency>
         </RuntimeDependencies>
         <Files>
-            <Path fileType="header">/usr/include/hipsolver.h</Path>
             <Path fileType="header">/usr/include/hipsolver/hipsolver.h</Path>
             <Path fileType="header">/usr/include/hipsolver/hipsolver_module.f90</Path>
             <Path fileType="header">/usr/include/hipsolver/internal/hipsolver-compat.h</Path>
@@ -54,12 +46,6 @@
             <Path fileType="header">/usr/include/hipsolver/internal/hipsolver-functions.h</Path>
             <Path fileType="header">/usr/include/hipsolver/internal/hipsolver-types.h</Path>
             <Path fileType="header">/usr/include/hipsolver/internal/hipsolver-version.h</Path>
-            <Path fileType="header">/usr/include/hipsolver_module.f90</Path>
-            <Path fileType="header">/usr/include/internal/hipsolver-compat.h</Path>
-            <Path fileType="header">/usr/include/internal/hipsolver-export.h</Path>
-            <Path fileType="header">/usr/include/internal/hipsolver-functions.h</Path>
-            <Path fileType="header">/usr/include/internal/hipsolver-types.h</Path>
-            <Path fileType="header">/usr/include/internal/hipsolver-version.h</Path>
             <Path fileType="library">/usr/lib/cmake/hipsolver/hipsolver-config-version.cmake</Path>
             <Path fileType="library">/usr/lib/cmake/hipsolver/hipsolver-config.cmake</Path>
             <Path fileType="library">/usr/lib/cmake/hipsolver/hipsolver-targets-relwithdebinfo.cmake</Path>
@@ -68,9 +54,9 @@
         </Files>
     </Package>
     <History>
-        <Update release="1">
-            <Date>2022-11-02</Date>
-            <Version>5.2.3</Version>
+        <Update release="2">
+            <Date>2023-08-29</Date>
+            <Version>5.5.1</Version>
             <Comment>Packaging update</Comment>
             <Name>Gavin Zhao</Name>
             <Email>me@gzgz.dev</Email>
