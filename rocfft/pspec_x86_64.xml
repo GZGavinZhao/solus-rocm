@@ -20,24 +20,13 @@
         <PartOf>programming.library</PartOf>
         <Files>
             <Path fileType="executable">/usr/bin/rocfft_rtc_helper</Path>
-            <Path fileType="library">/usr/lib/librocfft-device-0.so.0</Path>
-            <Path fileType="library">/usr/lib/librocfft-device-0.so.0.1</Path>
-            <Path fileType="library">/usr/lib/librocfft-device-1.so.0</Path>
-            <Path fileType="library">/usr/lib/librocfft-device-1.so.0.1</Path>
-            <Path fileType="library">/usr/lib/librocfft-device-2.so.0</Path>
-            <Path fileType="library">/usr/lib/librocfft-device-2.so.0.1</Path>
-            <Path fileType="library">/usr/lib/librocfft-device-3.so.0</Path>
-            <Path fileType="library">/usr/lib/librocfft-device-3.so.0.1</Path>
             <Path fileType="library">/usr/lib/librocfft.so.0</Path>
             <Path fileType="library">/usr/lib/librocfft.so.0.1</Path>
+            <Path fileType="library">/usr/lib/rocfft_kernel_cache.db</Path>
             <Path fileType="data">/usr/rocfft/lib/cmake/rocfft-config-version.cmake</Path>
             <Path fileType="data">/usr/rocfft/lib/cmake/rocfft-config.cmake</Path>
             <Path fileType="data">/usr/rocfft/lib/cmake/rocfft-targets-relwithdebinfo.cmake</Path>
             <Path fileType="data">/usr/rocfft/lib/cmake/rocfft-targets.cmake</Path>
-            <Path fileType="data">/usr/rocfft/lib/librocfft-device-0.so</Path>
-            <Path fileType="data">/usr/rocfft/lib/librocfft-device-1.so</Path>
-            <Path fileType="data">/usr/rocfft/lib/librocfft-device-2.so</Path>
-            <Path fileType="data">/usr/rocfft/lib/librocfft-device-3.so</Path>
             <Path fileType="data">/usr/rocfft/lib/librocfft.so</Path>
             <Path fileType="doc">/usr/share/doc/rocfft/LICENSE.md</Path>
         </Files>
@@ -49,10 +38,9 @@
 </Description>
         <PartOf>programming.devel</PartOf>
         <RuntimeDependencies>
-            <Dependency release="1">rocfft</Dependency>
+            <Dependency release="2">rocfft</Dependency>
         </RuntimeDependencies>
         <Files>
-            <Path fileType="header">/usr/include/rocfft.h</Path>
             <Path fileType="header">/usr/include/rocfft/rocfft-export.h</Path>
             <Path fileType="header">/usr/include/rocfft/rocfft-version.h</Path>
             <Path fileType="header">/usr/include/rocfft/rocfft.h</Path>
@@ -60,17 +48,13 @@
             <Path fileType="library">/usr/lib/cmake/rocfft/rocfft-config.cmake</Path>
             <Path fileType="library">/usr/lib/cmake/rocfft/rocfft-targets-relwithdebinfo.cmake</Path>
             <Path fileType="library">/usr/lib/cmake/rocfft/rocfft-targets.cmake</Path>
-            <Path fileType="library">/usr/lib/librocfft-device-0.so</Path>
-            <Path fileType="library">/usr/lib/librocfft-device-1.so</Path>
-            <Path fileType="library">/usr/lib/librocfft-device-2.so</Path>
-            <Path fileType="library">/usr/lib/librocfft-device-3.so</Path>
             <Path fileType="library">/usr/lib/librocfft.so</Path>
         </Files>
     </Package>
     <History>
-        <Update release="1">
-            <Date>2023-08-29</Date>
-            <Version>5.2.3</Version>
+        <Update release="2">
+            <Date>2023-08-30</Date>
+            <Version>5.5.1</Version>
             <Comment>Packaging update</Comment>
             <Name>Gavin Zhao</Name>
             <Email>me@gzgz.dev</Email>

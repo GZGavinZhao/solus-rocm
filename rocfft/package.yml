@@ -1,11 +1,11 @@
 name       : rocfft
-version    : 5.2.3
-release    : 1
+version    : 5.5.1
+release    : 2
 source     :
-    - https://github.com/ROCmSoftwarePlatform/rocFFT/archive/refs/tags/rocm-5.2.3.tar.gz : 0cee37886f01f1afb3ae5dad1164c819573c13c6675bff4eb668de334adbff27
+    - https://github.com/ROCmSoftwarePlatform/rocFFT/archive/refs/tags/rocm-5.5.1.tar.gz : 57423a64f5cdb1c37ff0891b6c17b59f73198d46be42db4ae23781ef2c0cd49d
 license    : MIT
 component  : programming.library
-summary    : Next generation FFT implementation for ROCm 
+summary    : Next generation FFT implementation for ROCm
 description: |
     rocFFT is a software library for computing Fast Fourier Transforms (FFT) written in HIP. It is part of AMD's software ecosystem based on ROCm.
 clang      : yes
