@@ -10,6 +10,7 @@ libhipfft.so:hipfftExecD2Z
 libhipfft.so:hipfftExecR2C
 libhipfft.so:hipfftExecZ2D
 libhipfft.so:hipfftExecZ2Z
+libhipfft.so:hipfftExtPlanScaleFactor
 libhipfft.so:hipfftGetProperty
 libhipfft.so:hipfftGetSize
 libhipfft.so:hipfftGetSize1d

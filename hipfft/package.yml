@@ -1,8 +1,9 @@
 name       : hipfft
-version    : 5.2.3
-release    : 1
+version    : 5.5.1
+release    : 2
 source     :
-    - https://github.com/ROCmSoftwarePlatform/hipFFT/archive/refs/tags/rocm-5.2.3.tar.gz : 10be731fe91ede5e9f254f6eb3bc00b4dbeab449477f3cac03de358a7d0a6fa1
+    # - https://github.com/ROCmSoftwarePlatform/hipFFT/archive/refs/tags/rocm-5.5.1.tar.gz : 3addd15a459752ad657e84c2a7b6b6289600d1d0a5f90d6e0946ba11e8148fc0
+    - git|https://github.com/ROCmSoftwarePlatform/hipFFT.git : rocm-5.5.1
 license    : MIT
 component  : programming.library
 summary    : ROCm FFT marshalling library
@@ -21,35 +22,37 @@ builddeps  :
     - rocm-smi-devel
     - git
 environment: |
-    export CCACHE_MAXSIZE=100G
+    declare -A rocm_vars
+    rocm_vars=(
+        ["HIP_DEVICE_LIB_PATH"]="/usr/share/amdgcn/bitcode"
+        ["DEVICE_LIB_PATH"]="/usr/share/amdgcn/bitcode"
+        ["HIP_CLANG_PATH"]="/usr/bin"
+        ["HIP_COMPILER"]="clang"
+        ["HIP_LIB_PATH"]="/usr/lib64"
+        ["HIP_PATH"]="/usr"
+        ["HIP_PLATFORM"]="amd"
+        ["HIP_ROCCLR_HOME"]="/usr"
+        ["ROCM_PATH"]="/usr"
+        ["AMDGPU_TARGETS"]="gfx1030"
+        ["HCC_AMDGPU_TARGETS"]="gfx1030"
+        ["BUILD_FILE_REORG_BACKWARD_COMPATIBILITY"]="OFF"
+        ["HIPCC_VERBOSE"]="0"
+    )
 
-    export ROCM_PATH=%PREFIX%
-    export ROCM_DIR=%PREFIX%
+    for name in "${!rocm_vars[@]}"; do
+        echo "Setting $name to ${rocm_vars[$name]}";
+        export "$name"="${rocm_vars[$name]}";
+        export ROCM_CMAKE_FLAGS="$ROCM_CMAKE_FLAGS -D$name=${rocm_vars[$name]}";
+    done
 
-    export HIP_PLATFORM=amd
-    export HIP_RUNTIME=rocclr
-    export DEVICE_LIB_PATH=/usr/lib64/amdgcn/bitcode
-    export HIP_DEVICE_LIB_PATH=/usr/lib64/amdgcn/bitcode
-    export HIP_COMPILER=clang
-    export HIP_CLANG_PATH=/usr/bin
-    export HSA_PATH=/usr/hsa
-    export LLVM_PATH=/usr
-
-    # https://github.com/ROCm-Developer-Tools/HIP/blob/rocm-5.1.x/docs/markdown/clang_options.md
-    # export CFLAGS="-fcf-protection=none"
-    # export CXXFLAGS="-fcf-protection=none"
+    unset CFLAGS
+    unset CXXFLAGS
+    unset LDFLAGS
+    export CXXFLAGS="-fcf-protection=none -mllvm -amdgpu-opt-vgpr-liverange=0"
 setup      : |
-    if [[ -d /usr/lib64/ccache/bin ]]; then
-        CMAKE_CCACHE_FLAGS="-DCMAKE_C_COMPILER_LAUNCHER=ccache -DCMAKE_CXX_COMPILER_LAUNCHER=ccache"
-    fi
-
-    %cmake_ninja $CMAKE_CCACHE_FLAGS \
-                 -DCMAKE_MODULE_PATH="/usr/lib64/cmake;/usr/lib64/cmake/hip" \
-                 -DCMAKE_C_COMPILER=/usr/bin/clang \
-                 -DCMAKE_CXX_COMPILER=/usr/bin/hipcc \
-                 -DAMDGPU_TARGETS='gfx1030' #limiting compilation to just one GPU speeds up build time massively
-                 # -DCMAKE_PREFIX_PATH="/usr/include;/usr/lib64/cmake;/usr/share/rocm/cmake;/usr/lib64/amdgcn" \
+    %cmake_ninja $ROCM_CMAKE_FLAGS
 build      : |
     %ninja_build
 install    : |
     %ninja_install
+    rm -rf $installdir/usr/hipfft

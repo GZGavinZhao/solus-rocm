@@ -19,15 +19,6 @@
 </Description>
         <PartOf>programming.library</PartOf>
         <Files>
-            <Path fileType="data">/usr/hipfft/include/hipfft-export.h</Path>
-            <Path fileType="data">/usr/hipfft/include/hipfft-version.h</Path>
-            <Path fileType="data">/usr/hipfft/include/hipfft.h</Path>
-            <Path fileType="data">/usr/hipfft/include/hipfftXt.h</Path>
-            <Path fileType="data">/usr/hipfft/lib/cmake/hipfft-config-version.cmake</Path>
-            <Path fileType="data">/usr/hipfft/lib/cmake/hipfft-config.cmake</Path>
-            <Path fileType="data">/usr/hipfft/lib/cmake/hipfft-targets-relwithdebinfo.cmake</Path>
-            <Path fileType="data">/usr/hipfft/lib/cmake/hipfft-targets.cmake</Path>
-            <Path fileType="data">/usr/hipfft/lib/libhipfft.so</Path>
             <Path fileType="doc">/usr/share/doc/hipfft/LICENSE.md</Path>
         </Files>
     </Package>
@@ -38,17 +29,13 @@
 </Description>
         <PartOf>programming.devel</PartOf>
         <RuntimeDependencies>
-            <Dependency release="1">hipfft</Dependency>
+            <Dependency release="2">hipfft</Dependency>
         </RuntimeDependencies>
         <Files>
-            <Path fileType="header">/usr/include/hipfft-export.h</Path>
-            <Path fileType="header">/usr/include/hipfft-version.h</Path>
-            <Path fileType="header">/usr/include/hipfft.h</Path>
             <Path fileType="header">/usr/include/hipfft/hipfft-export.h</Path>
             <Path fileType="header">/usr/include/hipfft/hipfft-version.h</Path>
             <Path fileType="header">/usr/include/hipfft/hipfft.h</Path>
             <Path fileType="header">/usr/include/hipfft/hipfftXt.h</Path>
-            <Path fileType="header">/usr/include/hipfftXt.h</Path>
             <Path fileType="library">/usr/lib/cmake/hipfft/hipfft-config-version.cmake</Path>
             <Path fileType="library">/usr/lib/cmake/hipfft/hipfft-config.cmake</Path>
             <Path fileType="library">/usr/lib/cmake/hipfft/hipfft-targets-relwithdebinfo.cmake</Path>
@@ -57,9 +44,9 @@
         </Files>
     </Package>
     <History>
-        <Update release="1">
-            <Date>2022-11-02</Date>
-            <Version>5.2.3</Version>
+        <Update release="2">
+            <Date>2023-08-30</Date>
+            <Version>5.5.1</Version>
             <Comment>Packaging update</Comment>
             <Name>Gavin Zhao</Name>
             <Email>me@gzgz.dev</Email>
