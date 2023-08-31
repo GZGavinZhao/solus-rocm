@@ -19,51 +19,8 @@
 </Description>
         <PartOf>programming.library</PartOf>
         <Files>
-            <Path fileType="data">/usr/hiprand/include/hiprand.h</Path>
-            <Path fileType="data">/usr/hiprand/include/hiprand.hpp</Path>
-            <Path fileType="data">/usr/hiprand/include/hiprand_hcc.h</Path>
-            <Path fileType="data">/usr/hiprand/include/hiprand_kernel.h</Path>
-            <Path fileType="data">/usr/hiprand/include/hiprand_kernel_hcc.h</Path>
-            <Path fileType="data">/usr/hiprand/include/hiprand_kernel_nvcc.h</Path>
-            <Path fileType="data">/usr/hiprand/include/hiprand_mtgp32_host.h</Path>
-            <Path fileType="data">/usr/hiprand/include/hiprand_nvcc.h</Path>
-            <Path fileType="data">/usr/hiprand/include/hiprand_version.h</Path>
-            <Path fileType="data">/usr/hiprand/lib/cmake/hiprand-config-version.cmake</Path>
-            <Path fileType="data">/usr/hiprand/lib/cmake/hiprand-config.cmake</Path>
-            <Path fileType="data">/usr/hiprand/lib/cmake/hiprand-targets-relwithdebinfo.cmake</Path>
-            <Path fileType="data">/usr/hiprand/lib/cmake/hiprand-targets.cmake</Path>
-            <Path fileType="data">/usr/hiprand/lib/libhiprand.so</Path>
-            <Path fileType="library">/usr/lib/libhiprand.so.1</Path>
-            <Path fileType="library">/usr/lib/libhiprand.so.1.1</Path>
             <Path fileType="library">/usr/lib/librocrand.so.1</Path>
             <Path fileType="library">/usr/lib/librocrand.so.1.1</Path>
-            <Path fileType="data">/usr/rocrand/include/rocrand.h</Path>
-            <Path fileType="data">/usr/rocrand/include/rocrand.hpp</Path>
-            <Path fileType="data">/usr/rocrand/include/rocrand_common.h</Path>
-            <Path fileType="data">/usr/rocrand/include/rocrand_discrete.h</Path>
-            <Path fileType="data">/usr/rocrand/include/rocrand_discrete_types.h</Path>
-            <Path fileType="data">/usr/rocrand/include/rocrand_kernel.h</Path>
-            <Path fileType="data">/usr/rocrand/include/rocrand_log_normal.h</Path>
-            <Path fileType="data">/usr/rocrand/include/rocrand_mrg32k3a.h</Path>
-            <Path fileType="data">/usr/rocrand/include/rocrand_mrg32k3a_precomputed.h</Path>
-            <Path fileType="data">/usr/rocrand/include/rocrand_mtgp32.h</Path>
-            <Path fileType="data">/usr/rocrand/include/rocrand_mtgp32_11213.h</Path>
-            <Path fileType="data">/usr/rocrand/include/rocrand_normal.h</Path>
-            <Path fileType="data">/usr/rocrand/include/rocrand_philox4x32_10.h</Path>
-            <Path fileType="data">/usr/rocrand/include/rocrand_poisson.h</Path>
-            <Path fileType="data">/usr/rocrand/include/rocrand_sobol32.h</Path>
-            <Path fileType="data">/usr/rocrand/include/rocrand_sobol32_precomputed.h</Path>
-            <Path fileType="data">/usr/rocrand/include/rocrand_sobol64.h</Path>
-            <Path fileType="data">/usr/rocrand/include/rocrand_sobol64_precomputed.h</Path>
-            <Path fileType="data">/usr/rocrand/include/rocrand_uniform.h</Path>
-            <Path fileType="data">/usr/rocrand/include/rocrand_version.h</Path>
-            <Path fileType="data">/usr/rocrand/include/rocrand_xorwow.h</Path>
-            <Path fileType="data">/usr/rocrand/include/rocrand_xorwow_precomputed.h</Path>
-            <Path fileType="data">/usr/rocrand/lib/cmake/rocrand-config-version.cmake</Path>
-            <Path fileType="data">/usr/rocrand/lib/cmake/rocrand-config.cmake</Path>
-            <Path fileType="data">/usr/rocrand/lib/cmake/rocrand-targets-relwithdebinfo.cmake</Path>
-            <Path fileType="data">/usr/rocrand/lib/cmake/rocrand-targets.cmake</Path>
-            <Path fileType="data">/usr/rocrand/lib/librocrand.so</Path>
             <Path fileType="doc">/usr/share/doc/rocrand/LICENSE.txt</Path>
         </Files>
     </Package>
@@ -74,36 +31,20 @@
 </Description>
         <PartOf>programming.devel</PartOf>
         <RuntimeDependencies>
-            <Dependency release="1">rocrand</Dependency>
+            <Dependency release="2">rocrand</Dependency>
         </RuntimeDependencies>
         <Files>
-            <Path fileType="header">/usr/include/hiprand.h</Path>
-            <Path fileType="header">/usr/include/hiprand.hpp</Path>
-            <Path fileType="header">/usr/include/hiprand/hiprand.h</Path>
-            <Path fileType="header">/usr/include/hiprand/hiprand.hpp</Path>
-            <Path fileType="header">/usr/include/hiprand/hiprand_hcc.h</Path>
-            <Path fileType="header">/usr/include/hiprand/hiprand_kernel.h</Path>
-            <Path fileType="header">/usr/include/hiprand/hiprand_kernel_hcc.h</Path>
-            <Path fileType="header">/usr/include/hiprand/hiprand_kernel_nvcc.h</Path>
-            <Path fileType="header">/usr/include/hiprand/hiprand_mtgp32_host.h</Path>
-            <Path fileType="header">/usr/include/hiprand/hiprand_nvcc.h</Path>
-            <Path fileType="header">/usr/include/hiprand/hiprand_version.h</Path>
-            <Path fileType="header">/usr/include/hiprand_hcc.h</Path>
-            <Path fileType="header">/usr/include/hiprand_kernel.h</Path>
-            <Path fileType="header">/usr/include/hiprand_kernel_hcc.h</Path>
-            <Path fileType="header">/usr/include/hiprand_kernel_nvcc.h</Path>
-            <Path fileType="header">/usr/include/hiprand_mtgp32_host.h</Path>
-            <Path fileType="header">/usr/include/hiprand_nvcc.h</Path>
-            <Path fileType="header">/usr/include/hiprand_version.h</Path>
-            <Path fileType="header">/usr/include/rocrand.h</Path>
-            <Path fileType="header">/usr/include/rocrand.hpp</Path>
             <Path fileType="header">/usr/include/rocrand/rocrand.h</Path>
             <Path fileType="header">/usr/include/rocrand/rocrand.hpp</Path>
             <Path fileType="header">/usr/include/rocrand/rocrand_common.h</Path>
             <Path fileType="header">/usr/include/rocrand/rocrand_discrete.h</Path>
             <Path fileType="header">/usr/include/rocrand/rocrand_discrete_types.h</Path>
+            <Path fileType="header">/usr/include/rocrand/rocrand_hip_cpu.h</Path>
             <Path fileType="header">/usr/include/rocrand/rocrand_kernel.h</Path>
+            <Path fileType="header">/usr/include/rocrand/rocrand_lfsr113.h</Path>
             <Path fileType="header">/usr/include/rocrand/rocrand_log_normal.h</Path>
+            <Path fileType="header">/usr/include/rocrand/rocrand_mrg31k3p.h</Path>
+            <Path fileType="header">/usr/include/rocrand/rocrand_mrg31k3p_precomputed.h</Path>
             <Path fileType="header">/usr/include/rocrand/rocrand_mrg32k3a.h</Path>
             <Path fileType="header">/usr/include/rocrand/rocrand_mrg32k3a_precomputed.h</Path>
             <Path fileType="header">/usr/include/rocrand/rocrand_mtgp32.h</Path>
@@ -111,52 +52,40 @@
             <Path fileType="header">/usr/include/rocrand/rocrand_normal.h</Path>
             <Path fileType="header">/usr/include/rocrand/rocrand_philox4x32_10.h</Path>
             <Path fileType="header">/usr/include/rocrand/rocrand_poisson.h</Path>
+            <Path fileType="header">/usr/include/rocrand/rocrand_scrambled_sobol32.h</Path>
+            <Path fileType="header">/usr/include/rocrand/rocrand_scrambled_sobol32_constants.h</Path>
+            <Path fileType="header">/usr/include/rocrand/rocrand_scrambled_sobol32_precomputed.h</Path>
+            <Path fileType="header">/usr/include/rocrand/rocrand_scrambled_sobol64.h</Path>
+            <Path fileType="header">/usr/include/rocrand/rocrand_scrambled_sobol64_constants.h</Path>
+            <Path fileType="header">/usr/include/rocrand/rocrand_scrambled_sobol64_precomputed.h</Path>
             <Path fileType="header">/usr/include/rocrand/rocrand_sobol32.h</Path>
             <Path fileType="header">/usr/include/rocrand/rocrand_sobol32_precomputed.h</Path>
             <Path fileType="header">/usr/include/rocrand/rocrand_sobol64.h</Path>
             <Path fileType="header">/usr/include/rocrand/rocrand_sobol64_precomputed.h</Path>
+            <Path fileType="header">/usr/include/rocrand/rocrand_threefry2_impl.h</Path>
+            <Path fileType="header">/usr/include/rocrand/rocrand_threefry2x32_20.h</Path>
+            <Path fileType="header">/usr/include/rocrand/rocrand_threefry2x64_20.h</Path>
+            <Path fileType="header">/usr/include/rocrand/rocrand_threefry4_impl.h</Path>
+            <Path fileType="header">/usr/include/rocrand/rocrand_threefry4x32_20.h</Path>
+            <Path fileType="header">/usr/include/rocrand/rocrand_threefry4x64_20.h</Path>
+            <Path fileType="header">/usr/include/rocrand/rocrand_threefry_common.h</Path>
             <Path fileType="header">/usr/include/rocrand/rocrand_uniform.h</Path>
             <Path fileType="header">/usr/include/rocrand/rocrand_version.h</Path>
             <Path fileType="header">/usr/include/rocrand/rocrand_xorwow.h</Path>
             <Path fileType="header">/usr/include/rocrand/rocrand_xorwow_precomputed.h</Path>
-            <Path fileType="header">/usr/include/rocrand_common.h</Path>
-            <Path fileType="header">/usr/include/rocrand_discrete.h</Path>
-            <Path fileType="header">/usr/include/rocrand_discrete_types.h</Path>
-            <Path fileType="header">/usr/include/rocrand_kernel.h</Path>
-            <Path fileType="header">/usr/include/rocrand_log_normal.h</Path>
-            <Path fileType="header">/usr/include/rocrand_mrg32k3a.h</Path>
-            <Path fileType="header">/usr/include/rocrand_mrg32k3a_precomputed.h</Path>
-            <Path fileType="header">/usr/include/rocrand_mtgp32.h</Path>
-            <Path fileType="header">/usr/include/rocrand_mtgp32_11213.h</Path>
-            <Path fileType="header">/usr/include/rocrand_normal.h</Path>
-            <Path fileType="header">/usr/include/rocrand_philox4x32_10.h</Path>
-            <Path fileType="header">/usr/include/rocrand_poisson.h</Path>
-            <Path fileType="header">/usr/include/rocrand_sobol32.h</Path>
-            <Path fileType="header">/usr/include/rocrand_sobol32_precomputed.h</Path>
-            <Path fileType="header">/usr/include/rocrand_sobol64.h</Path>
-            <Path fileType="header">/usr/include/rocrand_sobol64_precomputed.h</Path>
-            <Path fileType="header">/usr/include/rocrand_uniform.h</Path>
-            <Path fileType="header">/usr/include/rocrand_version.h</Path>
-            <Path fileType="header">/usr/include/rocrand_xorwow.h</Path>
-            <Path fileType="header">/usr/include/rocrand_xorwow_precomputed.h</Path>
-            <Path fileType="library">/usr/lib/cmake/hiprand/hiprand-config-version.cmake</Path>
-            <Path fileType="library">/usr/lib/cmake/hiprand/hiprand-config.cmake</Path>
-            <Path fileType="library">/usr/lib/cmake/hiprand/hiprand-fortran-config.cmake</Path>
-            <Path fileType="library">/usr/lib/cmake/hiprand/hiprand-targets-relwithdebinfo.cmake</Path>
-            <Path fileType="library">/usr/lib/cmake/hiprand/hiprand-targets.cmake</Path>
+            <Path fileType="header">/usr/include/rocrand/rocrandapi.h</Path>
             <Path fileType="library">/usr/lib/cmake/rocrand/rocrand-config-version.cmake</Path>
             <Path fileType="library">/usr/lib/cmake/rocrand/rocrand-config.cmake</Path>
             <Path fileType="library">/usr/lib/cmake/rocrand/rocrand-fortran-config.cmake</Path>
             <Path fileType="library">/usr/lib/cmake/rocrand/rocrand-targets-relwithdebinfo.cmake</Path>
             <Path fileType="library">/usr/lib/cmake/rocrand/rocrand-targets.cmake</Path>
-            <Path fileType="library">/usr/lib/libhiprand.so</Path>
             <Path fileType="library">/usr/lib/librocrand.so</Path>
         </Files>
     </Package>
     <History>
-        <Update release="1">
-            <Date>2022-11-02</Date>
-            <Version>5.2.3</Version>
+        <Update release="2">
+            <Date>2023-08-30</Date>
+            <Version>2.10.17</Version>
             <Comment>Packaging update</Comment>
             <Name>Gavin Zhao</Name>
             <Email>me@gzgz.dev</Email>
