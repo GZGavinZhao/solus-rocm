@@ -19,32 +19,14 @@
 </Description>
         <PartOf>programming.library</PartOf>
         <Files>
-            <Path fileType="library">/usr/lib/libroctracer64.so.1</Path>
-            <Path fileType="library">/usr/lib/libroctracer64.so.1.0.0</Path>
-            <Path fileType="library">/usr/lib/libroctx64.so.1</Path>
-            <Path fileType="library">/usr/lib/libroctx64.so.1.0.0</Path>
-            <Path fileType="library">/usr/lib/roctracer/libroctracer_tool.so</Path>
-            <Path fileType="data">/usr/roctracer/include/ext/hsa_rt_utils.hpp</Path>
-            <Path fileType="data">/usr/roctracer/include/ext/prof_protocol.h</Path>
-            <Path fileType="data">/usr/roctracer/include/hip_ostream_ops.h</Path>
-            <Path fileType="data">/usr/roctracer/include/hsa_ostream_ops.h</Path>
-            <Path fileType="data">/usr/roctracer/include/hsa_prof_str.h</Path>
-            <Path fileType="data">/usr/roctracer/include/roctracer.h</Path>
-            <Path fileType="data">/usr/roctracer/include/roctracer_cb_table.h</Path>
-            <Path fileType="data">/usr/roctracer/include/roctracer_ext.h</Path>
-            <Path fileType="data">/usr/roctracer/include/roctracer_hcc.h</Path>
-            <Path fileType="data">/usr/roctracer/include/roctracer_hip.h</Path>
-            <Path fileType="data">/usr/roctracer/include/roctracer_hsa.h</Path>
-            <Path fileType="data">/usr/roctracer/include/roctracer_roctx.h</Path>
-            <Path fileType="data">/usr/roctracer/include/roctx.h</Path>
-            <Path fileType="data">/usr/roctracer/lib/libroctracer64.so</Path>
-            <Path fileType="data">/usr/roctracer/lib/libroctracer64.so.1</Path>
-            <Path fileType="data">/usr/roctracer/lib/libroctracer64.so.1.0.0</Path>
-            <Path fileType="data">/usr/roctracer/lib/libroctx64.so</Path>
-            <Path fileType="data">/usr/roctracer/lib/libroctx64.so.1</Path>
-            <Path fileType="data">/usr/roctracer/lib/libroctx64.so.1.0.0</Path>
-            <Path fileType="data">/usr/roctracer/tool/libtracer_tool.so</Path>
-            <Path fileType="doc">/usr/share/doc/roctracer-dev/LICENSE</Path>
+            <Path fileType="library">/usr/lib64/libroctracer64.so.4</Path>
+            <Path fileType="library">/usr/lib64/libroctracer64.so.4.1.0</Path>
+            <Path fileType="library">/usr/lib64/libroctx64.so.4</Path>
+            <Path fileType="library">/usr/lib64/libroctx64.so.4.1.0</Path>
+            <Path fileType="library">/usr/lib64/roctracer/libfile_plugin.so</Path>
+            <Path fileType="library">/usr/lib64/roctracer/libhip_stats.so</Path>
+            <Path fileType="library">/usr/lib64/roctracer/libroctracer_tool.so</Path>
+            <Path fileType="doc">/usr/share/doc/roctracer/LICENSE</Path>
         </Files>
     </Package>
     <Package>
@@ -54,30 +36,29 @@
 </Description>
         <PartOf>programming.devel</PartOf>
         <RuntimeDependencies>
-            <Dependency release="1">roctracer</Dependency>
+            <Dependency release="2">roctracer</Dependency>
         </RuntimeDependencies>
         <Files>
-            <Path fileType="header">/usr/include/roctracer/ext/hsa_rt_utils.hpp</Path>
             <Path fileType="header">/usr/include/roctracer/ext/prof_protocol.h</Path>
             <Path fileType="header">/usr/include/roctracer/hip_ostream_ops.h</Path>
             <Path fileType="header">/usr/include/roctracer/hsa_ostream_ops.h</Path>
             <Path fileType="header">/usr/include/roctracer/hsa_prof_str.h</Path>
             <Path fileType="header">/usr/include/roctracer/roctracer.h</Path>
-            <Path fileType="header">/usr/include/roctracer/roctracer_cb_table.h</Path>
             <Path fileType="header">/usr/include/roctracer/roctracer_ext.h</Path>
             <Path fileType="header">/usr/include/roctracer/roctracer_hcc.h</Path>
             <Path fileType="header">/usr/include/roctracer/roctracer_hip.h</Path>
             <Path fileType="header">/usr/include/roctracer/roctracer_hsa.h</Path>
+            <Path fileType="header">/usr/include/roctracer/roctracer_plugin.h</Path>
             <Path fileType="header">/usr/include/roctracer/roctracer_roctx.h</Path>
             <Path fileType="header">/usr/include/roctracer/roctx.h</Path>
-            <Path fileType="library">/usr/lib/libroctracer64.so</Path>
-            <Path fileType="library">/usr/lib/libroctx64.so</Path>
+            <Path fileType="library">/usr/lib64/libroctracer64.so</Path>
+            <Path fileType="library">/usr/lib64/libroctx64.so</Path>
         </Files>
     </Package>
     <History>
-        <Update release="1">
-            <Date>2022-11-02</Date>
-            <Version>5.2.1</Version>
+        <Update release="2">
+            <Date>2023-09-02</Date>
+            <Version>5.5.1</Version>
             <Comment>Packaging update</Comment>
             <Name>Gavin Zhao</Name>
             <Email>me@gzgz.dev</Email>

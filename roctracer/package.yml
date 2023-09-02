@@ -1,11 +1,11 @@
 name       : roctracer
-version    : 5.2.1
-release    : 1
+version    : 5.5.1
+release    : 2
 source     :
-    - https://github.com/ROCm-Developer-Tools/roctracer/archive/refs/tags/rocm-5.2.1.tar.gz : e200b5342bdf840960ced6919d4bf42c8f30f8013513f25a2190ee8767667e59
+    - https://github.com/ROCm-Developer-Tools/roctracer/archive/refs/tags/rocm-5.5.1.tar.gz : 3afc31ebfdb14b0365185ca6b9326a83b1503a94a51d910f5ce7ced192d8c133
 license    : MIT
 component  : programming.library
-summary    : ROCm Tracer Callback/Activity Library for Performance tracing AMD GPU's 
+summary    : ROCm Tracer Callback/Activity Library for Performance tracing AMD GPU's
 description: |
     Runtimes Generic Callback/Activity APIs. The goal of the implementation is to provide a generic independent from specific runtime profiler to trace API and asyncronous activity. The API provides functionality for registering the runtimes API callbacks and asyncronous activity records pool support.
 clang      : yes
@@ -20,31 +20,45 @@ builddeps  :
     - rocm-opencl-devel
     - rocm-runtime-devel
     - rocm-smi-devel
+    - hsa-amd-aqlprofile-devel
     - rocprim-devel
     - rocprofiler
-    - git
     - python-ply
     - python-cppheaderparser
 environment: |
-    export ROCM_PATH=%PREFIX%
-    export ROCM_DIR=%PREFIX%
+    declare -A rocm_vars
+    rocm_vars=(
+        ["HIP_DEVICE_LIB_PATH"]="/usr/share/amdgcn/bitcode"
+        ["DEVICE_LIB_PATH"]="/usr/share/amdgcn/bitcode"
+        ["HIP_CLANG_PATH"]="/usr/bin"
+        ["HIP_COMPILER"]="clang"
+        ["HIP_LIB_PATH"]="/usr/lib64"
+        ["HIP_PATH"]="/usr"
+        ["HIP_PLATFORM"]="amd"
+        ["HIP_ROCCLR_HOME"]="/usr"
+        ["ROCM_PATH"]="/usr"
+        ["AMDGPU_TARGETS"]="gfx1030"
+        ["HCC_AMDGPU_TARGETS"]="gfx1030"
+        ["BUILD_FILE_REORG_BACKWARD_COMPATIBILITY"]="OFF"
+        ["HIPCC_VERBOSE"]="0"
+    )
 
-    export HIP_PLATFORM=amd
-    export HIP_RUNTIME=rocclr
-    export HIP_COMPILER=clang
-    export HIP_CLANG_PATH=/usr/bin
-    export DEVICE_LIB_PATH=/usr/lib64/amdgcn/bitcode
-    export HSA_PATH=/usr/hsa
-    export LLVM_PATH=/usr
+    for name in "${!rocm_vars[@]}"; do
+        echo "Setting $name to ${rocm_vars[$name]}";
+        export "$name"="${rocm_vars[$name]}";
+        export ROCM_CMAKE_FLAGS="$ROCM_CMAKE_FLAGS -D$name=${rocm_vars[$name]}";
+    done
 
-    # roctracer specific
-    export HIP_PATH=/usr
+    unset CFLAGS
+    unset CXXFLAGS
+    unset LDFLAGS
+    export CXXFLAGS="-fcf-protection=none -mllvm -amdgpu-opt-vgpr-liverange=0"
 setup      : |
-    %cmake_ninja -DCMAKE_CXX_COMPILER=/usr/bin/hipcc \
-                 -DHIP_PATH=/usr \
-                 -DBUILD_FILE_REORG_BACKWARD_COMPATIBILITY=ON \
-                 -DAMDGPU_TARGETS="gfx1030" \
+    %cmake_ninja $ROCM_CMAKE_FLAGS \
+                 -DCMAKE_CXX_COMPILER=/usr/bin/hipcc \
+                 -L \
 build      : |
     %ninja_build
 install    : |
     %ninja_install
+    rm -rf $installdir/usr/{roctracer,test}
