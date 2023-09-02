@@ -1,0 +1,19 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 99fb394..a7f80cf 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -107,10 +107,12 @@ find_package(
+   ${CMAKE_INSTALL_PREFIX}
+   PATHS
+   ${ROCM_PATH})
++
++set(GPU_TARGETS "gfx900;gfx1030" CACHE STRING "GPU targets to compile for")
++
+ find_package(
+-  HIP
++  hip
+   REQUIRED
+-  CONFIG
+   HINTS
+   ${CMAKE_INSTALL_PREFIX}
+   PATHS

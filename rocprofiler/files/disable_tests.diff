@@ -1,0 +1,30 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 99fb394..979a592 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -161,18 +161,18 @@ endif()
+ add_subdirectory(src)
+ 
+ if(${LIBRARY_TYPE} STREQUAL SHARED)
+-  # Build samples
+-  add_subdirectory(samples)
++  # # Build samples
++  # add_subdirectory(samples)
+ 
+-  # Build tests
+-  add_subdirectory(tests)
++  # # Build tests
++  # add_subdirectory(tests)
+ endif()
+ 
+-# Build Plugins
+-add_subdirectory(plugin)
++# # Build Plugins
++# add_subdirectory(plugin)
+ 
+ # Build tests
+-add_subdirectory(${TEST_DIR} ${PROJECT_BINARY_DIR}/test)
++# add_subdirectory(${TEST_DIR} ${PROJECT_BINARY_DIR}/test)
+ 
+ # Installation and packaging
+ set(DEST_NAME ${ROCPROFILER_NAME})
