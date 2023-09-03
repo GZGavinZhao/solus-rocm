@@ -12,8 +12,8 @@ clang      : yes
 networking : yes
 cache      : no
 builddeps  :
-    # - pkgconfig(msgpack)
-    # - msgpack-cpp-devel
+    # - pkgconfig(msgpack-c)
+    # - msgpack-cpp
     # - python-msgpack
     - pkgconfig(libhsakmt)
     - perl-file-which
@@ -63,11 +63,9 @@ setup      : |
     %cmake_ninja $ROCM_CMAKE_FLAGS -Wno-dev \
                  -L \
                  -Dpython="/usr/bin/python3" \
-                 -DENABLE_INLINE_ASM=1 \
-                 -DBUILD_WITH_TENSILE=OFF \
+                 -DBUILD_WITH_TENSILE=ON \
                  -DTensile_PRINT_DEBUG=ON \
                  -DTensile_LIBRARY_FORMAT=yaml \
-                 -DTensile_LOGIC=asm_lite \
                  -DTensile_CPU_THREADS=%YJOBS% \
                  -DBUILD_CLIENTS_TESTS=OFF \
                  -DBUILD_CLIENTS_BENCHMARKS=OFF \
